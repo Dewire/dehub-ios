@@ -9,6 +9,26 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Model.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>ModelTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Scene.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>SceneTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -23,6 +43,26 @@
 			<true/>
 		</dict>
 		<key>D3BD74241D042E650032CC00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D3BD743B1D0431B40032CC00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D3BD74441D0431B40032CC00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D3BD745E1D0431F00032CC00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D3BD74671D0431F00032CC00</key>
 		<dict>
 			<key>primary</key>
 			<true/>
