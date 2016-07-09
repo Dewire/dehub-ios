@@ -11,7 +11,7 @@ import Model
 
 public class BaseScene {
   
-  weak var stageRef: UIViewController?
+  weak var stageRef: UIViewController!
   
   let presentation: Presentation
   let services: Services

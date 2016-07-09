@@ -13,8 +13,12 @@ import RxCocoa
 class HomeStage : DirectedViewController<HomeDirector> {
   
   @IBOutlet weak var username: UILabel!
+  @IBOutlet weak var realName: UILabel!
   @IBOutlet weak var reposCount: UILabel!
   @IBOutlet weak var gistsCount: UILabel!
+  @IBOutlet weak var following: UILabel!
+  @IBOutlet weak var followers: UILabel!
+  @IBOutlet weak var logoutButton: UIBarButtonItem!
   
   static func create(directorFactory: HomeStage -> HomeDirector) -> HomeStage {
     let storyboard = UIStoryboard(name: "Home", bundle: NSBundle(forClass: HomeScene.self))
@@ -28,13 +32,21 @@ extension HomeStage {
     let username: AnyObserver<String>
     let reposCount: AnyObserver<String>
     let gistsCount: AnyObserver<String>
+    let realName: AnyObserver<String>
+    let followers: AnyObserver<String>
+    let following: AnyObserver<String>
+    let logout: ControlEvent<Void>
   }
   
   var actions: Actions {
     return Actions(
       username: username.rx_text,
       reposCount: reposCount.rx_text,
-      gistsCount:  gistsCount.rx_text
+      gistsCount: gistsCount.rx_text,
+      realName: realName.rx_text,
+      followers: followers.rx_text,
+      following: following.rx_text,
+      logout: logoutButton.rx_tap
     )
   }
 }

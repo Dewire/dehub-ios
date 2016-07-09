@@ -15,7 +15,10 @@ class LoginDirector : BaseDirector {
   
   let networkInteractor: P_NetworkInteractor
 
-  let loginSuccessful = PublishSubject<Bool>()
+  let logoutRequested = PublishSubject<Void>()
+  let loginSuccessful = PublishSubject<Void>()
+  let resetUi = PublishSubject<Void>()
+  
   let loginButtonHidden = Variable<Bool>(true)
   let loginButtonEnabled = Variable<Bool>(true)
   let username = Variable<String>("")
@@ -25,8 +28,24 @@ class LoginDirector : BaseDirector {
     self.networkInteractor = networkInteractor
     super.init()
     
+    registerForLogoutNotification()
   	observePasswordUsername(actions.password, username: actions.username)
     observeLoginPressed(actions.loginPressed)
+  }
+  
+  private func registerForLogoutNotification() {
+    NSNotificationCenter.defaultCenter().addObserver(self,
+      selector: #selector(logout), name:"Logout", object: nil)
+  }
+  
+  @objc private func logout() {
+    print("logout")
+    logoutRequested.onNext()
+    resetUi.onNext()
+    loginButtonEnabled.value = true
+    loginButtonHidden.value = true
+    username.value = ""
+    password.value = ""
   }
   
   private func observePasswordUsername(password: ControlProperty<String>,
@@ -59,7 +78,7 @@ class LoginDirector : BaseDirector {
       switch event {
       case .Next:
         print("login ok")
-        self.loginSuccessful.onNext(true)
+        self.loginSuccessful.onNext()
       case .Error:
         print("login error")
         self.loginButtonEnabled.value = true

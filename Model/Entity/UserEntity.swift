@@ -12,24 +12,33 @@ import Gloss
 public struct UserEntity : Decodable {
   
   public let username: String
+  public let name: String?
   public let id: Int
   public let avatarUrl: String?
   public let publicRepos: Int
   public let publicGists: Int
+  public let following: Int
+  public let followers: Int
   
   public init?(json: JSON) {
     guard let
       username: String = "login" <~~ json,
       id: Int = "id" <~~ json,
     	publicRepos: Int = "public_repos" <~~ json,
-    	publicGists: Int = "public_gists" <~~ json
+    	publicGists: Int = "public_gists" <~~ json,
+    	following: Int = "following" <~~ json,
+    	followers: Int = "followers" <~~ json
+
     else { return nil }
     
     self.username = username
     self.id = id
+    self.name = "name" <~~ json
     self.publicRepos = publicRepos
     self.publicGists = publicGists
     self.avatarUrl = "avatar_url" <~~ json
+    self.followers = followers
+    self.following = following
   }
 }
 

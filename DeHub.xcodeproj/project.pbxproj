@@ -51,6 +51,7 @@
 		D3F541921D281C91009A9A27 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F541911D281C91009A9A27 /* Button.swift */; };
 		D3F541951D281E51009A9A27 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F541941D281E51009A9A27 /* UIColor.swift */; };
 		D3F541971D298739009A9A27 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F541961D298739009A9A27 /* UIView.swift */; };
+		D3F541991D2D3D3E009A9A27 /* RoundedCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F541981D2D3D3E009A9A27 /* RoundedCornerView.swift */; };
 		D3FFDDEE1D044034004C6569 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BD74091D042E650032CC00 /* AppDelegate.swift */; };
 		D3FFDDF51D044BE6004C6569 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFDDF11D044BE6004C6569 /* Context.swift */; };
 		D3FFDDF61D044BE6004C6569 /* ModalContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFDDF21D044BE6004C6569 /* ModalContext.swift */; };
@@ -182,6 +183,7 @@
 		D3F541911D281C91009A9A27 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		D3F541941D281E51009A9A27 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		D3F541961D298739009A9A27 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		D3F541981D2D3D3E009A9A27 /* RoundedCornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedCornerView.swift; sourceTree = "<group>"; };
 		D3FFDDF11D044BE6004C6569 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		D3FFDDF21D044BE6004C6569 /* ModalContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalContext.swift; sourceTree = "<group>"; };
 		D3FFDDF31D044BE6004C6569 /* NavigationContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationContext.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 			isa = PBXGroup;
 			children = (
 				D3F541911D281C91009A9A27 /* Button.swift */,
+				D3F541981D2D3D3E009A9A27 /* RoundedCornerView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -842,6 +845,7 @@
 				D3CE169B1D0BEB4600749C9F /* BaseScene.swift in Sources */,
 				D3FFDDFA1D045680004C6569 /* DirectedViewController.swift in Sources */,
 				D3BD748E1D043BE40032CC00 /* LoginStage.swift in Sources */,
+				D3F541991D2D3D3E009A9A27 /* RoundedCornerView.swift in Sources */,
 				D3FFDDFC1D04720F004C6569 /* LoginDirector.swift in Sources */,
 				D3FFDDF61D044BE6004C6569 /* ModalContext.swift in Sources */,
 				D3F541921D281C91009A9A27 /* Button.swift in Sources */,

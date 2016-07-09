@@ -20,18 +20,28 @@ public class LoginScene : BaseScene {
   }
   
   private func observeDirector(director: LoginDirector) {
-    
-    director.loginSuccessful.subscribeNext { success in
+    observeLoginSuccessful(director)
+    observeLogoutRequested(director)
+  }
+  
+  private func observeLoginSuccessful(director: LoginDirector) {
+    director.loginSuccessful.subscribeNext { _ in
       self.segueToHomeScene()
-      
     }
     .addDisposableTo(director.bag)
   }
   
-  func segueToHomeScene() {
+  private func segueToHomeScene() {
     print("segueToHomeScene")
-    let presentation = ModalContext(presenter: stageRef!, animated: true)
+    let presentation = ModalContext(presenter: stageRef, animated: true)
     let homeScene = HomeScene(presentation: presentation, services: services)
     homeScene.presentInContext()
+  }
+  
+  private func observeLogoutRequested(director: LoginDirector) {
+    director.logoutRequested.bindNext { _ in
+      self.stageRef.dismissViewControllerAnimated(true, completion: nil)
+    }
+    .addDisposableTo(director.bag)
   }
 }
