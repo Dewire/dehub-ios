@@ -15,84 +15,73 @@ class LoginDirector : BaseDirector {
   
   let networkInteractor: P_NetworkInteractor
 
+  // Scene outputs
   let logoutRequested = PublishSubject<Void>()
+
+  // Stage outputs
+  let enableLoginButton = Variable<Bool>(false)
   let loginSuccessful = PublishSubject<Void>()
   let resetUi = PublishSubject<Void>()
-  
-  let loginButtonHidden = Variable<Bool>(true)
-  let loginButtonEnabled = Variable<Bool>(true)
-  let username = Variable<String>("")
-  let password = Variable<String>("")
 
   init(actions: LoginStage.Actions, networkInteractor: P_NetworkInteractor) {
     self.networkInteractor = networkInteractor
     super.init()
-    
+
     registerForLogoutNotification()
-  	observePasswordUsername(actions.password, username: actions.username)
-    observeLoginPressed(actions.loginPressed)
+    observeActions(actions)
   }
-  
+
   private func registerForLogoutNotification() {
     NSNotificationCenter.defaultCenter().addObserver(self,
       selector: #selector(logout), name:"Logout", object: nil)
   }
-  
-  @objc private func logout() {
-    print("logout")
-    logoutRequested.onNext()
-    resetUi.onNext()
-    loginButtonEnabled.value = true
-    loginButtonHidden.value = true
-    username.value = ""
-    password.value = ""
-  }
-  
-  private func observePasswordUsername(password: ControlProperty<String>,
-                                       username: ControlProperty<String>) {
-    
-    username.bindTo(self.username).addDisposableTo(bag)
-    password.bindTo(self.password).addDisposableTo(bag)
 
-    Driver
-      .combineLatest(password.asDriver(), username.asDriver()) {
-        ($0, $1)
+  private func observeActions(actions: LoginStage.Actions) {
+    let userPass = Driver.combineLatest(actions.username.asDriver(), actions.password.asDriver()) {
+      ($0, $1)
+    }
+
+    observeUsernamePassword(userPass)
+    observeLoginPressed(userPass, loginPressed: actions.loginPressed)
+  }
+
+  private func observeUsernamePassword(userPass: Driver<(String, String)>) {
+    userPass.map { userPass in
+      return !userPass.0.isEmpty && !userPass.1.isEmpty
+    }
+    .drive(enableLoginButton)
+    .addDisposableTo(bag)
+  }
+
+  private func observeLoginPressed(userPass: Driver<(String, String)>, loginPressed: ControlEvent<Void>) {
+    loginPressed.asDriver()
+      .withLatestFrom(userPass) { $1 }
+      .driveNext { userPass in
+        self.enableLoginButton.value = false
+        self.performLoginRequest(userPass.0, password: userPass.1)
       }
-      .map { userPass in
-        userPass.0.isEmpty || userPass.1.isEmpty
-      }
-      .drive(loginButtonHidden)
       .addDisposableTo(bag)
   }
-  
-  private func observeLoginPressed(press: ControlEvent<Void>) {
-    press.subscribeNext {
-      self.loginButtonEnabled.value = false
-      self.performLoginRequest()
-    }
-    .addDisposableTo(self.bag)
+
+  @objc private func logout() {
+    print("logout")
+    resetUi.onNext()
+    logoutRequested.onNext()
+    enableLoginButton.value = false
   }
-  
-  private func performLoginRequest() {
-    self.networkInteractor.login(self.username.value, password: self.password.value).subscribe { event in
+
+  private func performLoginRequest(username: String, password: String) {
+    self.networkInteractor.login(username, password: password).subscribe { event in
       switch event {
       case .Next:
         print("login ok")
         self.loginSuccessful.onNext()
       case .Error:
         print("login error")
-        self.loginButtonEnabled.value = true
+        self.enableLoginButton.value = true
       default: break
       }
     }
     .addDisposableTo(self.bag)
   }
 }
-
-
-
-
-
-
-
-

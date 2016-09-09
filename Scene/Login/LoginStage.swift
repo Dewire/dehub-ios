@@ -26,39 +26,19 @@ class LoginStage : DirectedViewController<LoginDirector> {
   }
 
   override func bindDirector(director: LoginDirector) {
-    observeLoginButtonHidden(director)
-    observeLoginButtonEnabled(director)
+    observeEnableLoginButton(director)
     observeResetUi(director)
   }
   
-  private func observeLoginButtonHidden(director: LoginDirector) {
-    director.loginButtonHidden.asDriver()
-      .distinctUntilChanged()
-      .driveNext { [unowned self] hidden in
-        if !hidden { self.loginButton.hidden = false }
-        self.animateLoginButtonHidden(hidden)
-      }
-      .addDisposableTo(bag)
-  }
-  
-  private func animateLoginButtonHidden(hidden: Bool) {
-    self.loginButton.alpha = hidden ? 1 : 0
-    
-    UIView.animateWithDuration(0.8) {
-      self.loginButton.alpha = hidden ? 0 : 1
-    }
-  }
-  
-  private func observeLoginButtonEnabled(director: LoginDirector) {
-    director.loginButtonEnabled.asDriver().drive(loginButton.rx_enabled)
+  private func observeEnableLoginButton(director: LoginDirector) {
+    director.enableLoginButton.asDriver().drive(loginButton.rx_enabled)
       .addDisposableTo(bag)
   }
   
   private func observeResetUi(director: LoginDirector) {
     director.resetUi.subscribeNext { [unowned self] _ in
-      print(NSThread.isMainThread())
-      self.username.text = ""
       self.password.text = ""
+      self.username.text = ""
       self.username.becomeFirstResponder()
     }
     .addDisposableTo(bag)
@@ -77,7 +57,7 @@ extension LoginStage {
     return Actions(
       username: username.rx_text,
       password: password.rx_text,
-    	loginPressed: loginButton.rx_tap)
+      loginPressed: loginButton.rx_tap)
   }
 }
 

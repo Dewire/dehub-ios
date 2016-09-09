@@ -13,12 +13,15 @@ import RxSwift
 import RxCocoa
 import Nimble
 
+typealias LoginResult = () -> Observable<Void>
+
 class SpyNetworkInteractor : P_NetworkInteractor {
   var loginWasCalled = false
-  
+  var loginResult: LoginResult!
+    
   func login(username: String, password: String) -> Observable<Void> {
     loginWasCalled = true
-    return Observable.just(())
+    return loginResult()
   }
   
   func getUser() -> Observable<Void> {
@@ -35,7 +38,7 @@ class LoginDirectorTests: XCTestCase {
   var loginButtonInput: BehaviorSubject<Void>!
   
   var interactor: SpyNetworkInteractor!
-  var ld: LoginDirector!
+  var director: LoginDirector!
   
   override func setUp() {
     super.setUp()
@@ -43,9 +46,11 @@ class LoginDirectorTests: XCTestCase {
     usernameInput = BehaviorSubject(value: "")
     passwordInput = BehaviorSubject(value: "")
     loginButtonInput = BehaviorSubject(value: Void())
-    interactor = SpyNetworkInteractor()
     
-    ld = LoginDirector(
+    interactor = SpyNetworkInteractor()
+    interactor.loginResult = { Observable.just(()) }
+    
+    director = LoginDirector(
       actions: mockActions(),
       networkInteractor: interactor)
   }
@@ -60,21 +65,39 @@ class LoginDirectorTests: XCTestCase {
   // MARK: Tests
   
   func testInitialState() {
-    expect(self.ld.loginButtonHidden.value).to(beTrue())
-    expect(self.ld.loginButtonEnabled.value).to(beTrue())
+    expect(self.director.enableLoginButton.value).to(beFalse())
   }
   
-  func testLoginButtonShownWhenUsernameAndPasswordEntered() {
+  func testLoginButtonEnabledWhenUsernameAndPasswordEntered() {
     usernameInput.onNext("username")
     passwordInput.onNext("password")
-    expect(self.ld.loginButtonHidden.value).toEventually(beFalse())
+    expect(self.director.enableLoginButton.value).toEventually(beTrue())
   }
   
-  func testLoginButtonDisabledAndEnabledAfterPressed() {
+  func testLoginButtonDisableAfterPressedAndLoginSuccess() {
     var wasDisabled = false
     var wasEnabled = false
     
-    let _ = ld.loginButtonEnabled.asObservable().subscribeNext() {
+    let _ = director.enableLoginButton.asObservable().skip(1).subscribeNext() {
+      if !$0 {
+        wasDisabled = true
+      } else {
+        wasEnabled = true
+      }
+    }
+    
+    loginButtonInput.onNext(Void())
+    expect(wasDisabled).toEventually(beTrue())
+    expect(wasEnabled).toEventuallyNot(beTrue())
+  }
+    
+  func testLoginButtonDisableAndEnabledAfterPressedAndLoginFailure() {
+    interactor.loginResult = { Observable.error(NSURLError.Unknown) }
+    
+    var wasDisabled = false
+    var wasEnabled = false
+    
+    let _ = director.enableLoginButton.asObservable().skip(1).subscribeNext() {
       if !$0 {
         wasDisabled = true
       } else {
