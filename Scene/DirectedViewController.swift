@@ -25,11 +25,11 @@
 import UIKit
 import RxSwift
 
-public class DirectedViewController<D> : UIViewController {
+class DirectedViewController<D> : UIViewController {
   
   var bag: DisposeBag!
 
-  public var director: D {
+  var director: D {
     if let director = _director {
       return director
     } else {
@@ -38,20 +38,25 @@ public class DirectedViewController<D> : UIViewController {
   }
 
   private var _director: D?
-  private var directorFactory: (DirectedViewController -> D)!
+  private var directorFactory: (DirectedViewController<D> -> D)!
 
-  public init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: NSBundle? = nil, directorFactory: DirectedViewController -> D) {
+  init(nibName nibNameOrNil: String? = nil,
+       bundle nibBundleOrNil: NSBundle? = nil,
+       directorFactory: DirectedViewController<D> -> D) {
+
     self.directorFactory = directorFactory
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
-  public static func create(storyboard: UIStoryboard, directorFactory: DirectedViewController -> D) -> DirectedViewController {
-    let viewController = storyboard.instantiateInitialViewController() as! DirectedViewController
+  static func create(storyboard: UIStoryboard,
+                     directorFactory: DirectedViewController<D> -> D) -> DirectedViewController<D> {
+
+    let viewController = storyboard.instantiateInitialViewController() as! DirectedViewController<D>
     viewController.directorFactory = directorFactory
     return viewController
   }
 
-  public override func viewDidLoad() {
+  override func viewDidLoad() {
     super.viewDidLoad()
     bag = DisposeBag()
     _director = directorFactory(self)
@@ -59,13 +64,17 @@ public class DirectedViewController<D> : UIViewController {
     bindDirector(director)
   }
 
-  public func bindDirector(director: D) {}
+  func bindDirector(director: D) {}
   
   deinit {
     print("🗑 \(self.dynamicType) deinit")
   }
 }
 
-public func downcast<T, U, D>(closure: T -> D) -> (U -> D) {
-  return { a in closure(a as! T) }
+// S = Stage, D = Director, T = Any object
+// This function takes a directory factory closure of type S -> D.
+// It then creates and returns a new closure of type T -> D
+// It does this by force casting T to S, and then invoking the original closure with it.
+func downcast<S, D, T>(closure: S -> D) -> (T -> D) {
+  return { a in closure(a as! S) }
 }
