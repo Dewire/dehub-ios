@@ -60,4 +60,3 @@ extension LoginStage {
       loginPressed: loginButton.rx_tap)
   }
 }
-

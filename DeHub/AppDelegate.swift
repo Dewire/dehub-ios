@@ -17,13 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
-  	window = createWindow()
-    window!.makeKeyAndVisible()
+    let win = createWindow()
+    win.makeKeyAndVisible()
     
-    let context = WindowContext.init(window: window!)
-    let scene = LoginScene.init(presentation: context, services: Services())
-    scene.presentInContext()
+    let scene = LoginScene(services: Services())
+    win.rootViewController = scene.stage()
     
+    window = win
     return true
   }
   

@@ -8,33 +8,35 @@
 
 import UIKit
 import Model
+import RxSwift
 
 public class BaseScene {
   
+  let bag = DisposeBag()
+  
   weak var stageRef: UIViewController!
   
-  let presentation: Presentation
   let services: Services
-  
-  public func presentInContext() {
-    presentation.present(stage())
-  }
-  
-  public func stage() -> UIViewController {
-    stageRef = createStage()
-    return stageRef!
-  }
-  
-  public func createStage() -> UIViewController {
-    fatalError("must be overriden by subclass")
-  }
-  
-  public init(presentation: Presentation, services: Services) {
-    self.presentation = presentation
+    
+  public init(services: Services) {
   	self.services = services
   }
   
   deinit {
     print("🗑 \(self.dynamicType) deinit")
+  }
+  
+  public func stage() -> UIViewController {
+    let stage = createStage()
+    stageRef = stage
+    return stage
+  }
+  
+  func createStage() -> UIViewController {
+    fatalError("must be overriden by subclass")
+  }
+  
+  func referToSelf() {
+    
   }
 }

@@ -12,7 +12,7 @@ import Gloss
 
 public protocol P_NetworkInteractor {
   func login(username: String, password: String) -> Observable<Void>
-  func getUser() -> Observable<Void>
+  func loadGists() -> Observable<Void>
 }
 
 public class NetworkInteractor : P_NetworkInteractor {
@@ -35,14 +35,13 @@ public class NetworkInteractor : P_NetworkInteractor {
       }
   }
   
-  public func getUser() -> Observable<Void> {
-    return network.getUser().map() { json in
-      if let u = UserEntity(json: json) {
-        self.state.user.value = u
-        return ()
-      } else {
-        throw NSURLError.CannotDecodeContentData
-      }
+  public func loadGists() -> Observable<Void> {
+    return network.getGists().map() { json in
+      let gists = [GistEntity].fromJSONArray(json)
+      guard gists.count == json.count else { throw NSURLError.CannotDecodeContentData }
+      
+      self.state.gists.value = gists
+      return ()
     }
   }
 }

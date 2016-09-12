@@ -7,9 +7,14 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 import Model
 
 class HomeDirector : BaseDirector {
+  
+  // Scene outputs
+  let newGist = PublishSubject<Void>()
   
   private let actions: HomeStage.Actions
   private let network: P_NetworkInteractor
@@ -22,40 +27,24 @@ class HomeDirector : BaseDirector {
     self.state = state
     super.init()
     
-    observeLogout()
-    observeUser()
-    getUser()
+    observeState()
+    observeAddButtonTap()
+    getGists()
   }
   
-  private func observeLogout() {
-    actions.logout
-      .take(1)
-      .bindNext { _ in
-  			NSNotificationCenter.defaultCenter().postNotificationName(
-      		"Logout",
-          object: nil)
-    	}
-    	.addDisposableTo(bag)
-  }
-  
-  private func observeUser() {
-    state.user.asDriver().driveNext { [unowned self] user in
-      guard let user = user else { return }
-      self.actions.username.onNext(user.username)
-      self.actions.reposCount.onNext(String(user.publicRepos))
-      self.actions.gistsCount.onNext(String(user.publicGists))
-      self.actions.followers.onNext(String(user.followers))
-      self.actions.following.onNext(String(user.following))
-      
-      if let name = user.name {
-        self.actions.realName.onNext(name)
-      }
+  private func observeState() {
+    state.gists.asDriver().driveNext { gists in
+      print(gists)
     }
     .addDisposableTo(bag)
   }
   
-  private func getUser() {
-    network.getUser().subscribeError { _ in
+  private func observeAddButtonTap() {
+    actions.addButtonTap.bindTo(newGist).addDisposableTo(bag)
+  }
+  
+  private func getGists() {
+    network.loadGists().subscribeError { _ in
       print("getUser error")
     }
     .addDisposableTo(bag)

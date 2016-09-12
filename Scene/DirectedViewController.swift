@@ -39,15 +39,7 @@ class DirectedViewController<D> : UIViewController {
 
   private var _director: D?
   private var directorFactory: (DirectedViewController<D> -> D)!
-
-  init(nibName nibNameOrNil: String? = nil,
-       bundle nibBundleOrNil: NSBundle? = nil,
-       directorFactory: DirectedViewController<D> -> D) {
-
-    self.directorFactory = directorFactory
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-  }
-
+  
   static func create(storyboard: UIStoryboard,
                      directorFactory: DirectedViewController<D> -> D) -> DirectedViewController<D> {
 

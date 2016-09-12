@@ -33,15 +33,15 @@ public class LoginScene : BaseScene {
   
   private func segueToHomeScene() {
     print("segueToHomeScene")
-    let presentation = ModalContext(presenter: stageRef, animated: true)
-    let homeScene = HomeScene(presentation: presentation, services: services)
-    homeScene.presentInContext()
+    let homeStage = HomeScene(services: services).stage()
+    let navController = UINavigationController(rootViewController: homeStage)
+    stageRef.presentViewController(navController, animated: true, completion: nil)
   }
   
   private func observeLogoutRequested(director: LoginDirector) {
     director.logoutRequested.bindNext { _ in
       self.stageRef.dismissViewControllerAnimated(true, completion: nil)
     }
-    .addDisposableTo(director.bag)
+    .addDisposableTo(bag)
   }
 }

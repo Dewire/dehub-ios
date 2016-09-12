@@ -19,7 +19,7 @@ public struct Services {
     networkInteractor = NetworkInteractor(
       network: Network(
         session: NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()),
-        requestHelper: RequestHelper()),
+        requestHelper: RequestHelper(baseUrl: "https://api.github.com")),
       state: state)
   }
 }

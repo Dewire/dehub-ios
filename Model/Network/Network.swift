@@ -14,7 +14,7 @@ import Gloss
 protocol P_Network {
   func setUsername(username: String, password: String)
   func tryLogin(username: String, password: String) -> Observable<(NSData, NSHTTPURLResponse)>
-  func getUser() -> Observable<JSON>
+  func getGists() -> Observable<[JSON]>
 }
 
 class Network : P_Network {
@@ -38,20 +38,21 @@ class Network : P_Network {
     .observeOn(MainScheduler.instance)
   }
 
-  func getUser() -> Observable<JSON> {
-    return urlSession.rx_gloss(requests.GET("https://api.github.com/user"))
+  func getGists() -> Observable<[JSON]> {
+    return urlSession.rx_JSON_cast(requests.GET("gists"))
   }
 }
 
 extension NSURLSession {
-  func rx_gloss(req: NSURLRequest) -> Observable<JSON> {
+  
+  func rx_JSON_cast<T>(req: NSURLRequest) -> Observable<T> {
     return rx_JSON(req).map() { json in
-      if let json = json as? JSON {
+      if let json = json as? T {
         return json
       } else {
         throw NSURLError.CannotDecodeContentData
       }
-    }
-    .observeOn(MainScheduler.instance)
+      }
+      .observeOn(MainScheduler.instance)
   }
 }

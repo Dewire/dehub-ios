@@ -11,6 +11,6 @@ import RxSwift
 
 public class State {
   
-  public var user: Variable<UserEntity?> = Variable(nil)
+  public var gists: Variable<[GistEntity]?> = Variable(nil)
   
 }

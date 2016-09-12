@@ -10,9 +10,13 @@ import Foundation
 
 class RequestHelper {
   
+  let baseUrl: String
+  
   private var basicAuth = ""
   
-  init() {}
+  init(baseUrl: String) {
+    self.baseUrl = baseUrl
+  }
   
   func setUsername(username: String, password: String) {
     basicAuth = basicAuthForUsername(username, password: password)
@@ -26,12 +30,16 @@ class RequestHelper {
   }
   
   func makeLoginRequest(username: String, password: String) -> NSURLRequest {
-    return GET("https://api.github.com/user")
+    return GET("user")
       .addBasicAuth(basicAuthForUsername(username, password: password))
   }
   
-  func GET(url: String) -> NSMutableURLRequest {
-    return NSMutableURLRequest(URL: NSURL(string: url)!).addBasicAuth(basicAuth)
+  func GET(path: String) -> NSMutableURLRequest {
+    precondition(!path.isEmpty && path.characters.first != "/")
+    
+    let url = NSURL(string: baseUrl + "/" + path)!
+    print(url)
+    return NSMutableURLRequest(URL: url).addBasicAuth(basicAuth)
   }
 }
 

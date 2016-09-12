@@ -16,11 +16,11 @@ class LoginDirector : BaseDirector {
   let networkInteractor: P_NetworkInteractor
 
   // Scene outputs
+  let loginSuccessful = PublishSubject<Void>()
   let logoutRequested = PublishSubject<Void>()
 
   // Stage outputs
   let enableLoginButton = Variable<Bool>(false)
-  let loginSuccessful = PublishSubject<Void>()
   let resetUi = PublishSubject<Void>()
 
   init(actions: LoginStage.Actions, networkInteractor: P_NetworkInteractor) {
