@@ -19,6 +19,6 @@ class CreateGistScene : BaseScene {
     }
   }
   
-  private func observeDirector(director: CreateGistDirector) {
+  fileprivate func observeDirector(_ director: CreateGistDirector) {
   }
 }

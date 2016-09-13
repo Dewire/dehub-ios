@@ -16,9 +16,9 @@ class HomeDirector : BaseDirector {
   // Scene outputs
   let newGist = PublishSubject<Void>()
   
-  private let actions: HomeStage.Actions
-  private let network: P_NetworkInteractor
-  private let state: State
+  fileprivate let actions: HomeStage.Actions
+  fileprivate let network: P_NetworkInteractor
+  fileprivate let state: State
   
   init(actions: HomeStage.Actions, state: State, network: P_NetworkInteractor) {
     
@@ -32,21 +32,21 @@ class HomeDirector : BaseDirector {
     getGists()
   }
   
-  private func observeState() {
-    state.gists.asDriver().driveNext { gists in
+  fileprivate func observeState() {
+    state.gists.asDriver().drive(onNext: { gists in
       print(gists)
-    }
+    })
     .addDisposableTo(bag)
   }
   
-  private func observeAddButtonTap() {
+  fileprivate func observeAddButtonTap() {
     actions.addButtonTap.bindTo(newGist).addDisposableTo(bag)
   }
   
-  private func getGists() {
-    network.loadGists().subscribeError { _ in
+  fileprivate func getGists() {
+    network.loadGists().subscribe(onError: { _ in
       print("getUser error")
-    }
+    })
     .addDisposableTo(bag)
   }
 }

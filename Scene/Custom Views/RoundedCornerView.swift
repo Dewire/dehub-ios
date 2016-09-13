@@ -10,7 +10,7 @@ import UIKit
 
 class RoundedCornerView: UIView {
   
-  private static let CORNER_RADIUS: CGFloat = 5.0
+  fileprivate static let CORNER_RADIUS: CGFloat = 5.0
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -22,7 +22,7 @@ class RoundedCornerView: UIView {
     setup()
   }
   
-  private func setup() {
+  fileprivate func setup() {
     layer.cornerRadius = RoundedCornerView.CORNER_RADIUS
     alpha = 0.8
   }

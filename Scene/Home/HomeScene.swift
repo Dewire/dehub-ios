@@ -19,11 +19,11 @@ class HomeScene : BaseScene {
     }
   }
   
-  private func observeDirector(director: HomeDirector) {
-    director.newGist.subscribeNext() {
+  fileprivate func observeDirector(_ director: HomeDirector) {
+    director.newGist.subscribe(onNext: {
       let createGistStage = CreateGistScene(services: self.services).stage()
       self.stageRef.navigationController?.pushViewController(createGistStage, animated: true)
-    }
+    })
     .addDisposableTo(bag)
   }
 }

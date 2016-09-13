@@ -37,11 +37,11 @@ class DirectedViewController<D> : UIViewController {
     }
   }
 
-  private var _director: D?
-  private var directorFactory: (DirectedViewController<D> -> D)!
+  fileprivate var _director: D?
+  fileprivate var directorFactory: ((DirectedViewController<D>) -> D)!
   
-  static func create(storyboard: UIStoryboard,
-                     directorFactory: DirectedViewController<D> -> D) -> DirectedViewController<D> {
+  static func create(_ storyboard: UIStoryboard,
+                     directorFactory: @escaping (DirectedViewController<D>) -> D) -> DirectedViewController<D> {
 
     let viewController = storyboard.instantiateInitialViewController() as! DirectedViewController<D>
     viewController.directorFactory = directorFactory
@@ -56,10 +56,10 @@ class DirectedViewController<D> : UIViewController {
     bindDirector(director)
   }
 
-  func bindDirector(director: D) {}
+  func bindDirector(_ director: D) {}
   
   deinit {
-    print("🗑 \(self.dynamicType) deinit")
+    print("🗑 \(type(of: self)) deinit")
   }
 }
 
@@ -67,6 +67,6 @@ class DirectedViewController<D> : UIViewController {
 // This function takes a directory factory closure of type S -> D.
 // It then creates and returns a new closure of type T -> D
 // It does this by force casting T to S, and then invoking the original closure with it.
-func downcast<S, D, T>(closure: S -> D) -> (T -> D) {
+func downcast<S, D, T>(_ closure: @escaping (S) -> D) -> ((T) -> D) {
   return { a in closure(a as! S) }
 }

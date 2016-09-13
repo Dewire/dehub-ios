@@ -16,8 +16,8 @@ class LoginStage : DirectedViewController<LoginDirector> {
   @IBOutlet weak var password: UITextField!
   @IBOutlet weak var loginButton: UIButton!
   
-  static func create(directorFactory: LoginStage -> LoginDirector) -> LoginStage {
-    let storyboard = UIStoryboard(name: "Login", bundle: NSBundle(forClass: LoginScene.self))
+  static func create(_ directorFactory: @escaping (LoginStage) -> LoginDirector) -> LoginStage {
+    let storyboard = UIStoryboard(name: "Login", bundle: Bundle(for: LoginScene.self))
     return create(storyboard, directorFactory: downcast(directorFactory)) as! LoginStage
   }
   
@@ -25,22 +25,22 @@ class LoginStage : DirectedViewController<LoginDirector> {
     super.viewDidLoad()
   }
 
-  override func bindDirector(director: LoginDirector) {
+  override func bindDirector(_ director: LoginDirector) {
     observeEnableLoginButton(director)
     observeResetUi(director)
   }
   
-  private func observeEnableLoginButton(director: LoginDirector) {
-    director.enableLoginButton.asDriver().drive(loginButton.rx_enabled)
+  fileprivate func observeEnableLoginButton(_ director: LoginDirector) {
+    director.enableLoginButton.asDriver().drive(loginButton.rx.enabled)
       .addDisposableTo(bag)
   }
   
-  private func observeResetUi(director: LoginDirector) {
-    director.resetUi.subscribeNext { [unowned self] _ in
+  fileprivate func observeResetUi(_ director: LoginDirector) {
+    director.resetUi.subscribe(onNext: { [unowned self] _ in
       self.password.text = ""
       self.username.text = ""
       self.username.becomeFirstResponder()
-    }
+    })
     .addDisposableTo(bag)
   }
 }
@@ -55,8 +55,8 @@ extension LoginStage {
 
   var actions: Actions {
     return Actions(
-      username: username.rx_text,
-      password: password.rx_text,
-      loginPressed: loginButton.rx_tap)
+      username: username.rx.text,
+      password: password.rx.text,
+      loginPressed: loginButton.rx.tap)
   }
 }

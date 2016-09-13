@@ -10,7 +10,7 @@ import UIKit
 import Model
 import RxSwift
 
-public class BaseScene {
+open class BaseScene {
   
   let bag = DisposeBag()
   
@@ -23,10 +23,10 @@ public class BaseScene {
   }
   
   deinit {
-    print("🗑 \(self.dynamicType) deinit")
+    print("🗑 \(type(of: self)) deinit")
   }
   
-  public func stage() -> UIViewController {
+  open func stage() -> UIViewController {
     let stage = createStage()
     stageRef = stage
     return stage

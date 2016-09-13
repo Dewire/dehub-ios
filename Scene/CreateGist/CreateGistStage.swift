@@ -12,8 +12,8 @@ import RxCocoa
 
 class CreateGistStage : DirectedViewController<CreateGistDirector> {
   
-  static func create(directorFactory: CreateGistStage -> CreateGistDirector) -> CreateGistStage {
-    let storyboard = UIStoryboard(name: "CreateGist", bundle: NSBundle(forClass: CreateGistScene.self))
+  static func create(_ directorFactory: @escaping (CreateGistStage) -> CreateGistDirector) -> CreateGistStage {
+    let storyboard = UIStoryboard(name: "CreateGist", bundle: Bundle(for: CreateGistScene.self))
     return create(storyboard, directorFactory: downcast(directorFactory)) as! CreateGistStage
   }
   
@@ -21,7 +21,7 @@ class CreateGistStage : DirectedViewController<CreateGistDirector> {
     super.viewDidLoad()
   }
 
-  override func bindDirector(director: CreateGistDirector) {
+  override func bindDirector(_ director: CreateGistDirector) {
   }
 
 }

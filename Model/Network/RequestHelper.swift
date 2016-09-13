@@ -12,39 +12,39 @@ class RequestHelper {
   
   let baseUrl: String
   
-  private var basicAuth = ""
+  fileprivate var basicAuth = ""
   
   init(baseUrl: String) {
     self.baseUrl = baseUrl
   }
   
-  func setUsername(username: String, password: String) {
+  func setUsername(_ username: String, password: String) {
     basicAuth = basicAuthForUsername(username, password: password)
   }
   
-  private func basicAuthForUsername(username: String, password: String) -> String {
-    let data = (username + ":" + password).dataUsingEncoding(NSUTF8StringEncoding)
-    let encoded = data?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+  fileprivate func basicAuthForUsername(_ username: String, password: String) -> String {
+    let data = (username + ":" + password).data(using: String.Encoding.utf8)
+    let encoded = data?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
     
     return "Basic " + encoded!
   }
   
-  func makeLoginRequest(username: String, password: String) -> NSURLRequest {
+  func makeLoginRequest(_ username: String, password: String) -> URLRequest {
     return GET("user")
-      .addBasicAuth(basicAuthForUsername(username, password: password))
+      .addBasicAuth(basicAuthForUsername(username, password: password)) as URLRequest
   }
   
-  func GET(path: String) -> NSMutableURLRequest {
+  func GET(_ path: String) -> NSMutableURLRequest {
     precondition(!path.isEmpty && path.characters.first != "/")
     
-    let url = NSURL(string: baseUrl + "/" + path)!
+    let url = URL(string: baseUrl + "/" + path)!
     print(url)
-    return NSMutableURLRequest(URL: url).addBasicAuth(basicAuth)
+    return NSMutableURLRequest(url: url).addBasicAuth(basicAuth)
   }
 }
 
 extension NSMutableURLRequest {
-  func addBasicAuth(basicAuth: String) -> NSMutableURLRequest {
+  func addBasicAuth(_ basicAuth: String) -> NSMutableURLRequest {
     setValue(basicAuth, forHTTPHeaderField: "Authorization")
     return self
   }

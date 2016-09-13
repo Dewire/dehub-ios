@@ -9,9 +9,9 @@
 import UIKit
 import Model
 
-public class LoginScene : BaseScene {
+open class LoginScene : BaseScene {
   
-  public override func createStage() -> UIViewController {
+  open override func createStage() -> UIViewController {
     return LoginStage.create { stage in
       let d = LoginDirector.init(actions: stage.actions, networkInteractor: self.services.networkInteractor)
       self.observeDirector(d)
@@ -19,28 +19,28 @@ public class LoginScene : BaseScene {
     }
   }
   
-  private func observeDirector(director: LoginDirector) {
+  fileprivate func observeDirector(_ director: LoginDirector) {
     observeLoginSuccessful(director)
     observeLogoutRequested(director)
   }
   
-  private func observeLoginSuccessful(director: LoginDirector) {
-    director.loginSuccessful.subscribeNext { _ in
+  fileprivate func observeLoginSuccessful(_ director: LoginDirector) {
+    director.loginSuccessful.subscribe(onNext: { _ in
       self.segueToHomeScene()
-    }
+    })
     .addDisposableTo(director.bag)
   }
   
-  private func segueToHomeScene() {
+  fileprivate func segueToHomeScene() {
     print("segueToHomeScene")
     let homeStage = HomeScene(services: services).stage()
     let navController = UINavigationController(rootViewController: homeStage)
-    stageRef.presentViewController(navController, animated: true, completion: nil)
+    stageRef.present(navController, animated: true, completion: nil)
   }
   
-  private func observeLogoutRequested(director: LoginDirector) {
+  fileprivate func observeLogoutRequested(_ director: LoginDirector) {
     director.logoutRequested.bindNext { _ in
-      self.stageRef.dismissViewControllerAnimated(true, completion: nil)
+      self.stageRef.dismiss(animated: true, completion: nil)
     }
     .addDisposableTo(bag)
   }

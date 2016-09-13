@@ -13,8 +13,8 @@ import RxCocoa
 class HomeStage : DirectedViewController<HomeDirector> {
   
   
-  static func create(directorFactory: HomeStage -> HomeDirector) -> HomeStage {
-    let storyboard = UIStoryboard(name: "Home", bundle: NSBundle(forClass: HomeScene.self))
+  static func create(_ directorFactory: @escaping (HomeStage) -> HomeDirector) -> HomeStage {
+    let storyboard = UIStoryboard(name: "Home", bundle: Bundle(for: HomeScene.self))
     return create(storyboard, directorFactory: downcast(directorFactory)) as! HomeStage
   }
   
@@ -23,8 +23,8 @@ class HomeStage : DirectedViewController<HomeDirector> {
     setupBarButtons()
   }
   
-  private func setupBarButtons() {
-    let item = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: nil, action: nil)
+  fileprivate func setupBarButtons() {
+    let item = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: nil, action: nil)
     self.navigationItem.rightBarButtonItem = item
   }
   
@@ -41,7 +41,7 @@ extension HomeStage {
   
   var actions: Actions {
     return Actions(
-      addButtonTap: self.navigationItem.rightBarButtonItem!.rx_tap
+      addButtonTap: self.navigationItem.rightBarButtonItem!.rx.tap
     )
   }
 }

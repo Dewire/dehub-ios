@@ -31,12 +31,12 @@ class LoginDirector : BaseDirector {
     observeActions(actions)
   }
 
-  private func registerForLogoutNotification() {
-    NSNotificationCenter.defaultCenter().addObserver(self,
-      selector: #selector(logout), name:"Logout", object: nil)
+  fileprivate func registerForLogoutNotification() {
+    NotificationCenter.default.addObserver(self,
+      selector: #selector(logout), name:NSNotification.Name(rawValue: "Logout"), object: nil)
   }
 
-  private func observeActions(actions: LoginStage.Actions) {
+  fileprivate func observeActions(_ actions: LoginStage.Actions) {
     let userPass = Driver.combineLatest(actions.username.asDriver(), actions.password.asDriver()) {
       ($0, $1)
     }
@@ -45,7 +45,7 @@ class LoginDirector : BaseDirector {
     observeLoginPressed(userPass, loginPressed: actions.loginPressed)
   }
 
-  private func observeUsernamePassword(userPass: Driver<(String, String)>) {
+  fileprivate func observeUsernamePassword(_ userPass: Driver<(String, String)>) {
     userPass.map { userPass in
       return !userPass.0.isEmpty && !userPass.1.isEmpty
     }
@@ -53,33 +53,32 @@ class LoginDirector : BaseDirector {
     .addDisposableTo(bag)
   }
 
-  private func observeLoginPressed(userPass: Driver<(String, String)>, loginPressed: ControlEvent<Void>) {
+  fileprivate func observeLoginPressed(_ userPass: Driver<(String, String)>, loginPressed: ControlEvent<Void>) {
     loginPressed.asDriver()
       .withLatestFrom(userPass) { $1 }
-      .driveNext { userPass in
+      .drive(onNext: { userPass in
         self.enableLoginButton.value = false
         self.performLoginRequest(userPass.0, password: userPass.1)
-      }
+      })
       .addDisposableTo(bag)
   }
 
-  @objc private func logout() {
+  @objc fileprivate func logout() {
     print("logout")
     resetUi.onNext()
     logoutRequested.onNext()
     enableLoginButton.value = false
   }
 
-  private func performLoginRequest(username: String, password: String) {
-    self.networkInteractor.login(username, password: password).subscribe { event in
-      switch event {
-      case .Next:
-        print("login ok")
-        self.loginSuccessful.onNext()
-      case .Error:
+  fileprivate func performLoginRequest(_ username: String, password: String) {
+    self.networkInteractor.login(username: username, password: password).subscribe { event in
+      if event.error != nil {
         print("login error")
         self.enableLoginButton.value = true
-      default: break
+      }
+      else {
+        print("login ok")
+        self.loginSuccessful.onNext()
       }
     }
     .addDisposableTo(self.bag)

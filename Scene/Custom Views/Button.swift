@@ -12,11 +12,11 @@ import RxCocoa
 
 class Button: UIButton {
   
-  private static let CORNER_RADIUS: CGFloat = 5.0
+  fileprivate static let CORNER_RADIUS: CGFloat = 5.0
   
-  override var enabled: Bool {
+  override var isEnabled: Bool {
     didSet {
-      self.backgroundColor = enabled ? UIColor.orangeColor() : UIColor.lightClay()
+      self.backgroundColor = isEnabled ? UIColor.orange : UIColor.lightClay()
     }
   }
   
@@ -30,12 +30,12 @@ class Button: UIButton {
     setup()
   }
   
-  private func setup() {
+  fileprivate func setup() {
     layer.cornerRadius = Button.CORNER_RADIUS
     contentEdgeInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
-    setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-    setTitleColor(UIColor.whiteColor(), forState: UIControlState.Highlighted)
-    titleLabel?.font = UIFont.boldSystemFontOfSize(15)
-    backgroundColor = UIColor.orangeColor()
+    setTitleColor(UIColor.white, for: UIControlState())
+    setTitleColor(UIColor.white, for: UIControlState.highlighted)
+    titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+    backgroundColor = UIColor.orange
   }
 }

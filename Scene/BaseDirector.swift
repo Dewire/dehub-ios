@@ -14,6 +14,6 @@ class BaseDirector {
   let bag = DisposeBag()
   
   deinit {
-    print("🗑 \(self.dynamicType) deinit")
+    print("🗑 \(type(of: self)) deinit")
   }
 }

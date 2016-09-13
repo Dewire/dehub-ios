@@ -16,16 +16,17 @@ import Nimble
 typealias LoginResult = () -> Observable<Void>
 
 class SpyNetworkInteractor : P_NetworkInteractor {
+  
+  public func loadGists() -> Observable<Void> {
+    return Observable.just(())
+  }
+
   var loginWasCalled = false
   var loginResult: LoginResult!
     
   func login(username: String, password: String) -> Observable<Void> {
     loginWasCalled = true
     return loginResult()
-  }
-  
-  func getUser() -> Observable<Void> {
-    return Observable.just(())
   }
 }
 
@@ -78,13 +79,13 @@ class LoginDirectorTests: XCTestCase {
     var wasDisabled = false
     var wasEnabled = false
     
-    let _ = director.enableLoginButton.asObservable().skip(1).subscribeNext() {
+    let _ = director.enableLoginButton.asObservable().skip(1).subscribe(onNext: {
       if !$0 {
         wasDisabled = true
       } else {
         wasEnabled = true
       }
-    }
+    })
     
     loginButtonInput.onNext(Void())
     expect(wasDisabled).toEventually(beTrue())
@@ -92,18 +93,18 @@ class LoginDirectorTests: XCTestCase {
   }
     
   func testLoginButtonDisableAndEnabledAfterPressedAndLoginFailure() {
-    interactor.loginResult = { Observable.error(NSURLError.Unknown) }
+    interactor.loginResult = { Observable.error(URLError(.unknown)) }
     
     var wasDisabled = false
     var wasEnabled = false
     
-    let _ = director.enableLoginButton.asObservable().skip(1).subscribeNext() {
+    let _ = director.enableLoginButton.asObservable().skip(1).subscribe(onNext: {
       if !$0 {
         wasDisabled = true
       } else {
         wasEnabled = true
       }
-    }
+    })
     
     loginButtonInput.onNext(Void())
     expect(wasDisabled).toEventually(beTrue())
