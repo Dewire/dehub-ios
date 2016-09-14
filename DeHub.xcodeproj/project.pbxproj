@@ -12,6 +12,7 @@
 		6B3053541D86E577000F344A /* CreateGistStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053511D86E577000F344A /* CreateGistStage.swift */; };
 		6B3053561D86E685000F344A /* CreateGist.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B3053551D86E685000F344A /* CreateGist.storyboard */; };
 		6B3053581D86EBF8000F344A /* GistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053571D86EBF8000F344A /* GistEntity.swift */; };
+		6B5E3EDE1D883B5800E357E2 /* GistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */; };
 		D32D8E2E1D0BF29900730381 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2D1D0BF29900730381 /* Network.swift */; };
 		D32D8E301D0BFAF100730381 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2F1D0BFAF100730381 /* State.swift */; };
 		D32D8E321D0BFB2500730381 /* NetworkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */; };
@@ -146,6 +147,7 @@
 		6B3053511D86E577000F344A /* CreateGistStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGistStage.swift; path = CreateGist/CreateGistStage.swift; sourceTree = "<group>"; };
 		6B3053551D86E685000F344A /* CreateGist.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CreateGist.storyboard; sourceTree = "<group>"; };
 		6B3053571D86EBF8000F344A /* GistEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistEntity.swift; sourceTree = "<group>"; };
+		6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistTableViewCell.swift; sourceTree = "<group>"; };
 		D32D8E2D1D0BF29900730381 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D32D8E2F1D0BFAF100730381 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = State.swift; path = Model/State.swift; sourceTree = SOURCE_ROOT; };
 		D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInteractor.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				D3F43D0C1D191937005A0094 /* HomeStage.swift */,
 				D3F43D0E1D191944005A0094 /* HomeDirector.swift */,
 				D3F43D101D19195B005A0094 /* HomeScene.swift */,
+				6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -851,6 +854,7 @@
 				D3FFDDFA1D045680004C6569 /* DirectedViewController.swift in Sources */,
 				D3BD748E1D043BE40032CC00 /* LoginStage.swift in Sources */,
 				D3F541991D2D3D3E009A9A27 /* RoundedCornerView.swift in Sources */,
+				6B5E3EDE1D883B5800E357E2 /* GistTableViewCell.swift in Sources */,
 				6B3053531D86E577000F344A /* CreateGistScene.swift in Sources */,
 				D3FFDDFC1D04720F004C6569 /* LoginDirector.swift in Sources */,
 				D3F541921D281C91009A9A27 /* Button.swift in Sources */,

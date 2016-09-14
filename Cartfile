@@ -1,3 +1,4 @@
-github "ReactiveX/RxSwift"  "master"
+github "ReactiveX/RxSwift" "master"
+github "RxSwiftCommunity/RxDataSources" "master"
 github "Quick/Nimble" "master"
 github "hkellaway/Gloss" "swift_3.0"

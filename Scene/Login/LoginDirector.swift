@@ -72,11 +72,12 @@ class LoginDirector : BaseDirector {
 
   fileprivate func performLoginRequest(_ username: String, password: String) {
     self.networkInteractor.login(username: username, password: password).subscribe { event in
+      
       if event.error != nil {
         print("login error")
         self.enableLoginButton.value = true
       }
-      else {
+      else if !event.isStopEvent {
         print("login ok")
         self.loginSuccessful.onNext()
       }

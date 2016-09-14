@@ -25,7 +25,7 @@ open class LoginScene : BaseScene {
   }
   
   fileprivate func observeLoginSuccessful(_ director: LoginDirector) {
-    director.loginSuccessful.subscribe(onNext: { _ in
+    director.loginSuccessful.subscribe(onNext: { e in
       self.segueToHomeScene()
     })
     .addDisposableTo(director.bag)

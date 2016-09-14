@@ -53,10 +53,10 @@ class DirectedViewController<D> : UIViewController {
     bag = DisposeBag()
     _director = directorFactory(self)
     directorFactory = nil
-    bindDirector(director)
+    bind(director: director)
   }
 
-  func bindDirector(_ director: D) {}
+  func bind(director: D) {}
   
   deinit {
     print("🗑 \(type(of: self)) deinit")

@@ -16,6 +16,9 @@ class HomeDirector : BaseDirector {
   // Scene outputs
   let newGist = PublishSubject<Void>()
   
+  // Stage outputs
+  let gists = Variable<[GistEntity]>([])
+  
   fileprivate let actions: HomeStage.Actions
   fileprivate let network: P_NetworkInteractor
   fileprivate let state: State
@@ -28,13 +31,21 @@ class HomeDirector : BaseDirector {
     super.init()
     
     observeState()
+    observeLogoutButtonTap()
     observeAddButtonTap()
     getGists()
   }
   
   fileprivate func observeState() {
-    state.gists.asDriver().drive(onNext: { gists in
-      print(gists)
+    state.gists.asObservable()
+      .filter { $0 != nil }.map { $0! }
+      .bindTo(gists).addDisposableTo(bag)
+  }
+  
+  fileprivate func observeLogoutButtonTap() {
+    
+    actions.logoutButtonTap.subscribe(onNext: {
+      NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Logout"), object: nil)
     })
     .addDisposableTo(bag)
   }
@@ -45,7 +56,7 @@ class HomeDirector : BaseDirector {
   
   fileprivate func getGists() {
     network.loadGists().subscribe(onError: { _ in
-      print("getUser error")
+      print("getGists error")
     })
     .addDisposableTo(bag)
   }

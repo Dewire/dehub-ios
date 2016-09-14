@@ -25,7 +25,7 @@ class LoginStage : DirectedViewController<LoginDirector> {
     super.viewDidLoad()
   }
 
-  override func bindDirector(_ director: LoginDirector) {
+  override func bind(director: LoginDirector) {
     observeEnableLoginButton(director)
     observeResetUi(director)
   }

@@ -21,9 +21,6 @@ class CreateGistStage : DirectedViewController<CreateGistDirector> {
     super.viewDidLoad()
   }
 
-  override func bindDirector(_ director: CreateGistDirector) {
-  }
-
 }
 
 extension CreateGistStage {
