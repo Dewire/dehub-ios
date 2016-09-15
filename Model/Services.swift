@@ -12,7 +12,6 @@ public struct Services {
   public let state: State
   public let networkInteractor: P_NetworkInteractor
 
-  
   public init() {
     state = State()
     

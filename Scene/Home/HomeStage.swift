@@ -15,6 +15,8 @@ class HomeStage : DirectedViewController<HomeDirector> {
   
   @IBOutlet weak var tableView: UITableView!
   
+  var refreshControl: UIRefreshControl!
+  
   static func create(_ directorFactory: @escaping (HomeStage) -> HomeDirector) -> HomeStage {
     let storyboard = UIStoryboard(name: "Home", bundle: Bundle(for: HomeScene.self))
     return create(storyboard, directorFactory: downcast(directorFactory)) as! HomeStage
@@ -23,9 +25,10 @@ class HomeStage : DirectedViewController<HomeDirector> {
   override func awakeFromNib() {
     super.awakeFromNib()
     setupBarButtons()
+    refreshControl = UIRefreshControl()
   }
   
-  fileprivate func setupBarButtons() {
+  private func setupBarButtons() {
     let logout = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.done, target: nil, action: nil)
     self.navigationItem.leftBarButtonItem = logout
     
@@ -35,13 +38,27 @@ class HomeStage : DirectedViewController<HomeDirector> {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    tableView.addSubview(refreshControl)
   }
   
   override func bind(director: HomeDirector) {
+    observeGists(director: director)
+    observeEndRefreshing(director: director)
+  }
+  
+  private func observeGists(director: HomeDirector) {
     director.gists.asDriver()
       .drive(tableView.rx.items(cellIdentifier: "GistCell", cellType: GistTableViewCell.self)) { [unowned self] (row, model, cell) in
         self.configure(cell: cell, withModel: model)
       }
+      .addDisposableTo(bag)
+  }
+  
+  private func observeEndRefreshing(director: HomeDirector) {
+    director.endRefreshing.asDriver(onErrorJustReturn: ())
+      .drive(onNext: { [unowned self] in
+        self.refreshControl.endRefreshing()
+      })
       .addDisposableTo(bag)
   }
   
@@ -56,12 +73,26 @@ extension HomeStage {
   struct Actions {
     let logoutButtonTap: ControlEvent<Void>
     let addButtonTap: ControlEvent<Void>
+    let rowTap: Observable<GistEntity>
+    let refresh: ControlEvent<Void>
   }
   
   var actions: Actions {
     return Actions(
-      logoutButtonTap: self.navigationItem.leftBarButtonItem!.rx.tap,
-      addButtonTap: self.navigationItem.rightBarButtonItem!.rx.tap
+      logoutButtonTap: navigationItem.leftBarButtonItem!.rx.tap,
+      addButtonTap: navigationItem.rightBarButtonItem!.rx.tap,
+      
+      rowTap: tableView.rx.itemSelected.map { [unowned self] indexPath in
+        do {
+          let model: GistEntity = try self.tableView.rx.model(indexPath)
+          return model
+        }
+        catch {
+          throw error
+        }
+      },
+      
+      refresh: refreshControl.rx.controlEvent(UIControlEvents.valueChanged)
     )
   }
 }

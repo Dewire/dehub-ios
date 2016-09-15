@@ -19,28 +19,29 @@ open class LoginScene : BaseScene {
     }
   }
   
-  fileprivate func observeDirector(_ director: LoginDirector) {
+  func observeDirector(_ director: LoginDirector) {
     observeLoginSuccessful(director)
     observeLogoutRequested(director)
   }
   
-  fileprivate func observeLoginSuccessful(_ director: LoginDirector) {
-    director.loginSuccessful.subscribe(onNext: { e in
+  private func observeLoginSuccessful(_ director: LoginDirector) {
+    director.loginSuccessful.subscribe(onNext: {
       self.segueToHomeScene()
     })
     .addDisposableTo(director.bag)
   }
   
-  fileprivate func segueToHomeScene() {
+  private func segueToHomeScene() {
     print("segueToHomeScene")
     let homeStage = HomeScene(services: services).stage()
     let navController = UINavigationController(rootViewController: homeStage)
-    stageRef.present(navController, animated: true, completion: nil)
+    navigation.present(navController, animated: true, completion: nil)
   }
   
-  fileprivate func observeLogoutRequested(_ director: LoginDirector) {
+  private func observeLogoutRequested(_ director: LoginDirector) {
     director.logoutRequested.bindNext { _ in
-      self.stageRef.dismiss(animated: true, completion: nil)
+      self.navigation.dismiss(animated: true, completion: nil)
+      self.services.state.reset()
     }
     .addDisposableTo(bag)
   }

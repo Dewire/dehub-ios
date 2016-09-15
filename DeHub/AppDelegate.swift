@@ -27,10 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
   
-  fileprivate func createWindow() -> UIWindow {
+  private func createWindow() -> UIWindow {
     let window = UIWindow(frame: UIScreen.main.bounds)
     window.backgroundColor = UIColor.white
     return window
   }
+  
 }
 

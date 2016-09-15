@@ -15,13 +15,15 @@ class HomeDirector : BaseDirector {
   
   // Scene outputs
   let newGist = PublishSubject<Void>()
+  let viewGist = PublishSubject<GistEntity>()
   
   // Stage outputs
   let gists = Variable<[GistEntity]>([])
+  let endRefreshing = PublishSubject<Void>()
   
-  fileprivate let actions: HomeStage.Actions
-  fileprivate let network: P_NetworkInteractor
-  fileprivate let state: State
+  private let actions: HomeStage.Actions
+  private let network: P_NetworkInteractor
+  private let state: State
   
   init(actions: HomeStage.Actions, state: State, network: P_NetworkInteractor) {
     
@@ -31,33 +33,56 @@ class HomeDirector : BaseDirector {
     super.init()
     
     observeState()
-    observeLogoutButtonTap()
-    observeAddButtonTap()
+    observeActions()
     getGists()
   }
   
-  fileprivate func observeState() {
+  private func observeState() {
     state.gists.asObservable()
       .filter { $0 != nil }.map { $0! }
       .bindTo(gists).addDisposableTo(bag)
   }
   
-  fileprivate func observeLogoutButtonTap() {
-    
+  private func observeActions() {
+    observeLogoutButtonTap()
+    observeAddButtonTap()
+    observeRowTap()
+    observeRefresh()
+  }
+  
+  private func observeLogoutButtonTap() {
     actions.logoutButtonTap.subscribe(onNext: {
       NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Logout"), object: nil)
     })
     .addDisposableTo(bag)
   }
   
-  fileprivate func observeAddButtonTap() {
+  private func observeAddButtonTap() {
     actions.addButtonTap.bindTo(newGist).addDisposableTo(bag)
   }
   
-  fileprivate func getGists() {
-    network.loadGists().subscribe(onError: { _ in
-      print("getGists error")
+  private func observeRowTap() {
+    actions.rowTap.subscribe(onNext: { model in
+      print(model)
     })
+    .addDisposableTo(bag)
+  }
+  
+  private func observeRefresh() {
+    actions.refresh.subscribe(onNext: { [unowned self] _ in
+      print("refresh")
+      self.getGists()
+    })
+    .addDisposableTo(bag)
+  }
+  
+  private func getGists() {
+    network.loadGists().subscribe { [weak self] event in
+      if event.error != nil { print("getGists error") }
+      if event.isStopEvent {
+        self?.endRefreshing.onNext(())
+      }
+    }
     .addDisposableTo(bag)
   }
 }

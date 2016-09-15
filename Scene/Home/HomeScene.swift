@@ -22,7 +22,7 @@ class HomeScene : BaseScene {
   fileprivate func observeDirector(_ director: HomeDirector) {
     director.newGist.subscribe(onNext: {
       let createGistStage = CreateGistScene(services: self.services).stage()
-      self.stageRef.navigationController?.pushViewController(createGistStage, animated: true)
+      self.navigation.pushController(createGistStage, animated: true)
     })
     .addDisposableTo(bag)
   }

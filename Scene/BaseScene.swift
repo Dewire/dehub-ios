@@ -14,7 +14,7 @@ open class BaseScene {
   
   let bag = DisposeBag()
   
-  weak var stageRef: UIViewController!
+  weak var navigation: Navigation!
   
   let services: Services
     
@@ -28,7 +28,7 @@ open class BaseScene {
   
   open func stage() -> UIViewController {
     let stage = createStage()
-    stageRef = stage
+    navigation = stage
     return stage
   }
   
@@ -38,5 +38,17 @@ open class BaseScene {
   
   func referToSelf() {
     
+  }
+}
+
+protocol Navigation : class {
+  func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
+  func dismiss(animated flag: Bool, completion: (() -> Void)?)
+  func pushController(_ viewController: UIViewController, animated: Bool)
+}
+
+extension UIViewController : Navigation {
+  func pushController(_ viewController: UIViewController, animated: Bool) {
+    self.navigationController?.pushViewController(viewController, animated: animated)
   }
 }

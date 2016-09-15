@@ -13,6 +13,8 @@
 		6B3053561D86E685000F344A /* CreateGist.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B3053551D86E685000F344A /* CreateGist.storyboard */; };
 		6B3053581D86EBF8000F344A /* GistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053571D86EBF8000F344A /* GistEntity.swift */; };
 		6B5E3EDE1D883B5800E357E2 /* GistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */; };
+		6BC3768D1D8A8C9C007F4C87 /* LoginSceneTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3768B1D8A8C8E007F4C87 /* LoginSceneTest.swift */; };
+		6BC3768F1D8A90F4007F4C87 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3768E1D8A90F4007F4C87 /* Common.swift */; };
 		D32D8E2E1D0BF29900730381 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2D1D0BF29900730381 /* Network.swift */; };
 		D32D8E301D0BFAF100730381 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2F1D0BFAF100730381 /* State.swift */; };
 		D32D8E321D0BFB2500730381 /* NetworkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */; };
@@ -68,6 +70,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6BC376901D8A9400007F4C87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3BD73FE1D042E650032CC00 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D3BD74051D042E650032CC00;
+			remoteInfo = DeHub;
+		};
 		D3BD741B1D042E650032CC00 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3BD73FE1D042E650032CC00 /* Project object */;
@@ -110,13 +119,6 @@
 			remoteGlobalIDString = D3BD745E1D0431F00032CC00;
 			remoteInfo = Scene;
 		};
-		D3BD746C1D0431F10032CC00 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3BD73FE1D042E650032CC00 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D3BD74051D042E650032CC00;
-			remoteInfo = DeHub;
-		};
 		D3BD74721D0431F10032CC00 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3BD73FE1D042E650032CC00 /* Project object */;
@@ -148,6 +150,8 @@
 		6B3053551D86E685000F344A /* CreateGist.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CreateGist.storyboard; sourceTree = "<group>"; };
 		6B3053571D86EBF8000F344A /* GistEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistEntity.swift; sourceTree = "<group>"; };
 		6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistTableViewCell.swift; sourceTree = "<group>"; };
+		6BC3768B1D8A8C8E007F4C87 /* LoginSceneTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSceneTest.swift; sourceTree = "<group>"; };
+		6BC3768E1D8A90F4007F4C87 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		D32D8E2D1D0BF29900730381 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D32D8E2F1D0BFAF100730381 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = State.swift; path = Model/State.swift; sourceTree = SOURCE_ROOT; };
 		D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInteractor.swift; sourceTree = "<group>"; };
@@ -391,7 +395,9 @@
 		D3BD746E1D0431F10032CC00 /* SceneTests */ = {
 			isa = PBXGroup;
 			children = (
+				6BC3768E1D8A90F4007F4C87 /* Common.swift */,
 				D3BD746F1D0431F10032CC00 /* LoginDirectorTest.swift */,
+				6BC3768B1D8A8C8E007F4C87 /* LoginSceneTest.swift */,
 				D3BD74711D0431F10032CC00 /* Info.plist */,
 			);
 			path = SceneTests;
@@ -605,8 +611,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				6BC376911D8A9400007F4C87 /* PBXTargetDependency */,
 				D3BD746B1D0431F10032CC00 /* PBXTargetDependency */,
-				D3BD746D1D0431F10032CC00 /* PBXTargetDependency */,
 			);
 			name = SceneTests;
 			productName = SceneTests;
@@ -870,6 +876,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC3768D1D8A8C9C007F4C87 /* LoginSceneTest.swift in Sources */,
+				6BC3768F1D8A90F4007F4C87 /* Common.swift in Sources */,
 				D3BD74701D0431F10032CC00 /* LoginDirectorTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -877,6 +885,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6BC376911D8A9400007F4C87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D3BD74051D042E650032CC00 /* DeHub */;
+			targetProxy = 6BC376901D8A9400007F4C87 /* PBXContainerItemProxy */;
+		};
 		D3BD741C1D042E650032CC00 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D3BD74051D042E650032CC00 /* DeHub */;
@@ -906,11 +919,6 @@
 			isa = PBXTargetDependency;
 			target = D3BD745E1D0431F00032CC00 /* Scene */;
 			targetProxy = D3BD746A1D0431F10032CC00 /* PBXContainerItemProxy */;
-		};
-		D3BD746D1D0431F10032CC00 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D3BD74051D042E650032CC00 /* DeHub */;
-			targetProxy = D3BD746C1D0431F10032CC00 /* PBXContainerItemProxy */;
 		};
 		D3BD74731D0431F10032CC00 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -9,8 +9,12 @@
 import Foundation
 import RxSwift
 
-open class State {
+public class State {
   
-  open var gists: Variable<[GistEntity]?> = Variable(nil)
+  public var gists: Variable<[GistEntity]?> = Variable(nil)
+  
+  public func reset() {
+    gists = Variable(nil)
+  }
   
 }
