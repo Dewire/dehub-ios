@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Model.h"
 
 //! Project version number for Scene.
 FOUNDATION_EXPORT double SceneVersionNumber;
