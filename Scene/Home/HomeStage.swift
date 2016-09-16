@@ -39,11 +39,13 @@ class HomeStage : DirectedViewController<HomeDirector> {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.addSubview(refreshControl)
+    
   }
   
   override func bind(director: HomeDirector) {
     observeGists(director: director)
     observeEndRefreshing(director: director)
+    observeShowLoadingIndicator(director: director)
   }
   
   private func observeGists(director: HomeDirector) {
@@ -60,6 +62,17 @@ class HomeStage : DirectedViewController<HomeDirector> {
         self.refreshControl.endRefreshing()
       })
       .addDisposableTo(bag)
+  }
+  
+  private func observeShowLoadingIndicator(director: HomeDirector) {
+    director.showLoadingIndicator.asDriver().drive(onNext: { [unowned self] show in
+      if show {
+        self.view.showLoadingIndicator(style: .whiteLarge, color: .gray, zPosition: 1)
+      } else {
+        self.view.hideLoadingIndicator()
+      }
+    })
+    .addDisposableTo(bag)
   }
   
   private func configure(cell: GistTableViewCell, withModel model: GistEntity) {

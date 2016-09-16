@@ -8,13 +8,16 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 public class State {
   
-  public var gists: Variable<[GistEntity]?> = Variable(nil)
+  let gists: Variable<[GistEntity]?> = Variable(nil)
+  public var gistsDriver: Driver<[GistEntity]?> { return gists.asDriver() }
+  public var gistsObservable: Observable<[GistEntity]?> { return gists.asObservable() }
   
   public func reset() {
-    gists = Variable(nil)
+    gists.value = nil
   }
   
 }

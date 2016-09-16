@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="92F-o6-vjL">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Gist Stage-->
+        <scene sceneID="OoU-Kn-wce">
+            <objects>
+                <viewController id="92F-o6-vjL" customClass="ViewGistStage" customModule="Scene" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="t8T-eM-02B"/>
+                        <viewControllerLayoutGuide type="bottom" id="EgN-dC-NBu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RrM-k9-EHe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2aq-18-BkP">
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="rect" keyPath="contentInset">
+                                        <rect key="value" x="0.0" y="12" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="2aq-18-BkP" secondAttribute="trailing" id="2Bz-s7-jSD"/>
+                            <constraint firstItem="2aq-18-BkP" firstAttribute="top" secondItem="RrM-k9-EHe" secondAttribute="top" id="Ty3-vh-vSl"/>
+                            <constraint firstItem="2aq-18-BkP" firstAttribute="leading" secondItem="RrM-k9-EHe" secondAttribute="leading" id="bfH-Z2-9I3"/>
+                            <constraint firstItem="EgN-dC-NBu" firstAttribute="top" secondItem="2aq-18-BkP" secondAttribute="bottom" id="wiX-DB-dq1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textViewContainer" destination="2aq-18-BkP" id="T1I-TD-x00"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qwA-6V-PCO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-92" y="109.29535232383809"/>
+        </scene>
+    </scenes>
+</document>

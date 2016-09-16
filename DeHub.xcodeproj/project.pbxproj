@@ -7,14 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B09C1541D8C020800434B33 /* DualScrollableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B09C1531D8C020800434B33 /* DualScrollableTextView.swift */; };
 		6B3053521D86E577000F344A /* CreateGistDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B30534F1D86E577000F344A /* CreateGistDirector.swift */; };
 		6B3053531D86E577000F344A /* CreateGistScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053501D86E577000F344A /* CreateGistScene.swift */; };
 		6B3053541D86E577000F344A /* CreateGistStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053511D86E577000F344A /* CreateGistStage.swift */; };
-		6B3053561D86E685000F344A /* CreateGist.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B3053551D86E685000F344A /* CreateGist.storyboard */; };
 		6B3053581D86EBF8000F344A /* GistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053571D86EBF8000F344A /* GistEntity.swift */; };
 		6B5E3EDE1D883B5800E357E2 /* GistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */; };
 		6BC3768D1D8A8C9C007F4C87 /* LoginSceneTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3768B1D8A8C8E007F4C87 /* LoginSceneTest.swift */; };
 		6BC3768F1D8A90F4007F4C87 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3768E1D8A90F4007F4C87 /* Common.swift */; };
+		6BC3769B1D8AC334007F4C87 /* ViewGistStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3769A1D8AC334007F4C87 /* ViewGistStage.swift */; };
+		6BC3769E1D8AC413007F4C87 /* ViewGistDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3769C1D8AC413007F4C87 /* ViewGistDirector.swift */; };
+		6BC3769F1D8AC413007F4C87 /* ViewGistScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3769D1D8AC413007F4C87 /* ViewGistScene.swift */; };
+		6BC376A41D8AC501007F4C87 /* ViewGist.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC376A21D8AC501007F4C87 /* ViewGist.storyboard */; };
+		6BC47CEA1D8C3C2000286368 /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CE91D8C3C2000286368 /* ObservableType.swift */; };
+		6BC47CEB1D8C3D2E00286368 /* CreateGist.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC376951D8AC2B7007F4C87 /* CreateGist.storyboard */; };
 		D32D8E2E1D0BF29900730381 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2D1D0BF29900730381 /* Network.swift */; };
 		D32D8E301D0BFAF100730381 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2F1D0BFAF100730381 /* State.swift */; };
 		D32D8E321D0BFB2500730381 /* NetworkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */; };
@@ -144,14 +150,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6B09C1531D8C020800434B33 /* DualScrollableTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DualScrollableTextView.swift; sourceTree = "<group>"; };
 		6B30534F1D86E577000F344A /* CreateGistDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGistDirector.swift; path = CreateGist/CreateGistDirector.swift; sourceTree = "<group>"; };
 		6B3053501D86E577000F344A /* CreateGistScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGistScene.swift; path = CreateGist/CreateGistScene.swift; sourceTree = "<group>"; };
 		6B3053511D86E577000F344A /* CreateGistStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGistStage.swift; path = CreateGist/CreateGistStage.swift; sourceTree = "<group>"; };
-		6B3053551D86E685000F344A /* CreateGist.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CreateGist.storyboard; sourceTree = "<group>"; };
 		6B3053571D86EBF8000F344A /* GistEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistEntity.swift; sourceTree = "<group>"; };
 		6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistTableViewCell.swift; sourceTree = "<group>"; };
 		6BC3768B1D8A8C8E007F4C87 /* LoginSceneTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSceneTest.swift; sourceTree = "<group>"; };
 		6BC3768E1D8A90F4007F4C87 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		6BC376961D8AC2B7007F4C87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CreateGist.storyboard; sourceTree = "<group>"; };
+		6BC3769A1D8AC334007F4C87 /* ViewGistStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewGistStage.swift; path = ViewGist/ViewGistStage.swift; sourceTree = "<group>"; };
+		6BC3769C1D8AC413007F4C87 /* ViewGistDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewGistDirector.swift; path = ViewGist/ViewGistDirector.swift; sourceTree = "<group>"; };
+		6BC3769D1D8AC413007F4C87 /* ViewGistScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewGistScene.swift; path = ViewGist/ViewGistScene.swift; sourceTree = "<group>"; };
+		6BC376A31D8AC501007F4C87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ViewGist.storyboard; sourceTree = "<group>"; };
+		6BC376A51D8BDCCF007F4C87 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		6BC47CE91D8C3C2000286368 /* ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableType.swift; sourceTree = "<group>"; };
 		D32D8E2D1D0BF29900730381 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D32D8E2F1D0BFAF100730381 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = State.swift; path = Model/State.swift; sourceTree = SOURCE_ROOT; };
 		D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInteractor.swift; sourceTree = "<group>"; };
@@ -277,12 +290,23 @@
 		6B30534E1D86E545000F344A /* CreateGist */ = {
 			isa = PBXGroup;
 			children = (
-				6B3053551D86E685000F344A /* CreateGist.storyboard */,
+				6BC376951D8AC2B7007F4C87 /* CreateGist.storyboard */,
 				6B30534F1D86E577000F344A /* CreateGistDirector.swift */,
 				6B3053501D86E577000F344A /* CreateGistScene.swift */,
 				6B3053511D86E577000F344A /* CreateGistStage.swift */,
 			);
 			name = CreateGist;
+			sourceTree = "<group>";
+		};
+		6BC376921D8AC1F0007F4C87 /* ViewGist */ = {
+			isa = PBXGroup;
+			children = (
+				6BC376A21D8AC501007F4C87 /* ViewGist.storyboard */,
+				6BC3769C1D8AC413007F4C87 /* ViewGistDirector.swift */,
+				6BC3769D1D8AC413007F4C87 /* ViewGistScene.swift */,
+				6BC3769A1D8AC334007F4C87 /* ViewGistStage.swift */,
+			);
+			name = ViewGist;
 			sourceTree = "<group>";
 		};
 		D32D8E2C1D0BF27E00730381 /* Network */ = {
@@ -326,6 +350,7 @@
 		D3BD74081D042E650032CC00 /* DeHub */ = {
 			isa = PBXGroup;
 			children = (
+				6BC376A51D8BDCCF007F4C87 /* MyPlayground.playground */,
 				D3BD74091D042E650032CC00 /* AppDelegate.swift */,
 				D3BD74101D042E650032CC00 /* Assets.xcassets */,
 				D3BD74151D042E650032CC00 /* Info.plist */,
@@ -387,6 +412,7 @@
 				D3F541901D281C3F009A9A27 /* Custom Views */,
 				D3BD748C1D043B8D0032CC00 /* Login */,
 				D3F43D081D1918AD005A0094 /* Home */,
+				6BC376921D8AC1F0007F4C87 /* ViewGist */,
 				6B30534E1D86E545000F344A /* CreateGist */,
 			);
 			path = Scene;
@@ -439,6 +465,7 @@
 			children = (
 				D3F541911D281C91009A9A27 /* Button.swift */,
 				D3F541981D2D3D3E009A9A27 /* RoundedCornerView.swift */,
+				6B09C1531D8C020800434B33 /* DualScrollableTextView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -446,6 +473,7 @@
 		D3F541931D281E30009A9A27 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6BC47CE91D8C3C2000286368 /* ObservableType.swift */,
 				D3F541941D281E51009A9A27 /* UIColor.swift */,
 				D3F541961D298739009A9A27 /* UIView.swift */,
 			);
@@ -725,10 +753,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC47CEB1D8C3D2E00286368 /* CreateGist.storyboard in Resources */,
 				D3F43D0B1D191913005A0094 /* Home.storyboard in Resources */,
+				6BC376A41D8AC501007F4C87 /* ViewGist.storyboard in Resources */,
 				D3BD748A1D043AAB0032CC00 /* Login.storyboard in Resources */,
 				D3BD74901D043E1C0032CC00 /* LaunchScreen.storyboard in Resources */,
-				6B3053561D86E685000F344A /* CreateGist.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,22 +881,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B09C1541D8C020800434B33 /* DualScrollableTextView.swift in Sources */,
 				D3F541971D298739009A9A27 /* UIView.swift in Sources */,
 				D3FFDDFE1D047233004C6569 /* LoginScene.swift in Sources */,
 				6B3053521D86E577000F344A /* CreateGistDirector.swift in Sources */,
 				D3F5418F1D264C61009A9A27 /* BaseDirector.swift in Sources */,
 				D3CE169B1D0BEB4600749C9F /* BaseScene.swift in Sources */,
 				D3FFDDFA1D045680004C6569 /* DirectedViewController.swift in Sources */,
+				6BC3769F1D8AC413007F4C87 /* ViewGistScene.swift in Sources */,
 				D3BD748E1D043BE40032CC00 /* LoginStage.swift in Sources */,
 				D3F541991D2D3D3E009A9A27 /* RoundedCornerView.swift in Sources */,
+				6BC47CEA1D8C3C2000286368 /* ObservableType.swift in Sources */,
 				6B5E3EDE1D883B5800E357E2 /* GistTableViewCell.swift in Sources */,
 				6B3053531D86E577000F344A /* CreateGistScene.swift in Sources */,
 				D3FFDDFC1D04720F004C6569 /* LoginDirector.swift in Sources */,
 				D3F541921D281C91009A9A27 /* Button.swift in Sources */,
 				D3F43D0D1D191937005A0094 /* HomeStage.swift in Sources */,
+				6BC3769E1D8AC413007F4C87 /* ViewGistDirector.swift in Sources */,
 				D3F541951D281E51009A9A27 /* UIColor.swift in Sources */,
 				D3F43D0F1D191944005A0094 /* HomeDirector.swift in Sources */,
 				D3F43D111D19195B005A0094 /* HomeScene.swift in Sources */,
+				6BC3769B1D8AC334007F4C87 /* ViewGistStage.swift in Sources */,
 				6B3053541D86E577000F344A /* CreateGistStage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -928,6 +962,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		6BC376951D8AC2B7007F4C87 /* CreateGist.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6BC376961D8AC2B7007F4C87 /* Base */,
+			);
+			name = CreateGist.storyboard;
+			sourceTree = "<group>";
+		};
+		6BC376A21D8AC501007F4C87 /* ViewGist.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6BC376A31D8AC501007F4C87 /* Base */,
+			);
+			name = ViewGist.storyboard;
+			sourceTree = "<group>";
+		};
 		D3BD74851D043AAB0032CC00 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

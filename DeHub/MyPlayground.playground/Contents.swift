@@ -1,51 +1,38 @@
-//
-//  UIView.swift
-//  DeHub
-//
-//  Created by Kalle Lindström on 03/07/16.
-//  Copyright © 2016 Dewire. All rights reserved.
-//
+//: Playground - noun: a place where people can play
 
 import UIKit
 
 extension UIView {
   
-  func showLoadingIndicator(style: UIActivityIndicatorViewStyle = .white, color: UIColor? = nil, zPosition: CGFloat = 0) {
+  func showLoadingIndicator() {
     if let indicator = viewWithTag(555999) as? UIActivityIndicatorView {
       indicator.startAnimating()
     }
     else {
-      let indicator = UIActivityIndicatorView(activityIndicatorStyle: style)
+      let indicator = UIActivityIndicatorView()
       indicator.tag = 555999
-      indicator.layer.zPosition = zPosition
       indicator.hidesWhenStopped = true
       indicator.translatesAutoresizingMaskIntoConstraints = false
-      
-      if let color = color {
-        indicator.color = color
-      }
-      
-      addSubview(indicator)
       setConstraints(indicator: indicator)
-      indicator.startAnimating()
+      addSubview(indicator)
     }
   }
   
   private func setConstraints(indicator: UIActivityIndicatorView) {
     let centerX = NSLayoutConstraint(
-      item: self,
+      item: indicator,
       attribute: .centerX,
       relatedBy: .equal,
-      toItem: indicator,
+      toItem: self,
       attribute: .centerX,
       multiplier: 1,
       constant: 0)
     
     let centerY = NSLayoutConstraint(
-      item: self,
+      item: indicator,
       attribute: .centerY,
       relatedBy: .equal,
-      toItem: indicator,
+      toItem: self,
       attribute: .centerY,
       multiplier: 1,
       constant: 0)
@@ -60,3 +47,10 @@ extension UIView {
     }
   }
 }
+
+
+let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+
+view.showLoadingIndicator()
+
+view

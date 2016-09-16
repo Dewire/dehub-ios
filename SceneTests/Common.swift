@@ -19,6 +19,10 @@ class NopNetworkInteractor : P_NetworkInteractor {
   func loadGists() -> Observable<Void> {
     return Observable.never()
   }
+  
+  func get(url: String) -> Observable<Data> {
+    return Observable.never()
+  }
 }
 
 class SpyNavigation : Navigation {

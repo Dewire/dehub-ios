@@ -19,11 +19,25 @@ class HomeScene : BaseScene {
     }
   }
   
-  fileprivate func observeDirector(_ director: HomeDirector) {
+  private func observeDirector(_ director: HomeDirector) {
+    observeNewGist(director)
+    observeViewGist(director)
+  }
+  
+  private func observeNewGist(_ director: HomeDirector) {
     director.newGist.subscribe(onNext: {
       let createGistStage = CreateGistScene(services: self.services).stage()
       self.navigation.pushController(createGistStage, animated: true)
     })
     .addDisposableTo(bag)
   }
+  
+  private func observeViewGist(_ director: HomeDirector) {
+    director.viewGist.subscribe(onNext: { model in
+      let stage = ViewGistScene(services: self.services, gist: model).stage()
+      self.navigation.pushController(stage, animated: true)
+    })
+    .addDisposableTo(bag)
+  }
+  
 }

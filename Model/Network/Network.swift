@@ -15,6 +15,7 @@ protocol P_Network {
   func setUsername(_ username: String, password: String)
   func tryLogin(_ username: String, password: String) -> Observable<(Data, HTTPURLResponse)>
   func getGists() -> Observable<[JSON]>
+  func get(url: String) -> Observable<Data>
 }
 
 class Network : P_Network {
@@ -40,6 +41,11 @@ class Network : P_Network {
 
   func getGists() -> Observable<[JSON]> {
     return urlSession.JSON_decode(requests.GET("gists") as URLRequest)
+  }
+  
+  func get(url: String) -> Observable<Data> {
+    let req = requests.GET(url, relativePath: false) as URLRequest
+    return urlSession.rx.data(req)
   }
 }
 

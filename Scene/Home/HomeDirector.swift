@@ -20,6 +20,7 @@ class HomeDirector : BaseDirector {
   // Stage outputs
   let gists = Variable<[GistEntity]>([])
   let endRefreshing = PublishSubject<Void>()
+  let showLoadingIndicator = Variable<Bool>(true)
   
   private let actions: HomeStage.Actions
   private let network: P_NetworkInteractor
@@ -38,7 +39,8 @@ class HomeDirector : BaseDirector {
   }
   
   private func observeState() {
-    state.gists.asObservable()
+    
+    state.gistsObservable
       .filter { $0 != nil }.map { $0! }
       .bindTo(gists).addDisposableTo(bag)
   }
@@ -62,10 +64,7 @@ class HomeDirector : BaseDirector {
   }
   
   private func observeRowTap() {
-    actions.rowTap.subscribe(onNext: { model in
-      print(model)
-    })
-    .addDisposableTo(bag)
+    actions.rowTap.bindTo(viewGist).addDisposableTo(bag)
   }
   
   private func observeRefresh() {
@@ -82,6 +81,7 @@ class HomeDirector : BaseDirector {
       if event.isStopEvent {
         self?.endRefreshing.onNext(())
       }
+      self?.showLoadingIndicator.value = false
     }
     .addDisposableTo(bag)
   }

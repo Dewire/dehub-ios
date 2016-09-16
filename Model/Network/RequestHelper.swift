@@ -34,10 +34,12 @@ class RequestHelper {
       .addBasicAuth(basicAuthForUsername(username, password: password)) as URLRequest
   }
   
-  func GET(_ path: String) -> NSMutableURLRequest {
-    precondition(!path.isEmpty && path.characters.first != "/")
+  func GET(_ path: String, relativePath: Bool = true) -> NSMutableURLRequest {
+    precondition(!path.isEmpty)
+    if relativePath { precondition(path.characters.first != "/") }
     
-    let url = URL(string: baseUrl + "/" + path)!
+    
+    let url = URL(string: relativePath ? baseUrl + "/" + path : path)!
     print(url)
     return NSMutableURLRequest(url: url).addBasicAuth(basicAuth)
   }

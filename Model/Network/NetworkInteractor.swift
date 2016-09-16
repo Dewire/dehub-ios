@@ -13,6 +13,7 @@ import Gloss
 public protocol P_NetworkInteractor {
   func login(username: String, password: String) -> Observable<Void>
   func loadGists() -> Observable<Void>
+  func get(url: String) -> Observable<Data>
 }
 
 open class NetworkInteractor : P_NetworkInteractor {
@@ -43,6 +44,10 @@ open class NetworkInteractor : P_NetworkInteractor {
       self.state.gists.value = gists
       return ()
     }
+  }
+  
+  open func get(url: String) -> Observable<Data> {
+    return network.get(url: url)
   }
 }
 
