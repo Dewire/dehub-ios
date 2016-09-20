@@ -17,14 +17,14 @@ typealias LoginResult = () -> Observable<Void>
 
 class SpyNetworkInteractor : NopNetworkInteractor {
   
-  public override func loadGists() -> Observable<Void> {
+  public override func loadGists(options: RequestOptions) -> Observable<Void> {
     return Observable.just(())
   }
 
   var loginWasCalled = false
   var loginResult: LoginResult!
     
-  override func login(username: String, password: String) -> Observable<Void> {
+  override func login(username: String, password: String, options: RequestOptions) -> Observable<Void> {
     loginWasCalled = true
     return loginResult()
   }

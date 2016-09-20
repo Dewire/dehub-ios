@@ -12,15 +12,24 @@ import Model
 import RxSwift
 
 class NopNetworkInteractor : P_NetworkInteractor {
-  func login(username: String, password: String) -> Observable<Void> {
+  
+  var requestsInProgress: Observable<Int> {
     return Observable.never()
   }
   
-  func loadGists() -> Observable<Void> {
+  func login(username: String, password: String, options: RequestOptions) -> Observable<Void> {
     return Observable.never()
   }
   
-  func get(url: String) -> Observable<Data> {
+  func loadGists(options: RequestOptions) -> Observable<Void> {
+    return Observable.never()
+  }
+  
+  func get(url: String, options: RequestOptions) -> Observable<Data> {
+    return Observable.never()
+  }
+  
+  func create(gist: CreateGistEntity, options: RequestOptions) -> Observable<Data> {
     return Observable.never()
   }
 }
@@ -28,13 +37,11 @@ class NopNetworkInteractor : P_NetworkInteractor {
 class SpyNavigation : Navigation {
   
   var presentedController: UIViewController?
-  
   var pushedController: UIViewController?
-  
   var dismissCalled = false
+  var poppedController = false
   
   func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?) {
-    
     presentedController = viewControllerToPresent
   }
   
@@ -44,5 +51,9 @@ class SpyNavigation : Navigation {
   
   func pushController(_ viewController: UIViewController, animated: Bool) {
     pushedController = viewController
+  }
+  
+  func popController(animated: Bool) {
+    poppedController = true
   }
 }
