@@ -14,5 +14,10 @@ extension ObservableType {
   public func doOnNextAndError(callback: @escaping () -> ()) -> RxSwift.Observable<Self.E> {
     return self.do(onNext: { _ in callback() }, onError: { _ in callback() })
   }
+  
+  public func doOnErrorAndCompleted(callback: @escaping () -> ()) -> RxSwift.Observable<Self.E> {
+    return self.do(onError: { _ in callback() }, onCompleted: { _ in callback() })
+  }
+  
 }
 

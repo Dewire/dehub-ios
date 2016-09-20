@@ -28,30 +28,18 @@ class ViewGistStage : DirectedViewController<ViewGistDirector> {
     director.title.asDriver()
       .drive(rx.title)
       .addDisposableTo(bag)
-    
-    observeShowLoadingIndicator(director: director)
-  }
-  
-  private func observeShowLoadingIndicator(director: ViewGistDirector) {
-    director.showLoadingIndicator.asDriver().drive(onNext: { [unowned self] show in
-      if show {
-        self.view.showLoadingIndicator(style: .whiteLarge, color: .gray, zPosition: 1)
-      } else {
-        self.view.hideLoadingIndicator()
-      }
-      })
-      .addDisposableTo(bag)
   }
   
   override func viewDidLoad() {
     addTextView()
     super.viewDidLoad()
-    textView.font = UIFont(name: "Menlo", size: 14)!
-    textView.autocorrectionType = .no
   }
   
   private func addTextView() {
     textView = DualScrollableTextView()
+    textView.font = UIFont(name: "Menlo", size: 14)!
+    textView.autocorrectionType = .no
+    textView.isEditable = false
     textViewContainer.addSubview(textView)
   }
   

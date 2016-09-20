@@ -11,6 +11,24 @@ import Model
 
 open class LoginScene : BaseScene {
   
+  override public init(services: Services) {
+    super.init(services: services)
+    
+    services.networkInteractor.requestsInProgress.asDriver(onErrorJustReturn: 0)
+      .skip(1)
+      .drive(onNext: { count in
+        print("reqCount: \(count)")
+        if count > 0 {
+          UIApplication.shared.keyWindow?
+            .showLoadingIndicator(style: .whiteLarge, color: .gray, zPosition: 1)
+        }
+        else {
+          UIApplication.shared.keyWindow?.hideLoadingIndicator()
+        }
+      })
+      .addDisposableTo(bag)
+  }
+  
   open override func createStage() -> UIViewController {
     return LoginStage.create { stage in
       let d = LoginDirector.init(actions: stage.actions, networkInteractor: self.services.networkInteractor)

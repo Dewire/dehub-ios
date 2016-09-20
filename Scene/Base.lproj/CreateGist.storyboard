@@ -17,12 +17,48 @@
                     <view key="view" contentMode="scaleToFill" id="GkM-xC-Jgo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="moC-4L-Rut">
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9on-20-SCz">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                        <color key="value" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="moC-4L-Rut" firstAttribute="top" secondItem="HUh-su-chw" secondAttribute="bottom" constant="16" id="2Qh-v4-L5A"/>
+                            <constraint firstItem="9on-20-SCz" firstAttribute="leading" secondItem="GkM-xC-Jgo" secondAttribute="leading" constant="16" id="E4C-3V-Ft9"/>
+                            <constraint firstAttribute="trailing" secondItem="9on-20-SCz" secondAttribute="trailing" constant="16" id="RnL-Ji-R4w"/>
+                            <constraint firstAttribute="trailing" secondItem="moC-4L-Rut" secondAttribute="trailing" constant="16" id="TA1-H4-CsM"/>
+                            <constraint firstItem="moC-4L-Rut" firstAttribute="leading" secondItem="GkM-xC-Jgo" secondAttribute="leading" constant="16" id="XEo-zB-mVI"/>
+                            <constraint firstItem="pNe-L4-xyM" firstAttribute="top" secondItem="9on-20-SCz" secondAttribute="bottom" constant="16" id="nfP-vP-9Id"/>
+                            <constraint firstItem="9on-20-SCz" firstAttribute="top" secondItem="moC-4L-Rut" secondAttribute="bottom" constant="8" id="zdM-9B-B46"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="contentText" destination="9on-20-SCz" id="8Gu-kK-JWD"/>
+                        <outlet property="titleText" destination="moC-4L-Rut" id="WUe-O4-kj1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9nY-Yq-PaY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="449" y="485"/>
+            <point key="canvasLocation" x="448.80000000000001" y="484.40779610194909"/>
         </scene>
     </scenes>
 </document>

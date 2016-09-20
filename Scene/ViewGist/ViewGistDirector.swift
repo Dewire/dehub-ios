@@ -18,7 +18,6 @@ class ViewGistDirector : BaseDirector {
   // Stage outputs
   let gistText = Variable<String>("")
   let title = Variable<String>("")
-  let showLoadingIndicator = Variable<Bool>(true)
 
   init(actions: ViewGistStage.Actions, networkInteractor: P_NetworkInteractor, gist: GistEntity) {
     self.networkInteractor = networkInteractor
@@ -30,10 +29,9 @@ class ViewGistDirector : BaseDirector {
   
   private func fetchGistText(url: String) {
     
-    networkInteractor.get(url: url).map { data in
+    networkInteractor.get(url: url, options: []).map { data in
       String(data: data, encoding: .utf8)!
     }
-    .doOnNextAndError { [weak self] in self?.showLoadingIndicator.value = false }
     .bindTo(gistText)
     .addDisposableTo(bag)
   }

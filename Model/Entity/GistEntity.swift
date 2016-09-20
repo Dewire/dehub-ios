@@ -9,12 +9,12 @@
 import Foundation
 import Gloss
 
-public struct GistEntity : Decodable {
-  
+public struct GistEntity {
   public let description: String
-  
   public let file: GistFileInfo
-  
+}
+
+extension GistEntity : Decodable {
   public init?(json: JSON) {
     self.description = "description" <~~ json ?? ""
     
@@ -29,14 +29,14 @@ public struct GistEntity : Decodable {
   }
 }
 
-public struct GistFileInfo : Decodable {
-  
+public struct GistFileInfo {
   public let size: Int
   public let raw_url: String
   public let filename: String
   public let language: String?
-  
-  
+}
+
+extension GistFileInfo : Decodable {
   public init?(json: JSON) {
     
     guard
@@ -50,5 +50,4 @@ public struct GistFileInfo : Decodable {
     self.filename = filename
     self.language = "language" <~~ json
   }
-  
 }

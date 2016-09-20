@@ -16,6 +16,7 @@ protocol P_Network {
   func tryLogin(_ username: String, password: String) -> Observable<(Data, HTTPURLResponse)>
   func getGists() -> Observable<[JSON]>
   func get(url: String) -> Observable<Data>
+  func create(gist: CreateGistEntity) -> Observable<Data>
 }
 
 class Network : P_Network {
@@ -40,12 +41,23 @@ class Network : P_Network {
   }
 
   func getGists() -> Observable<[JSON]> {
-    return urlSession.JSON_decode(requests.GET("gists") as URLRequest)
+    let req = requests.GET("gists")
+    req.cachePolicy = .reloadIgnoringLocalCacheData
+    return urlSession.JSON_decode(req as URLRequest)
   }
   
   func get(url: String) -> Observable<Data> {
     let req = requests.GET(url, relativePath: false) as URLRequest
     return urlSession.rx.data(req)
+  }
+  
+  func create(gist: CreateGistEntity) -> Observable<Data> {
+    let req = requests.POST("gists")
+    print(gist.toJSON())
+    let data = try! JSONSerialization.data(withJSONObject: gist.toJSON()!, options: .prettyPrinted)
+    print(data)
+    req.httpBody = data
+    return urlSession.rx.data(req as URLRequest)
   }
 }
 

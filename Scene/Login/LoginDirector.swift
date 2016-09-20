@@ -71,7 +71,7 @@ class LoginDirector : BaseDirector {
   }
 
   private func performLoginRequest(_ username: String, password: String) {
-    self.networkInteractor.login(username: username, password: password).subscribe { event in
+    self.networkInteractor.login(username: username, password: password, options: []).subscribe { event in
       
       if event.error != nil {
         print("login error")

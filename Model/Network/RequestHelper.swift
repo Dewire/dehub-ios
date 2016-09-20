@@ -43,6 +43,12 @@ class RequestHelper {
     print(url)
     return NSMutableURLRequest(url: url).addBasicAuth(basicAuth)
   }
+  
+  func POST(_ path: String, relativePath: Bool = true) -> NSMutableURLRequest {
+    let req = GET(path, relativePath: relativePath)
+    req.httpMethod = "POST"
+    return req
+  }
 }
 
 extension NSMutableURLRequest {

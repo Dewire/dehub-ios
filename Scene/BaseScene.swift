@@ -45,10 +45,27 @@ protocol Navigation : class {
   func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
   func dismiss(animated flag: Bool, completion: (() -> Void)?)
   func pushController(_ viewController: UIViewController, animated: Bool)
+  func popController(animated: Bool)
 }
 
 extension UIViewController : Navigation {
+  
   func pushController(_ viewController: UIViewController, animated: Bool) {
-    self.navigationController?.pushViewController(viewController, animated: animated)
+    if let nav = navigationController {
+      nav.pushViewController(viewController, animated: animated)
+    }
+    else {
+      fatalError("tried to push a view controller on a controller that does not have a navigation controller")
+    }
+  }
+  
+  func popController(animated: Bool) {
+    if let nav = navigationController {
+      nav.popViewController(animated: animated)
+    }
+    else {
+      fatalError("tried to pop a view controller on a controller that does not have a navigation controller")
+    }
+    
   }
 }

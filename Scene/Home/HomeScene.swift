@@ -8,12 +8,17 @@
 
 import UIKit
 import Model
+import RxSwift
 
 class HomeScene : BaseScene {
   
   override func createStage() -> UIViewController {
     return HomeStage.create { stage in
-      let d = HomeDirector(actions: stage.actions, state: self.services.state, network: self.services.networkInteractor)
+      
+      let d = HomeDirector(actions: stage.actions,
+                           state: self.services.state,
+                           network: self.services.networkInteractor)
+      
       self.observeDirector(d)
       return d
     }
@@ -26,8 +31,10 @@ class HomeScene : BaseScene {
   
   private func observeNewGist(_ director: HomeDirector) {
     director.newGist.subscribe(onNext: {
-      let createGistStage = CreateGistScene(services: self.services).stage()
-      self.navigation.pushController(createGistStage, animated: true)
+      print("new gist")
+      let scene = CreateGistScene(services: self.services)
+      director.observeRefresh(signal: scene.refreshNeeded.asObservable(), showLoading: true)
+      self.navigation.pushController(scene.stage(), animated: true)
     })
     .addDisposableTo(bag)
   }

@@ -11,7 +11,11 @@ import UIKit
 class DualScrollableTextView: UITextView {
   
   override var text: String! {
+    willSet {
+      //isScrollEnabled = true
+    }
     didSet {
+      //isScrollEnabled = false
       setNewFrame(forText: text)
     }
   }

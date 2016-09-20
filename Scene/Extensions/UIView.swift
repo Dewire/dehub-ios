@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Loading indicator
 extension UIView {
   
   func showLoadingIndicator(style: UIActivityIndicatorViewStyle = .white, color: UIColor? = nil, zPosition: CGFloat = 0) {

@@ -11,7 +11,7 @@ import Model
 
 class ViewGistScene : BaseScene {
   
-  let gist: GistEntity
+  private let gist: GistEntity
   
   public init(services: Services, gist: GistEntity) {
     self.gist = gist
@@ -30,6 +30,6 @@ class ViewGistScene : BaseScene {
     }
   }
   
-  fileprivate func observeDirector(_ director: ViewGistDirector) {
+  private func observeDirector(_ director: ViewGistDirector) {
   }
 }

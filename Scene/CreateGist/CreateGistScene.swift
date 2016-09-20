@@ -8,8 +8,12 @@
 
 import UIKit
 import Model
+import RxSwift
 
 class CreateGistScene : BaseScene {
+  
+  // HomeScene outputs
+  let refreshNeeded = PublishSubject<Void>()
   
   override func createStage() -> UIViewController {
     return CreateGistStage.create { stage in
@@ -19,6 +23,12 @@ class CreateGistScene : BaseScene {
     }
   }
   
-  fileprivate func observeDirector(_ director: CreateGistDirector) {
+  private func observeDirector(_ director: CreateGistDirector) {
+    director.gistCreated.asDriver(onErrorJustReturn: ()).drive(onNext: {
+      print(self)
+      self.refreshNeeded.onNext(())
+      self.navigation.popController(animated: true)
+    })
+    .addDisposableTo(bag)
   }
 }

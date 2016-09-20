@@ -20,13 +20,14 @@ class HomeDirector : BaseDirector {
   // Stage outputs
   let gists = Variable<[GistEntity]>([])
   let endRefreshing = PublishSubject<Void>()
-  let showLoadingIndicator = Variable<Bool>(true)
   
   private let actions: HomeStage.Actions
   private let network: P_NetworkInteractor
   private let state: State
   
-  init(actions: HomeStage.Actions, state: State, network: P_NetworkInteractor) {
+  init(actions: HomeStage.Actions,
+       state: State,
+       network: P_NetworkInteractor) {
     
     self.actions = actions
     self.network = network
@@ -35,7 +36,7 @@ class HomeDirector : BaseDirector {
     
     observeState()
     observeActions()
-    getGists()
+    getGists(showLoading: true)
   }
   
   private func observeState() {
@@ -49,7 +50,7 @@ class HomeDirector : BaseDirector {
     observeLogoutButtonTap()
     observeAddButtonTap()
     observeRowTap()
-    observeRefresh()
+    observeRefresh(signal: actions.refresh.asObservable(), showLoading: false)
   }
   
   private func observeLogoutButtonTap() {
@@ -67,21 +68,21 @@ class HomeDirector : BaseDirector {
     actions.rowTap.bindTo(viewGist).addDisposableTo(bag)
   }
   
-  private func observeRefresh() {
-    actions.refresh.subscribe(onNext: { [unowned self] _ in
-      print("refresh")
-      self.getGists()
+  func observeRefresh(signal: Observable<Void>, showLoading: Bool) {
+    signal.subscribe(onNext: { [unowned self] in
+        print("refresh")
+        self.getGists(showLoading: showLoading)
     })
     .addDisposableTo(bag)
   }
   
-  private func getGists() {
-    network.loadGists().subscribe { [weak self] event in
+  private func getGists(showLoading: Bool) {
+    let options = showLoading ? [] : [RequestOption.noTrack]
+    network.loadGists(options: options).subscribe { [weak self] event in
       if event.error != nil { print("getGists error") }
       if event.isStopEvent {
         self?.endRefreshing.onNext(())
       }
-      self?.showLoadingIndicator.value = false
     }
     .addDisposableTo(bag)
   }
