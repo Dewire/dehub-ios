@@ -54,7 +54,13 @@ and send that back to the ```Stage```:
 
 ### The ```Scene```
 
-Creates the ```Stage``` and the ```Director``` and is responsible for transitioning to other scenes.
+Creates the ```Stage``` and the ```Director``` and is responsible for transitioning to other scenes. Generally the ```Scene``` listens to events from the ```Director``` to decide when to change to a new ```Scene```.
+
+![alt tag](http://i.imgur.com/p7XMFTm.png)
+
+## Bootstrapping
+
+When the app starts it creates the initial ```Scene``` which in turn creates the initial ```Stage```.
 
 
 
