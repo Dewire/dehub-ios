@@ -9,15 +9,22 @@
 import UIKit
 
 // Loading indicator
+
+fileprivate let TAG = 555999123
+
 extension UIView {
   
-  func showLoadingIndicator(style: UIActivityIndicatorViewStyle = .white, color: UIColor? = nil, zPosition: CGFloat = 0) {
-    if let indicator = viewWithTag(555999) as? UIActivityIndicatorView {
+  func showLoadingIndicator(
+    style: UIActivityIndicatorViewStyle = .white,
+    color: UIColor? = nil,
+    zPosition: CGFloat = 0) {
+    
+    if let indicator = viewWithTag(TAG) as? UIActivityIndicatorView {
       indicator.startAnimating()
     }
     else {
       let indicator = UIActivityIndicatorView(activityIndicatorStyle: style)
-      indicator.tag = 555999
+      indicator.tag = TAG
       indicator.layer.zPosition = zPosition
       indicator.hidesWhenStopped = true
       indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +63,7 @@ extension UIView {
   }
   
   func hideLoadingIndicator() {
-    if let indicator = viewWithTag(555999) as? UIActivityIndicatorView {
+    if let indicator = viewWithTag(TAG) as? UIActivityIndicatorView {
       indicator.stopAnimating()
     }
   }

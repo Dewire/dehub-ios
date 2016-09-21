@@ -13,7 +13,10 @@ open class LoginScene : BaseScene {
   
   override public init(services: Services) {
     super.init(services: services)
-    
+    observeRequestCount()
+  }
+  
+  private func observeRequestCount() {
     services.networkInteractor.requestsInProgress.asDriver(onErrorJustReturn: 0)
       .skip(1)
       .drive(onNext: { count in
@@ -57,10 +60,10 @@ open class LoginScene : BaseScene {
   }
   
   private func observeLogoutRequested(_ director: LoginDirector) {
-    director.logoutRequested.bindNext { _ in
+    director.logoutRequested.subscribe(onNext: {
       self.navigation.dismiss(animated: true, completion: nil)
       self.services.state.reset()
-    }
+    })
     .addDisposableTo(bag)
   }
 }

@@ -28,7 +28,6 @@ class ViewGistDirector : BaseDirector {
   }
   
   private func fetchGistText(url: String) {
-    
     networkInteractor.get(url: url, options: []).map { data in
       String(data: data, encoding: .utf8)!
     }

@@ -67,7 +67,6 @@ open class NetworkInteractor : P_NetworkInteractor {
   }
   
   open func get(url: String, options: RequestOptions) -> Observable<Data> {
-    
     handle(options)
     return network.get(url: url).handle(options)
   }

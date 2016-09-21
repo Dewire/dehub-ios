@@ -39,7 +39,6 @@ class HomeStage : DirectedViewController<HomeDirector> {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.addSubview(refreshControl)
-    
   }
   
   override func bind(director: HomeDirector) {
@@ -74,7 +73,7 @@ extension HomeStage {
   struct Actions {
     let logoutButtonTap: ControlEvent<Void>
     let addButtonTap: ControlEvent<Void>
-    let rowTap: Observable<GistEntity>
+    let rowTap: Observable<GistEntity?>
     let refresh: ControlEvent<Void>
   }
   
@@ -84,13 +83,7 @@ extension HomeStage {
       addButtonTap: navigationItem.rightBarButtonItem!.rx.tap,
       
       rowTap: tableView.rx.itemSelected.map { [unowned self] indexPath in
-        do {
-          let model: GistEntity = try self.tableView.rx.model(indexPath)
-          return model
-        }
-        catch {
-          throw error
-        }
+        return try? self.tableView.rx.model(indexPath)
       },
       
       refresh: refreshControl.rx.controlEvent(UIControlEvents.valueChanged)

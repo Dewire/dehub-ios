@@ -33,11 +33,12 @@ class LoginDirector : BaseDirector {
 
   private func registerForLogoutNotification() {
     NotificationCenter.default.addObserver(self,
-      selector: #selector(logout), name:NSNotification.Name(rawValue: "Logout"), object: nil)
+      selector: #selector(logout), name: NSNotification.Name(rawValue: "Logout"), object: nil)
   }
 
   private func observeActions(_ actions: LoginStage.Actions) {
-    let userPass = Driver.combineLatest(actions.username.asDriver(), actions.password.asDriver()) {
+    let userPass = Observable.combineLatest(actions.username.asObservable(),
+                                            actions.password.asObservable()) {
       ($0, $1)
     }
 
@@ -45,18 +46,18 @@ class LoginDirector : BaseDirector {
     observeLoginPressed(userPass, loginPressed: actions.loginPressed)
   }
 
-  private func observeUsernamePassword(_ userPass: Driver<(String, String)>) {
+  private func observeUsernamePassword(_ userPass: Observable<(String, String)>) {
     userPass.map { userPass in
       return !userPass.0.isEmpty && !userPass.1.isEmpty
     }
-    .drive(enableLoginButton)
+    .bindTo(enableLoginButton)
     .addDisposableTo(bag)
   }
 
-  private func observeLoginPressed(_ userPass: Driver<(String, String)>, loginPressed: ControlEvent<Void>) {
-    loginPressed.asDriver()
+  private func observeLoginPressed(_ userPass: Observable<(String, String)>, loginPressed: ControlEvent<Void>) {
+    loginPressed.asObservable()
       .withLatestFrom(userPass) { $1 }
-      .drive(onNext: { userPass in
+      .subscribe(onNext: { userPass in
         self.enableLoginButton.value = false
         self.performLoginRequest(userPass.0, password: userPass.1)
       })

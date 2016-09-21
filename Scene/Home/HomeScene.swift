@@ -31,6 +31,7 @@ class HomeScene : BaseScene {
   
   private func observeNewGist(_ director: HomeDirector) {
     director.newGist.subscribe(onNext: {
+      MainScheduler.ensureExecutingOnScheduler()
       print("new gist")
       let scene = CreateGistScene(services: self.services)
       director.observeRefresh(signal: scene.refreshNeeded.asObservable(), showLoading: true)
@@ -41,6 +42,7 @@ class HomeScene : BaseScene {
   
   private func observeViewGist(_ director: HomeDirector) {
     director.viewGist.subscribe(onNext: { model in
+      MainScheduler.ensureExecutingOnScheduler()
       let stage = ViewGistScene(services: self.services, gist: model).stage()
       self.navigation.pushController(stage, animated: true)
     })

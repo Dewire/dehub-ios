@@ -53,9 +53,8 @@ class Network : P_Network {
   
   func create(gist: CreateGistEntity) -> Observable<Data> {
     let req = requests.POST("gists")
-    print(gist.toJSON())
+    print("creating gist:\n\(gist.toJSON())")
     let data = try! JSONSerialization.data(withJSONObject: gist.toJSON()!, options: .prettyPrinted)
-    print(data)
     req.httpBody = data
     return urlSession.rx.data(req as URLRequest)
   }

@@ -40,10 +40,10 @@ class HomeDirector : BaseDirector {
   }
   
   private func observeState() {
-    
     state.gistsObservable
       .filter { $0 != nil }.map { $0! }
-      .bindTo(gists).addDisposableTo(bag)
+      .bindTo(gists)
+      .addDisposableTo(bag)
   }
   
   private func observeActions() {
@@ -65,7 +65,10 @@ class HomeDirector : BaseDirector {
   }
   
   private func observeRowTap() {
-    actions.rowTap.bindTo(viewGist).addDisposableTo(bag)
+    actions.rowTap
+      .filter { $0 != nil }.map { $0! }
+      .bindTo(viewGist)
+      .addDisposableTo(bag)
   }
   
   func observeRefresh(signal: Observable<Void>, showLoading: Bool) {

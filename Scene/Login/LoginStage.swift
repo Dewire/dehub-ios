@@ -20,10 +20,6 @@ class LoginStage : DirectedViewController<LoginDirector> {
     let storyboard = UIStoryboard(name: "Login", bundle: Bundle(for: LoginScene.self))
     return create(storyboard, directorFactory: downcast(directorFactory)) as! LoginStage
   }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
 
   override func bind(director: LoginDirector) {
     observeEnableLoginButton(director)
@@ -36,7 +32,8 @@ class LoginStage : DirectedViewController<LoginDirector> {
   }
   
   fileprivate func observeResetUi(_ director: LoginDirector) {
-    director.resetUi.subscribe(onNext: { [unowned self] _ in
+    director.resetUi.asDriver(onErrorJustReturn: ()).drive(onNext: { [unowned self] _ in
+      print("reset")
       self.password.text = ""
       self.username.text = ""
       self.username.becomeFirstResponder()
