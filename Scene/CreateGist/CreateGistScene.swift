@@ -12,23 +12,27 @@ import RxSwift
 
 class CreateGistScene : BaseScene {
   
-  // HomeScene outputs
-  let refreshNeeded = PublishSubject<Void>()
+  let newGistCallback: Closure
   
-  override func createStage() -> UIViewController {
-    return CreateGistStage.create { stage in
-      let d = CreateGistDirector.init(actions: stage.actions, networkInteractor: self.services.networkInteractor)
-      self.observeDirector(d)
-      return d
-    }
+  init(services: Services, newGistCallback: @escaping Closure) {
+    self.newGistCallback = newGistCallback
+    super.init(services: services)
   }
   
-  private func observeDirector(_ director: CreateGistDirector) {
-    director.gistCreated.asDriver(onErrorJustReturn: ()).drive(onNext: {
-      print(self)
-      self.refreshNeeded.onNext(())
-      self.navigation.popController(animated: true)
-    })
-    .addDisposableTo(bag)
+  override func createStage() -> UIViewController {
+    let s = CreateGistStage.create()
+    s.afterLoad = {
+      let d = CreateGistDirector(scene: self,
+                               networkInteractor: self.services.networkInteractor)
+      s.directorRef = d
+      d.stage = s
+    }
+    
+    return s
+  }
+  
+  func gistCreated() {
+    newGistCallback()
+    self.navigation.popController(animated: true)
   }
 }

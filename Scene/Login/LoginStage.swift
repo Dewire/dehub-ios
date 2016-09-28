@@ -10,48 +10,36 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class LoginStage : DirectedViewController<LoginDirector> {
+class LoginStage : DirectedViewController {
   
   @IBOutlet weak var username: UITextField!
   @IBOutlet weak var password: UITextField!
   @IBOutlet weak var loginButton: UIButton!
   
-  static func create(_ directorFactory: @escaping (LoginStage) -> LoginDirector) -> LoginStage {
+  static func create() -> LoginStage {
     let storyboard = UIStoryboard(name: "Login", bundle: Bundle(for: LoginScene.self))
-    return create(storyboard, directorFactory: downcast(directorFactory)) as! LoginStage
-  }
-
-  override func bind(director: LoginDirector) {
-    observeEnableLoginButton(director)
-    observeResetUi(director)
+    let stage = storyboard.instantiateInitialViewController() as! LoginStage
+    return stage
   }
   
-  fileprivate func observeEnableLoginButton(_ director: LoginDirector) {
-    director.enableLoginButton.asDriver().drive(loginButton.rx.enabled)
-      .addDisposableTo(bag)
+  func resetUi() {
+    self.password.text = ""
+    self.username.text = ""
+    self.username.becomeFirstResponder()
   }
   
-  fileprivate func observeResetUi(_ director: LoginDirector) {
-    director.resetUi.asDriver(onErrorJustReturn: ()).drive(onNext: { [unowned self] _ in
-      print("reset")
-      self.password.text = ""
-      self.username.text = ""
-      self.username.becomeFirstResponder()
-    })
-    .addDisposableTo(bag)
+  func enableLoginButton(enabled: Bool) {
+    loginButton.isEnabled = enabled
   }
-}
-
-extension LoginStage {
-
-  struct Actions {
+  
+  struct Outputs {
     let username: ControlProperty<String>
     let password: ControlProperty<String>
     let loginPressed: ControlEvent<Void>
   }
 
-  var actions: Actions {
-    return Actions(
+  var outputs: Outputs {
+    return Outputs(
       username: username.rx.text,
       password: password.rx.text,
       loginPressed: loginButton.rx.tap)

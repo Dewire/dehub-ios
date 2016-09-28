@@ -11,24 +11,18 @@ import RxSwift
 import RxCocoa
 import Model
 
-class LoginDirector : BaseDirector {
+class LoginDirector : BaseDirector<LoginScene, LoginStage> {
   
   let networkInteractor: P_NetworkInteractor
 
-  // Scene outputs
-  let loginSuccessful = PublishSubject<Void>()
-  let logoutRequested = PublishSubject<Void>()
-
-  // Stage outputs
-  let enableLoginButton = Variable<Bool>(false)
-  let resetUi = PublishSubject<Void>()
-
-  init(actions: LoginStage.Actions, networkInteractor: P_NetworkInteractor) {
+  init(scene: LoginScene, networkInteractor: P_NetworkInteractor) {
     self.networkInteractor = networkInteractor
-    super.init()
-
+    super.init(scene: scene)
+  }
+  
+  override func stageDidLoad(stage: LoginStage) {
     registerForLogoutNotification()
-    observeActions(actions)
+    observeOutputs(outputs: stage.outputs)
   }
 
   private func registerForLogoutNotification() {
@@ -36,39 +30,41 @@ class LoginDirector : BaseDirector {
       selector: #selector(logout), name: NSNotification.Name(rawValue: "Logout"), object: nil)
   }
 
-  private func observeActions(_ actions: LoginStage.Actions) {
-    let userPass = Observable.combineLatest(actions.username.asObservable(),
-                                            actions.password.asObservable()) {
+  private func observeOutputs(outputs: LoginStage.Outputs) {
+    let userPass = Observable.combineLatest(outputs.username.asObservable(),
+                                            outputs.password.asObservable()) {
       ($0, $1)
     }
 
     observeUsernamePassword(userPass)
-    observeLoginPressed(userPass, loginPressed: actions.loginPressed)
+    observeLoginPressed(userPass, loginPressed: outputs.loginPressed)
   }
 
   private func observeUsernamePassword(_ userPass: Observable<(String, String)>) {
     userPass.map { userPass in
       return !userPass.0.isEmpty && !userPass.1.isEmpty
     }
-    .bindTo(enableLoginButton)
+    .subscribe(onNext: { enabled in
+      self.stage.enableLoginButton(enabled: enabled)
+    })
     .addDisposableTo(bag)
   }
-
+  
   private func observeLoginPressed(_ userPass: Observable<(String, String)>, loginPressed: ControlEvent<Void>) {
     loginPressed.asObservable()
       .withLatestFrom(userPass) { $1 }
       .subscribe(onNext: { userPass in
-        self.enableLoginButton.value = false
+        self.stage.enableLoginButton(enabled: false)
         self.performLoginRequest(userPass.0, password: userPass.1)
       })
       .addDisposableTo(bag)
   }
-
+  
   @objc private func logout() {
     print("logout")
-    resetUi.onNext()
-    logoutRequested.onNext()
-    enableLoginButton.value = false
+    stage.resetUi()
+    stage.enableLoginButton(enabled: false)
+    scene.logout()
   }
 
   private func performLoginRequest(_ username: String, password: String) {
@@ -76,11 +72,11 @@ class LoginDirector : BaseDirector {
       
       if event.error != nil {
         print("login error")
-        self.enableLoginButton.value = true
+        self.stage.enableLoginButton(enabled: true)
       }
       else if !event.isStopEvent {
         print("login ok")
-        self.loginSuccessful.onNext()
+        self.scene.login()
       }
     }
     .addDisposableTo(self.bag)

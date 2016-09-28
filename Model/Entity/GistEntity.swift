@@ -12,17 +12,22 @@ import Gloss
 public struct GistEntity {
   public let description: String
   public let file: GistFileInfo
+  public let isPublic: Bool
 }
 
 extension GistEntity : Decodable {
   public init?(json: JSON) {
     self.description = "description" <~~ json ?? ""
     
-    if let files = json["files"] as? JSON,
+    if
+      let isPublic = json["public"] as? Bool,
+      let files = json["files"] as? JSON,
       let first = files[files.keys.first!] as? JSON,
-      let file = GistFileInfo(json: first) {
-        self.file = file
-      }
+      let file = GistFileInfo(json: first)
+    {
+      self.isPublic = isPublic
+      self.file = file
+    }
     else {
       return nil
     }

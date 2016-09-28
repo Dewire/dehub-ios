@@ -12,41 +12,33 @@ import RxSwift
 
 class HomeScene : BaseScene {
   
+  var newGistCallback: Closure!
+  
   override func createStage() -> UIViewController {
-    return HomeStage.create { stage in
-      
-      let d = HomeDirector(actions: stage.actions,
+    
+    let s = HomeStage.create()
+    s.afterLoad = {
+      let d = HomeDirector(scene: self,
                            state: self.services.state,
                            network: self.services.networkInteractor)
+      s.directorRef = d
+      d.stage = s
       
-      self.observeDirector(d)
-      return d
+      self.newGistCallback = { [weak d] in d?.getGists(showLoading: true) }
     }
+    
+    return s
   }
   
-  private func observeDirector(_ director: HomeDirector) {
-    observeNewGist(director)
-    observeViewGist(director)
+  func onNewGist() {
+    print("new gist")
+    let scene = CreateGistScene(services: self.services, newGistCallback: newGistCallback)
+    self.navigation.pushController(scene.stage(), animated: true)
   }
   
-  private func observeNewGist(_ director: HomeDirector) {
-    director.newGist.subscribe(onNext: {
-      MainScheduler.ensureExecutingOnScheduler()
-      print("new gist")
-      let scene = CreateGistScene(services: self.services)
-      director.observeRefresh(signal: scene.refreshNeeded.asObservable(), showLoading: true)
-      self.navigation.pushController(scene.stage(), animated: true)
-    })
-    .addDisposableTo(bag)
-  }
-  
-  private func observeViewGist(_ director: HomeDirector) {
-    director.viewGist.subscribe(onNext: { model in
-      MainScheduler.ensureExecutingOnScheduler()
-      let stage = ViewGistScene(services: self.services, gist: model).stage()
-      self.navigation.pushController(stage, animated: true)
-    })
-    .addDisposableTo(bag)
+  func onViewGist(gist: GistEntity) {
+    let stage = ViewGistScene(services: self.services, gist: gist).stage()
+    self.navigation.pushController(stage, animated: true)
   }
   
 }

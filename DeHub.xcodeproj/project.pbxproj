@@ -22,6 +22,8 @@
 		6BC47CEA1D8C3C2000286368 /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CE91D8C3C2000286368 /* ObservableType.swift */; };
 		6BC47CEB1D8C3D2E00286368 /* CreateGist.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BC376951D8AC2B7007F4C87 /* CreateGist.storyboard */; };
 		6BC47CEF1D8FDD1200286368 /* CreateGistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CEE1D8FDD1200286368 /* CreateGistEntity.swift */; };
+		6BC47CF11D9BA19900286368 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF01D9BA19800286368 /* RxDataSources.framework */; };
+		6BC47CF31D9BAD0700286368 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CF21D9BAD0700286368 /* Collection.swift */; };
 		D32D8E2E1D0BF29900730381 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2D1D0BF29900730381 /* Network.swift */; };
 		D32D8E301D0BFAF100730381 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2F1D0BFAF100730381 /* State.swift */; };
 		D32D8E321D0BFB2500730381 /* NetworkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */; };
@@ -167,6 +169,8 @@
 		6BC376A51D8BDCCF007F4C87 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		6BC47CE91D8C3C2000286368 /* ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableType.swift; sourceTree = "<group>"; };
 		6BC47CEE1D8FDD1200286368 /* CreateGistEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGistEntity.swift; sourceTree = "<group>"; };
+		6BC47CF01D9BA19800286368 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
+		6BC47CF21D9BAD0700286368 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		D32D8E2D1D0BF29900730381 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		D32D8E2F1D0BFAF100730381 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = State.swift; path = Model/State.swift; sourceTree = SOURCE_ROOT; };
 		D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInteractor.swift; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC47CF11D9BA19900286368 /* RxDataSources.framework in Frameworks */,
 				D3FFDE051D0576D8004C6569 /* RxCocoa.framework in Frameworks */,
 				D3FFDE041D0576D8004C6569 /* RxSwift.framework in Frameworks */,
 			);
@@ -479,6 +484,7 @@
 				6BC47CE91D8C3C2000286368 /* ObservableType.swift */,
 				D3F541941D281E51009A9A27 /* UIColor.swift */,
 				D3F541961D298739009A9A27 /* UIView.swift */,
+				6BC47CF21D9BAD0700286368 /* Collection.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -486,6 +492,7 @@
 		D3FFDDFF1D0576A3004C6569 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6BC47CF01D9BA19800286368 /* RxDataSources.framework */,
 				D3F43D021D16A096005A0094 /* Gloss.framework */,
 				D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */,
 				D3FFDE001D0576D8004C6569 /* RxSwift.framework */,
@@ -825,6 +832,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Gloss.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
 			);
 			outputPaths = (
 			);
@@ -904,6 +912,7 @@
 				6BC3769E1D8AC413007F4C87 /* ViewGistDirector.swift in Sources */,
 				D3F541951D281E51009A9A27 /* UIColor.swift in Sources */,
 				D3F43D0F1D191944005A0094 /* HomeDirector.swift in Sources */,
+				6BC47CF31D9BAD0700286368 /* Collection.swift in Sources */,
 				D3F43D111D19195B005A0094 /* HomeScene.swift in Sources */,
 				6BC3769B1D8AC334007F4C87 /* ViewGistStage.swift in Sources */,
 				6B3053541D86E577000F344A /* CreateGistStage.swift in Sources */,

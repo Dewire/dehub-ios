@@ -11,44 +11,43 @@ import RxSwift
 import RxCocoa
 import Model
 
-class CreateGistDirector : BaseDirector {
-  
-  // Scene outputs
-  let gistCreated = PublishSubject<Void>()
-  
-  // Stage outputs
-  let enableSaveButton = Variable<Bool>(false)
+class CreateGistDirector : BaseDirector<CreateGistScene, CreateGistStage> {
   
   private let networkInteractor: P_NetworkInteractor
 
-  init(actions: CreateGistStage.Actions, networkInteractor: P_NetworkInteractor) {
+  init(scene: CreateGistScene, networkInteractor: P_NetworkInteractor) {
     self.networkInteractor = networkInteractor
-    super.init()
-    
-    observeActions(actions: actions)
+    super.init(scene: scene)
   }
   
-  private func observeActions(actions: CreateGistStage.Actions) {
+  override func stageDidLoad(stage: CreateGistStage) {
+    observeOutputs(outputs: stage.outputs)
+  }
+  
+  private func observeOutputs(outputs: CreateGistStage.Outputs) {
     
-    let gist = [actions.titleText, actions.contentText].combineLatest { texts -> CreateGistEntity? in
+    let gist = [outputs.titleText, outputs.contentText].combineLatest { texts -> CreateGistEntity? in
       guard !texts.contains("") else { return nil }
       return CreateGistEntity(
         description: texts[0],
         isPublic: false,
         file: CreateGistFileInfo(content: texts[1]))
     }
+    .asDriver(onErrorJustReturn: nil)
     
     observeEnableSaveButton(gist: gist)
-    observeSaveGist(saveButtonTapped: actions.saveButtonTapped, gist: gist)
+    observeSaveGist(saveButtonTapped: outputs.saveButtonTapped, gist: gist)
   }
   
-  private func observeEnableSaveButton(gist: Observable<CreateGistEntity?>) {
+  private func observeEnableSaveButton(gist: Driver<CreateGistEntity?>) {
     gist.map { $0 != nil }
-      .bindTo(enableSaveButton)
+      .drive(onNext: { [unowned self] in
+        self.stage.enableSaveButton($0)
+      })
       .addDisposableTo(bag)
   }
   
-  private func observeSaveGist(saveButtonTapped: ControlEvent<Void>, gist: Observable<CreateGistEntity?>) {
+  private func observeSaveGist(saveButtonTapped: ControlEvent<Void>, gist: Driver<CreateGistEntity?>) {
     saveButtonTapped
       .withLatestFrom(gist)
       .subscribe(onNext: { [weak self] gist in
@@ -64,7 +63,7 @@ class CreateGistDirector : BaseDirector {
         print("create failed: \(e)")
       }, onCompleted: { [weak self] in
         print("create ok")
-        self?.gistCreated.onNext(())
+        self?.scene.gistCreated()
       })
       .addDisposableTo(bag)
   }

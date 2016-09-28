@@ -10,15 +10,14 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CreateGistStage : DirectedViewController<CreateGistDirector> {
+class CreateGistStage : DirectedViewController {
   
   @IBOutlet weak var titleText: UITextField!
-  
   @IBOutlet weak var contentText: UITextView!
   
-  static func create(_ directorFactory: @escaping (CreateGistStage) -> CreateGistDirector) -> CreateGistStage {
+  static func create() -> CreateGistStage {
     let storyboard = UIStoryboard(name: "CreateGist", bundle: Bundle(for: CreateGistScene.self))
-    return create(storyboard, directorFactory: downcast(directorFactory)) as! CreateGistStage
+    return storyboard.instantiateInitialViewController() as! CreateGistStage
   }
   
   override func awakeFromNib() {
@@ -30,25 +29,22 @@ class CreateGistStage : DirectedViewController<CreateGistDirector> {
   override func viewDidLoad() {
     super.viewDidLoad()
   }
- 
-  override func bind(director: CreateGistDirector) {
-    director.enableSaveButton.asDriver()
-      .drive(navigationItem.rightBarButtonItem!.rx.enabled)
-      .addDisposableTo(bag)
+  
+  func enableSaveButton(_ isEnabled: Bool) {
+    navigationItem.rightBarButtonItem?.isEnabled = isEnabled
   }
-
 }
 
 extension CreateGistStage {
 
-  struct Actions {
+  struct Outputs {
     let saveButtonTapped: ControlEvent<Void>
     let titleText: ControlProperty<String>
     let contentText: ControlProperty<String>
   }
 
-  var actions: Actions {
-    return Actions(
+  var outputs: Outputs {
+    return Outputs(
       saveButtonTapped: navigationItem.rightBarButtonItem!.rx.tap,
       titleText: titleText.rx.text,
       contentText: contentText.rx.text

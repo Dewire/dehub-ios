@@ -1,3 +1,4 @@
 github "hkellaway/Gloss" "145c78888ccca678bf146b5b0b58882016a4d9aa"
-github "Quick/Nimble" "e7c1f4e30419e5bec615293de901320d02f2acf7"
-github "ReactiveX/RxSwift" "06129b50cf17bc24bd0bef9e60982eac35f7d1c1"
+github "Quick/Nimble" "9ed51e1f17c410ff51cfa1c69e18e9e2d450dfb7"
+github "ReactiveX/RxSwift" "3.0.0-beta.1"
+github "RxSwiftCommunity/RxDataSources" "e55b725644cd4261debbf5e5c2a547a6d7f6fc78"

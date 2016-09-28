@@ -33,37 +33,25 @@ open class LoginScene : BaseScene {
   }
   
   open override func createStage() -> UIViewController {
-    return LoginStage.create { stage in
-      let d = LoginDirector.init(actions: stage.actions, networkInteractor: self.services.networkInteractor)
-      self.observeDirector(d)
-      return d
+    
+    let s = LoginStage.create()
+    s.afterLoad = {
+      let d = LoginDirector(scene: self, networkInteractor: self.services.networkInteractor)
+      s.directorRef = d
+      d.stage = s
     }
+    
+    return s
   }
   
-  func observeDirector(_ director: LoginDirector) {
-    observeLoginSuccessful(director)
-    observeLogoutRequested(director)
-  }
-  
-  private func observeLoginSuccessful(_ director: LoginDirector) {
-    director.loginSuccessful.subscribe(onNext: {
-      self.segueToHomeScene()
-    })
-    .addDisposableTo(director.bag)
-  }
-  
-  private func segueToHomeScene() {
-    print("segueToHomeScene")
+  func login() {
     let homeStage = HomeScene(services: services).stage()
     let navController = UINavigationController(rootViewController: homeStage)
     navigation.present(navController, animated: true, completion: nil)
   }
   
-  private func observeLogoutRequested(_ director: LoginDirector) {
-    director.logoutRequested.subscribe(onNext: {
-      self.navigation.dismiss(animated: true, completion: nil)
-      self.services.state.reset()
-    })
-    .addDisposableTo(bag)
+  func logout() {
+    navigation.dismiss(animated: true, completion: nil)
+    services.state.reset()
   }
 }

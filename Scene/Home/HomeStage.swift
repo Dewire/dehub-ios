@@ -9,17 +9,50 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 import Model
 
-class HomeStage : DirectedViewController<HomeDirector> {
+class HomeStage : DirectedViewController {
+  
+  struct Outputs {
+    let logoutButtonTap: ControlEvent<Void>
+    let addButtonTap: ControlEvent<Void>
+    let rowTap: Observable<GistEntity?>
+    let refresh: ControlEvent<Void>
+  }
+  
+  var outputs: Outputs {
+    return Outputs(
+      logoutButtonTap: navigationItem.leftBarButtonItem!.rx.tap,
+      addButtonTap: navigationItem.rightBarButtonItem!.rx.tap,
+      
+      rowTap: tableView.rx.itemSelected.map { [unowned self] indexPath in
+        return try? self.tableView.rx.model(indexPath)
+      },
+      
+      refresh: refreshControl.rx.controlEvent(UIControlEvents.valueChanged)
+    )
+  }
+  
+  struct Inputs {
+    let tableView: Reactive<UITableView>
+    let tableViewDataSource: RxTableViewSectionedReloadDataSource<GistSection>
+  }
+  
+  var inputs: Inputs {
+    return Inputs(
+      tableView: tableView.rx,
+      tableViewDataSource: dataSource
+    )
+  }
+  
   
   @IBOutlet weak var tableView: UITableView!
-  
   var refreshControl: UIRefreshControl!
   
-  static func create(_ directorFactory: @escaping (HomeStage) -> HomeDirector) -> HomeStage {
+  static func create() -> HomeStage {
     let storyboard = UIStoryboard(name: "Home", bundle: Bundle(for: HomeScene.self))
-    return create(storyboard, directorFactory: downcast(directorFactory)) as! HomeStage
+    return storyboard.instantiateInitialViewController() as! HomeStage
   }
   
   override func awakeFromNib() {
@@ -41,25 +74,35 @@ class HomeStage : DirectedViewController<HomeDirector> {
     tableView.addSubview(refreshControl)
   }
   
-  override func bind(director: HomeDirector) {
-    observeGists(director: director)
-    observeEndRefreshing(director: director)
+  func stopRefreshing() {
+    refreshControl.endRefreshing()
   }
   
-  private func observeGists(director: HomeDirector) {
-    director.gists.asDriver()
-      .drive(tableView.rx.items(cellIdentifier: "GistCell", cellType: GistTableViewCell.self)) { [unowned self] (row, model, cell) in
-        self.configure(cell: cell, withModel: model)
-      }
-      .addDisposableTo(bag)
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if let selected = tableView.indexPathForSelectedRow {
+      tableView.deselectRow(at: selected, animated: false)
+    }
   }
+}
+
+
+extension HomeStage {
   
-  private func observeEndRefreshing(director: HomeDirector) {
-    director.endRefreshing.asDriver(onErrorJustReturn: ())
-      .drive(onNext: { [unowned self] in
-        self.refreshControl.endRefreshing()
-      })
-      .addDisposableTo(bag)
+  fileprivate var dataSource: RxTableViewSectionedReloadDataSource<GistSection> {
+    let source = RxTableViewSectionedReloadDataSource<GistSection>()
+    
+    source.titleForHeaderInSection = { dataSource, index in
+      dataSource.sectionModels[index].header
+    }
+    
+    source.configureCell = { [weak self] dataSource, tableView, indexPath, item in
+      let cell = tableView.dequeueReusableCell(withIdentifier: "GistCell", for: indexPath) as! GistTableViewCell
+      self?.configure(cell: cell, withModel: item)
+      return cell
+    }
+    
+    return source
   }
   
   private func configure(cell: GistTableViewCell, withModel model: GistEntity) {
@@ -68,25 +111,3 @@ class HomeStage : DirectedViewController<HomeDirector> {
   }
 }
 
-extension HomeStage {
-  
-  struct Actions {
-    let logoutButtonTap: ControlEvent<Void>
-    let addButtonTap: ControlEvent<Void>
-    let rowTap: Observable<GistEntity?>
-    let refresh: ControlEvent<Void>
-  }
-  
-  var actions: Actions {
-    return Actions(
-      logoutButtonTap: navigationItem.leftBarButtonItem!.rx.tap,
-      addButtonTap: navigationItem.rightBarButtonItem!.rx.tap,
-      
-      rowTap: tableView.rx.itemSelected.map { [unowned self] indexPath in
-        return try? self.tableView.rx.model(indexPath)
-      },
-      
-      refresh: refreshControl.rx.controlEvent(UIControlEvents.valueChanged)
-    )
-  }
-}

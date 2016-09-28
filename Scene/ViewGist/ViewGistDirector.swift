@@ -11,19 +11,19 @@ import RxSwift
 import RxCocoa
 import Model
 
-class ViewGistDirector : BaseDirector {
+class ViewGistDirector : BaseDirector<ViewGistScene, ViewGistStage> {
   
+  let gist: GistEntity
   let networkInteractor: P_NetworkInteractor
-  
-  // Stage outputs
-  let gistText = Variable<String>("")
-  let title = Variable<String>("")
 
-  init(actions: ViewGistStage.Actions, networkInteractor: P_NetworkInteractor, gist: GistEntity) {
+  init(scene: ViewGistScene, networkInteractor: P_NetworkInteractor, gist: GistEntity) {
+    self.gist = gist
     self.networkInteractor = networkInteractor
-    super.init()
-    
-    title.value = gist.file.filename
+    super.init(scene: scene)
+  }
+  
+  override func stageDidLoad(stage: ViewGistStage) {
+    stage.title = gist.file.filename
     fetchGistText(url: gist.file.raw_url)
   }
   
@@ -31,7 +31,10 @@ class ViewGistDirector : BaseDirector {
     networkInteractor.get(url: url, options: []).map { data in
       String(data: data, encoding: .utf8)!
     }
-    .bindTo(gistText)
+    .asDriver(onErrorJustReturn: "")
+    .drive(onNext: { [weak self] in
+      self?.stage.setText(text: $0)
+    })
     .addDisposableTo(bag)
   }
 }

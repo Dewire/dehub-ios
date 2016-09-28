@@ -49,6 +49,7 @@ class Network : P_Network {
   func get(url: String) -> Observable<Data> {
     let req = requests.GET(url, relativePath: false) as URLRequest
     return urlSession.rx.data(req)
+      .observeOn(MainScheduler.instance)
   }
   
   func create(gist: CreateGistEntity) -> Observable<Data> {
@@ -57,6 +58,7 @@ class Network : P_Network {
     let data = try! JSONSerialization.data(withJSONObject: gist.toJSON()!, options: .prettyPrinted)
     req.httpBody = data
     return urlSession.rx.data(req as URLRequest)
+      .observeOn(MainScheduler.instance)
   }
 }
 

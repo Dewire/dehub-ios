@@ -15,22 +15,35 @@ import Nimble
 
 typealias LoginResult = () -> Observable<Void>
 
-class SpyNetworkInteractor : NopNetworkInteractor {
+class SpyLoginStage : LoginStage {
   
-  public override func loadGists(options: RequestOptions) -> Observable<Void> {
-    return Observable.just(())
+  let o: LoginStage.Outputs
+  
+  init(outputs: LoginStage.Outputs) {
+    o = outputs
+    super.init(nibName: nil, bundle: nil)
   }
-
-  var loginWasCalled = false
-  var loginResult: LoginResult!
-    
-  override func login(username: String, password: String, options: RequestOptions) -> Observable<Void> {
-    loginWasCalled = true
-    return loginResult()
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
+  
+  var resetUiCalled: Bool = false
+  override func resetUi() {
+    resetUiCalled = true
+  }
+  
+  var enableLoginButtonValue: Bool?
+  override func enableLoginButton(enabled: Bool) {
+    enableLoginButtonValue = enabled
+  }
+  
+  override var outputs: Outputs { return o }
 }
 
+
 class LoginDirectorTests: XCTestCase {
+  
   
   // MARK: Setup
   
@@ -38,6 +51,8 @@ class LoginDirectorTests: XCTestCase {
   var passwordInput: BehaviorSubject<String>!
   var loginButtonInput: BehaviorSubject<Void>!
   
+  var navigation: SpyNavigation!
+  var stage: SpyLoginStage!
   var interactor: SpyNetworkInteractor!
   var director: LoginDirector!
   
@@ -51,64 +66,52 @@ class LoginDirectorTests: XCTestCase {
     interactor = SpyNetworkInteractor()
     interactor.loginResult = { Observable.just(()) }
     
+    navigation = SpyNavigation()
+    
+    let scene = LoginScene(services: Services())
+    scene.navigation = navigation
     director = LoginDirector(
-      actions: mockActions(),
+      scene: scene,
       networkInteractor: interactor)
+    
+    stage = SpyLoginStage(outputs: mockOutputs())
+    director.stage = stage
   }
   
-  func mockActions() -> LoginStage.Actions {
-    return LoginStage.Actions(
+  func mockOutputs() -> LoginStage.Outputs {
+    return LoginStage.Outputs(
       username: ControlProperty<String>(values: usernameInput, valueSink: AnyObserver { n in }),
       password: ControlProperty<String>(values: passwordInput, valueSink: AnyObserver { n in }),
       loginPressed: ControlEvent<Void>(events: loginButtonInput))
   }
   
+  
   // MARK: Tests
   
-  func testInitialState() {
-    expect(self.director.enableLoginButton.value).to(beFalse())
+  func testLoginButtonDisabledWhenUsernameAndPasswordNotEntered() {
+    usernameInput.onNext("")
+    passwordInput.onNext("")
+    
+    expect(self.stage.enableLoginButtonValue).toEventually(beFalse())
   }
   
   func testLoginButtonEnabledWhenUsernameAndPasswordEntered() {
     usernameInput.onNext("username")
     passwordInput.onNext("password")
-    expect(self.director.enableLoginButton.value).toEventually(beTrue())
+    
+    expect(self.stage.enableLoginButtonValue).toEventually(beTrue())
   }
   
   func testLoginButtonDisableAfterPressedAndLoginSuccess() {
-    var wasDisabled = false
-    var wasEnabled = false
-    
-    let _ = director.enableLoginButton.asObservable().skip(1).subscribe(onNext: {
-      if !$0 {
-        wasDisabled = true
-      } else {
-        wasEnabled = true
-      }
-    })
-    
     loginButtonInput.onNext(Void())
-    expect(wasDisabled).toEventually(beTrue())
-    expect(wasEnabled).toEventuallyNot(beTrue())
+    expect(self.stage.enableLoginButtonValue).toEventually(beFalse())
   }
-    
-  func testLoginButtonDisableAndEnabledAfterPressedAndLoginFailure() {
+  
+  func testLoginButtonEnabledAfterPressedAndLoginFailure() {
     interactor.loginResult = { Observable.error(URLError(.unknown)) }
     
-    var wasDisabled = false
-    var wasEnabled = false
-    
-    let _ = director.enableLoginButton.asObservable().skip(1).subscribe(onNext: {
-      if !$0 {
-        wasDisabled = true
-      } else {
-        wasEnabled = true
-      }
-    })
-    
     loginButtonInput.onNext(Void())
-    expect(wasDisabled).toEventually(beTrue())
-    expect(wasEnabled).toEventually(beTrue())
+    expect(self.stage.enableLoginButtonValue).toEventually(beTrue())
   }
   
   func testLoginCalledWhenLoginButtonPressed() {

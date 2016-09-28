@@ -35,10 +35,6 @@ open class BaseScene {
   func createStage() -> UIViewController {
     fatalError("must be overriden by subclass")
   }
-  
-  func referToSelf() {
-    
-  }
 }
 
 protocol Navigation : class {

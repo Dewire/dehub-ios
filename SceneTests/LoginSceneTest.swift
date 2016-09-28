@@ -16,11 +16,11 @@ import Nimble
 
 class LoginSceneTests: XCTestCase {
   
+  
   // MARK: Setup
   
   
   var spyNavigation: SpyNavigation!
-  var director: LoginDirector!
   var scene: LoginScene!
   
   override func setUp() {
@@ -29,32 +29,19 @@ class LoginSceneTests: XCTestCase {
     scene = LoginScene(services: Services())
     spyNavigation = SpyNavigation()
     scene.navigation = spyNavigation
-    
-    director = LoginDirector(
-      actions: mockActions(),
-      networkInteractor: NopNetworkInteractor())
-    
-    scene.observeDirector(director)
-    
   }
   
-  func mockActions() -> LoginStage.Actions {
-    return LoginStage.Actions(
-      username: ControlProperty<String>(values: Observable.never(), valueSink: AnyObserver { n in }),
-      password: ControlProperty<String>(values: Observable.never(), valueSink: AnyObserver { n in }),
-      loginPressed: ControlEvent<Void>(events: Observable.never()))
-  }
   
   // MARK: Tests
   
   
   func testPresentsControllerOnSuccessfulLogin() {
-    director.loginSuccessful.onNext(())
+    scene.login()
     expect(self.spyNavigation.presentedController).toEventuallyNot(beNil())
   }
   
   func testDismissesControllerOnLogout() {
-    director.logoutRequested.onNext(())
+    scene.logout()
     expect(self.spyNavigation.dismissCalled).toEventually(beTrue())
   }
   

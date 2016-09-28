@@ -19,17 +19,16 @@ class ViewGistScene : BaseScene {
   }
   
   override func createStage() -> UIViewController {
-    return ViewGistStage.create { stage in
-      let d = ViewGistDirector.init(
-        actions: stage.actions,
-        networkInteractor: self.services.networkInteractor,
-        gist: self.gist)
-      
-      self.observeDirector(d)
-      return d
+    
+    let s = ViewGistStage.create()
+    s.afterLoad = {
+      let d = ViewGistDirector(scene: self,
+                               networkInteractor: self.services.networkInteractor,
+                               gist: self.gist)
+      s.directorRef = d
+      d.stage = s
     }
-  }
-  
-  private func observeDirector(_ director: ViewGistDirector) {
+    
+    return s
   }
 }

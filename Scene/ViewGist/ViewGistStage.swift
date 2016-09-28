@@ -10,24 +10,18 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ViewGistStage : DirectedViewController<ViewGistDirector> {
+class ViewGistStage : DirectedViewController {
   
   @IBOutlet weak var textViewContainer: UIScrollView!
   weak var textView: DualScrollableTextView!
   
-  static func create(_ directorFactory: @escaping (ViewGistStage) -> ViewGistDirector) -> ViewGistStage {
+  static func create() -> ViewGistStage {
     let storyboard = UIStoryboard(name: "ViewGist", bundle: Bundle(for: CreateGistScene.self))
-    return create(storyboard, directorFactory: downcast(directorFactory)) as! ViewGistStage
+    return storyboard.instantiateInitialViewController() as! ViewGistStage
   }
   
-  override func bind(director: ViewGistDirector) {
-    director.gistText.asDriver()
-      .drive(textView.rx.text)
-      .addDisposableTo(bag)
-    
-    director.title.asDriver()
-      .drive(rx.title)
-      .addDisposableTo(bag)
+  func setText(text: String) {
+    textView.text = text
   }
   
   override func viewDidLoad() {
@@ -42,17 +36,5 @@ class ViewGistStage : DirectedViewController<ViewGistDirector> {
     textView.isEditable = false
     textViewContainer.addSubview(textView)
   }
-  
 }
 
-extension ViewGistStage {
-  
-  struct Actions {
-    //let username: ControlProperty<String>
-    
-  }
-  
-  var actions: Actions {
-    return Actions()
-  }
-}
