@@ -13,10 +13,10 @@ import Model
 
 class CreateGistDirector : BaseDirector<CreateGistScene, CreateGistStage> {
   
-  private let networkInteractor: P_NetworkInteractor
+  private let api: GistApi
 
-  init(scene: CreateGistScene, networkInteractor: P_NetworkInteractor) {
-    self.networkInteractor = networkInteractor
+  init(scene: CreateGistScene, api: GistApi) {
+    self.api = api
     super.init(scene: scene)
   }
   
@@ -26,12 +26,17 @@ class CreateGistDirector : BaseDirector<CreateGistScene, CreateGistStage> {
   
   private func observeOutputs(outputs: CreateGistStage.Outputs) {
     
-    let gist = [outputs.titleText, outputs.contentText].combineLatest { texts -> CreateGistEntity? in
-      guard !texts.contains("") else { return nil }
+    let gist = Observable.combineLatest(
+      outputs.titleText,
+      outputs.contentText,
+      outputs.privatePublic) { t, c, p -> CreateGistEntity? in
+        
+      guard !t.isEmpty && !c.isEmpty else { return nil }
+        
       return CreateGistEntity(
-        description: texts[0],
-        isPublic: false,
-        file: CreateGistFileInfo(content: texts[1]))
+        description: t,
+        isPublic: p == 1,
+        file: CreateGistFileInfo(content: c))
     }
     .asDriver(onErrorJustReturn: nil)
     
@@ -58,13 +63,16 @@ class CreateGistDirector : BaseDirector<CreateGistScene, CreateGistStage> {
   }
   
   private func createGist(gist: CreateGistEntity) {
-    networkInteractor.create(gist: gist, options: []).subscribe(
-      onError: { e in
-        print("create failed: \(e)")
-      }, onCompleted: { [weak self] in
+    stage.enableSaveButton(false)
+    
+    api.gists.request(.post, json: gist.json())
+      .onFailure { [weak self] in
+        print("create failed: \($0)")
+        self?.stage.enableSaveButton(true)
+      }
+      .onSuccess { [weak self] _ in
         print("create ok")
         self?.scene.gistCreated()
-      })
-      .addDisposableTo(bag)
+      }
   }
 }

@@ -7,30 +7,22 @@
 //
 
 import Foundation
-import Gloss
+import SwiftyJSON
 
 public struct GistEntity {
   public let description: String
-  public let file: GistFileInfo
   public let isPublic: Bool
+  public let file: GistFileInfo
 }
 
-extension GistEntity : Decodable {
-  public init?(json: JSON) {
-    self.description = "description" <~~ json ?? ""
+extension GistEntity {
+  
+  public init(json: JSON) throws {
     
-    if
-      let isPublic = json["public"] as? Bool,
-      let files = json["files"] as? JSON,
-      let first = files[files.keys.first!] as? JSON,
-      let file = GistFileInfo(json: first)
-    {
-      self.isPublic = isPublic
-      self.file = file
-    }
-    else {
-      return nil
-    }
+    description = try json["description"].string*!
+    isPublic = try json["public"].bool*!
+    
+    file = try GistFileInfo(json: json["files"].dictionary*!.first*!.value*!)
   }
 }
 
@@ -41,18 +33,12 @@ public struct GistFileInfo {
   public let language: String?
 }
 
-extension GistFileInfo : Decodable {
-  public init?(json: JSON) {
-    
-    guard
-      let size: Int = "size" <~~ json,
-      let raw_url: String = "raw_url" <~~ json,
-      let filename: String = "filename" <~~ json else { return nil }
-    
-    
-    self.size = size
-    self.raw_url = raw_url
-    self.filename = filename
-    self.language = "language" <~~ json
+extension GistFileInfo {
+  
+  public init(json: JSON) throws {
+    size = try json["size"].int*!
+    raw_url = try json["raw_url"].string*!
+    filename = try json["filename"].string*!
+    language = json["language"].string
   }
 }

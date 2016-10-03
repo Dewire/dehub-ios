@@ -37,15 +37,18 @@ class HomeStage : DirectedViewController {
   struct Inputs {
     let tableView: Reactive<UITableView>
     let tableViewDataSource: RxTableViewSectionedReloadDataSource<GistSection>
+    let source: Variable<[GistSection]>
   }
   
   var inputs: Inputs {
     return Inputs(
       tableView: tableView.rx,
-      tableViewDataSource: dataSource
+      tableViewDataSource: dataSource,
+      source: gists
     )
   }
   
+  private let gists = Variable<[GistSection]>([])
   
   @IBOutlet weak var tableView: UITableView!
   var refreshControl: UIRefreshControl!
@@ -72,6 +75,9 @@ class HomeStage : DirectedViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.addSubview(refreshControl)
+    
+    gists.asDriver().drive(tableView.rx.items(dataSource: dataSource))
+      .addDisposableTo(bag)
   }
   
   func stopRefreshing() {
@@ -83,6 +89,10 @@ class HomeStage : DirectedViewController {
     if let selected = tableView.indexPathForSelectedRow {
       tableView.deselectRow(at: selected, animated: false)
     }
+  }
+  
+  func setGists(gists: [GistEntity]) {
+    
   }
 }
 

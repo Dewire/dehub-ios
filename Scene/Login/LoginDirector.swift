@@ -13,10 +13,10 @@ import Model
 
 class LoginDirector : BaseDirector<LoginScene, LoginStage> {
   
-  let networkInteractor: P_NetworkInteractor
+  let api: GistApi
 
-  init(scene: LoginScene, networkInteractor: P_NetworkInteractor) {
-    self.networkInteractor = networkInteractor
+  init(scene: LoginScene, api: GistApi) {
+    self.api = api
     super.init(scene: scene)
   }
   
@@ -68,17 +68,15 @@ class LoginDirector : BaseDirector<LoginScene, LoginStage> {
   }
 
   private func performLoginRequest(_ username: String, password: String) {
-    self.networkInteractor.login(username: username, password: password, options: []).subscribe { event in
-      
-      if event.error != nil {
-        print("login error")
-        self.stage.enableLoginButton(enabled: true)
+    
+    api.login(username: username, password: password)
+      .onFailure { [weak self] e in
+        print("login error: \(e)")
+        self?.stage.enableLoginButton(enabled: true)
       }
-      else if !event.isStopEvent {
+      .onSuccess { [weak self] s in
         print("login ok")
-        self.scene.login()
+        self?.scene.login()
       }
-    }
-    .addDisposableTo(self.bag)
   }
 }

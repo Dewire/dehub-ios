@@ -10,31 +10,31 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Model
+import Siesta
 
 class ViewGistDirector : BaseDirector<ViewGistScene, ViewGistStage> {
   
   let gist: GistEntity
-  let networkInteractor: P_NetworkInteractor
+  let api: GistApi
+  let resource: Resource
 
-  init(scene: ViewGistScene, networkInteractor: P_NetworkInteractor, gist: GistEntity) {
+  init(scene: ViewGistScene, api: GistApi, gist: GistEntity) {
     self.gist = gist
-    self.networkInteractor = networkInteractor
+    self.api = api
+    resource = api.resource(absoluteURL: gist.file.raw_url)
+    
     super.init(scene: scene)
   }
   
   override func stageDidLoad(stage: ViewGistStage) {
+    stage.overlayResources = [resource]
+    
     stage.title = gist.file.filename
-    fetchGistText(url: gist.file.raw_url)
-  }
-  
-  private func fetchGistText(url: String) {
-    networkInteractor.get(url: url, options: []).map { data in
-      String(data: data, encoding: .utf8)!
+    
+    resource.addObserver(owner: self) { [weak self] resource, event in
+      self?.stage.setText(text: resource.typedContent(ifNone: ""))
     }
-    .asDriver(onErrorJustReturn: "")
-    .drive(onNext: { [weak self] in
-      self?.stage.setText(text: $0)
-    })
-    .addDisposableTo(bag)
+    
+    self.resource.load()
   }
 }

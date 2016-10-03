@@ -23,7 +23,7 @@ class ViewGistScene : BaseScene {
     let s = ViewGistStage.create()
     s.afterLoad = {
       let d = ViewGistDirector(scene: self,
-                               networkInteractor: self.services.networkInteractor,
+                               api: self.services.api,
                                gist: self.gist)
       s.directorRef = d
       d.stage = s

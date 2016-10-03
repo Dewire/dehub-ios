@@ -14,6 +14,7 @@ class CreateGistStage : DirectedViewController {
   
   @IBOutlet weak var titleText: UITextField!
   @IBOutlet weak var contentText: UITextView!
+  @IBOutlet weak var privatePublicSegment: UISegmentedControl!
   
   static func create() -> CreateGistStage {
     let storyboard = UIStoryboard(name: "CreateGist", bundle: Bundle(for: CreateGistScene.self))
@@ -41,13 +42,15 @@ extension CreateGistStage {
     let saveButtonTapped: ControlEvent<Void>
     let titleText: ControlProperty<String>
     let contentText: ControlProperty<String>
+    let privatePublic: ControlProperty<Int>
   }
 
   var outputs: Outputs {
     return Outputs(
       saveButtonTapped: navigationItem.rightBarButtonItem!.rx.tap,
       titleText: titleText.rx.text,
-      contentText: contentText.rx.text
+      contentText: contentText.rx.text,
+      privatePublic: privatePublicSegment.rx.value
     )
   }
 }

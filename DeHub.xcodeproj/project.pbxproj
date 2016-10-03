@@ -24,9 +24,12 @@
 		6BC47CEF1D8FDD1200286368 /* CreateGistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CEE1D8FDD1200286368 /* CreateGistEntity.swift */; };
 		6BC47CF11D9BA19900286368 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF01D9BA19800286368 /* RxDataSources.framework */; };
 		6BC47CF31D9BAD0700286368 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CF21D9BAD0700286368 /* Collection.swift */; };
-		D32D8E2E1D0BF29900730381 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2D1D0BF29900730381 /* Network.swift */; };
-		D32D8E301D0BFAF100730381 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E2F1D0BFAF100730381 /* State.swift */; };
-		D32D8E321D0BFB2500730381 /* NetworkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */; };
+		6BC47CF51D9D395800286368 /* Siesta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF41D9D395800286368 /* Siesta.framework */; };
+		6BC47CF71D9D398F00286368 /* GistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CF61D9D398F00286368 /* GistApi.swift */; };
+		6BC47CF81D9D3D4700286368 /* Siesta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF41D9D395800286368 /* Siesta.framework */; };
+		6BC47CFA1D9D54F200286368 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF91D9D54F200286368 /* SwiftyJSON.framework */; };
+		6BC47CFC1D9E937900286368 /* SiestaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CFB1D9E937900286368 /* SiestaUI.framework */; };
+		6BC47CFE1D9FBF0400286368 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CFD1D9FBF0400286368 /* Common.swift */; };
 		D37CF6A91D0DDB8C00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AA1D0DDB8D00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AB1D0DDB8F00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
@@ -57,7 +60,6 @@
 		D3E0EF5D1D0D3ACE0066AE5C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE001D0576D8004C6569 /* RxSwift.framework */; };
 		D3E0EF5E1D0D3AF30066AE5C /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE011D0576D8004C6569 /* RxCocoa.framework */; };
 		D3E0EF5F1D0D3AF70066AE5C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE001D0576D8004C6569 /* RxSwift.framework */; };
-		D3F43CFD1D152DAE005A0094 /* RequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F43CFC1D152DAE005A0094 /* RequestHelper.swift */; };
 		D3F43D031D16A096005A0094 /* Gloss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F43D021D16A096005A0094 /* Gloss.framework */; };
 		D3F43D0B1D191913005A0094 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3F43D091D191913005A0094 /* Home.storyboard */; };
 		D3F43D0D1D191937005A0094 /* HomeStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F43D0C1D191937005A0094 /* HomeStage.swift */; };
@@ -171,9 +173,11 @@
 		6BC47CEE1D8FDD1200286368 /* CreateGistEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGistEntity.swift; sourceTree = "<group>"; };
 		6BC47CF01D9BA19800286368 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
 		6BC47CF21D9BAD0700286368 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
-		D32D8E2D1D0BF29900730381 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		D32D8E2F1D0BFAF100730381 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = State.swift; path = Model/State.swift; sourceTree = SOURCE_ROOT; };
-		D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInteractor.swift; sourceTree = "<group>"; };
+		6BC47CF41D9D395800286368 /* Siesta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Siesta.framework; path = Carthage/Build/iOS/Siesta.framework; sourceTree = "<group>"; };
+		6BC47CF61D9D398F00286368 /* GistApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GistApi.swift; path = ../GistApi.swift; sourceTree = "<group>"; };
+		6BC47CF91D9D54F200286368 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		6BC47CFB1D9E937900286368 /* SiestaUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SiestaUI.framework; path = Carthage/Build/iOS/SiestaUI.framework; sourceTree = "<group>"; };
+		6BC47CFD1D9FBF0400286368 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		D3BD74061D042E650032CC00 /* DeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BD74091D042E650032CC00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -202,7 +206,6 @@
 		D3BD748D1D043BE40032CC00 /* LoginStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginStage.swift; sourceTree = "<group>"; };
 		D3CE169A1D0BEB4600749C9F /* BaseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScene.swift; sourceTree = "<group>"; };
 		D3E0EF571D0D34E10066AE5C /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
-		D3F43CFC1D152DAE005A0094 /* RequestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHelper.swift; sourceTree = "<group>"; };
 		D3F43D021D16A096005A0094 /* Gloss.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gloss.framework; path = Carthage/Build/iOS/Gloss.framework; sourceTree = "<group>"; };
 		D3F43D0A1D191913005A0094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Scene/Base.lproj/Home.storyboard; sourceTree = SOURCE_ROOT; };
 		D3F43D0C1D191937005A0094 /* HomeStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStage.swift; sourceTree = "<group>"; };
@@ -254,8 +257,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3E0EF5B1D0D3ACC0066AE5C /* RxSwift.framework in Frameworks */,
+				6BC47CF51D9D395800286368 /* Siesta.framework in Frameworks */,
 				D3E0EF521D0C01AE0066AE5C /* RxCocoa.framework in Frameworks */,
 				D3F43D031D16A096005A0094 /* Gloss.framework in Frameworks */,
+				6BC47CFA1D9D54F200286368 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +282,8 @@
 				6BC47CF11D9BA19900286368 /* RxDataSources.framework in Frameworks */,
 				D3FFDE051D0576D8004C6569 /* RxCocoa.framework in Frameworks */,
 				D3FFDE041D0576D8004C6569 /* RxSwift.framework in Frameworks */,
+				6BC47CF81D9D3D4700286368 /* Siesta.framework in Frameworks */,
+				6BC47CFC1D9E937900286368 /* SiestaUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,9 +326,7 @@
 		D32D8E2C1D0BF27E00730381 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				D3F43CFC1D152DAE005A0094 /* RequestHelper.swift */,
-				D32D8E2D1D0BF29900730381 /* Network.swift */,
-				D32D8E311D0BFB2500730381 /* NetworkInteractor.swift */,
+				6BC47CF61D9D398F00286368 /* GistApi.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -389,7 +394,6 @@
 				D3BD743E1D0431B40032CC00 /* Model.h */,
 				D3BD74401D0431B40032CC00 /* Info.plist */,
 				D3E0EF571D0D34E10066AE5C /* Services.swift */,
-				D32D8E2F1D0BFAF100730381 /* State.swift */,
 				D3F43CFF1D167AC9005A0094 /* Entity */,
 				D32D8E2C1D0BF27E00730381 /* Network */,
 			);
@@ -450,6 +454,7 @@
 		D3F43CFF1D167AC9005A0094 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				6BC47CFD1D9FBF0400286368 /* Common.swift */,
 				6B3053571D86EBF8000F344A /* GistEntity.swift */,
 				6BC47CEE1D8FDD1200286368 /* CreateGistEntity.swift */,
 			);
@@ -492,6 +497,9 @@
 		D3FFDDFF1D0576A3004C6569 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6BC47CFB1D9E937900286368 /* SiestaUI.framework */,
+				6BC47CF91D9D54F200286368 /* SwiftyJSON.framework */,
+				6BC47CF41D9D395800286368 /* Siesta.framework */,
 				6BC47CF01D9BA19800286368 /* RxDataSources.framework */,
 				D3F43D021D16A096005A0094 /* Gloss.framework */,
 				D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */,
@@ -833,6 +841,9 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Gloss.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Siesta.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SiestaUI.framework",
 			);
 			outputPaths = (
 			);
@@ -872,11 +883,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B3053581D86EBF8000F344A /* GistEntity.swift in Sources */,
+				6BC47CF71D9D398F00286368 /* GistApi.swift in Sources */,
 				D3E0EF581D0D34E10066AE5C /* Services.swift in Sources */,
-				D32D8E2E1D0BF29900730381 /* Network.swift in Sources */,
-				D32D8E301D0BFAF100730381 /* State.swift in Sources */,
-				D3F43CFD1D152DAE005A0094 /* RequestHelper.swift in Sources */,
-				D32D8E321D0BFB2500730381 /* NetworkInteractor.swift in Sources */,
+				6BC47CFE1D9FBF0400286368 /* Common.swift in Sources */,
 				6BC47CEF1D8FDD1200286368 /* CreateGistEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

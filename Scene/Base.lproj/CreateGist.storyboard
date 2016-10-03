@@ -39,20 +39,29 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rHQ-Eb-viR">
+                                <segments>
+                                    <segment title="Private"/>
+                                    <segment title="Public"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.96470588239999999" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="moC-4L-Rut" firstAttribute="top" secondItem="HUh-su-chw" secondAttribute="bottom" constant="16" id="2Qh-v4-L5A"/>
                             <constraint firstItem="9on-20-SCz" firstAttribute="leading" secondItem="GkM-xC-Jgo" secondAttribute="leading" constant="16" id="E4C-3V-Ft9"/>
                             <constraint firstAttribute="trailing" secondItem="9on-20-SCz" secondAttribute="trailing" constant="16" id="RnL-Ji-R4w"/>
-                            <constraint firstAttribute="trailing" secondItem="moC-4L-Rut" secondAttribute="trailing" constant="16" id="TA1-H4-CsM"/>
                             <constraint firstItem="moC-4L-Rut" firstAttribute="leading" secondItem="GkM-xC-Jgo" secondAttribute="leading" constant="16" id="XEo-zB-mVI"/>
+                            <constraint firstItem="rHQ-Eb-viR" firstAttribute="top" secondItem="HUh-su-chw" secondAttribute="bottom" constant="16" id="gbP-Bu-JPy"/>
+                            <constraint firstItem="rHQ-Eb-viR" firstAttribute="leading" secondItem="moC-4L-Rut" secondAttribute="trailing" constant="17" id="l6M-Xo-Tom"/>
                             <constraint firstItem="pNe-L4-xyM" firstAttribute="top" secondItem="9on-20-SCz" secondAttribute="bottom" constant="16" id="nfP-vP-9Id"/>
-                            <constraint firstItem="9on-20-SCz" firstAttribute="top" secondItem="moC-4L-Rut" secondAttribute="bottom" constant="8" id="zdM-9B-B46"/>
+                            <constraint firstAttribute="trailing" secondItem="rHQ-Eb-viR" secondAttribute="trailing" constant="16" id="r7R-KC-zRh"/>
+                            <constraint firstItem="9on-20-SCz" firstAttribute="top" secondItem="moC-4L-Rut" secondAttribute="bottom" constant="12" id="zdM-9B-B46"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="contentText" destination="9on-20-SCz" id="8Gu-kK-JWD"/>
+                        <outlet property="privatePublicSegment" destination="rHQ-Eb-viR" id="6HQ-3B-aZk"/>
                         <outlet property="titleText" destination="moC-4L-Rut" id="WUe-O4-kj1"/>
                     </connections>
                 </viewController>

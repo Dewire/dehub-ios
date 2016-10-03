@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Gloss
+import SwiftyJSON
 
 public struct CreateGistEntity {
   public let description: String
@@ -21,15 +21,14 @@ public struct CreateGistEntity {
   }
 }
 
-extension CreateGistEntity : Encodable {
-  public func toJSON() -> JSON? {
-    guard let file = file.toJSON() else { return nil }
-    
-    return jsonify([
-      "description" ~~> description,
-      "public" ~~> isPublic,
-      "files" ~~> [description: file]
-    ])
+extension CreateGistEntity {
+  
+  public func json() -> JsonDict {
+    return [
+      "description": description,
+      "public": isPublic,
+      "files": [description: file.json()]
+    ]
   }
 }
 
@@ -41,10 +40,12 @@ public struct CreateGistFileInfo {
   }
 }
 
-extension CreateGistFileInfo : Encodable {
-  public func toJSON() -> JSON? {
-    return jsonify([
-      "content" ~~> content,
-    ])
+extension CreateGistFileInfo {
+  
+  public func json() -> JsonDict {
+    return [
+      "content": content
+    ]
   }
 }
+

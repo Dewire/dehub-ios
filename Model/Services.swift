@@ -9,16 +9,9 @@
 import Foundation
 
 public struct Services {
-  public let state: State
-  public let networkInteractor: P_NetworkInteractor
+  public let api: GistApi
 
   public init() {
-    state = State()
-    
-    networkInteractor = NetworkInteractor(
-      network: Network(
-        session: URLSession(configuration: URLSessionConfiguration.default),
-        requestHelper: RequestHelper(baseUrl: "https://api.github.com")),
-      state: state)
+    api = GistApi()
   }
 }

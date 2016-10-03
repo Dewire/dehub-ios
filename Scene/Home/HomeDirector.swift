@@ -11,30 +11,26 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import Model
+import Siesta
 
 class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   
   typealias O = HomeStage.Outputs
   
-  fileprivate let network: P_NetworkInteractor
-  fileprivate let state: State
+  fileprivate let api: GistApi
   
   init(scene: HomeScene,
-       state: State,
-       network: P_NetworkInteractor) {
+       api: GistApi) {
     
-    self.network = network
-    self.state = state
+    self.api = api
     super.init(scene: scene)
-    
-    getGists(showLoading: true)
   }
   
   override func stageDidLoad(stage: HomeStage) {
+    addApiObservers()
     observe(outputs: stage.outputs)
-    gistSectionDriver().drive(
-      stage.inputs.tableView.items(dataSource: stage.inputs.tableViewDataSource))
-      .addDisposableTo(bag)
+    api.gists.loadIfNeeded()
+    stage.overlayResources = [api.gists]
   }
  
   private func observe(outputs: O) {
@@ -70,23 +66,19 @@ class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   func observeRefresh(_ outputs: O) {
     outputs.refresh.asObservable().subscribe(onNext: { [unowned self] in
       print("refresh")
-      self.getGists(showLoading: false)
+      self.loadGists(useStatusOverlay: false)
     })
     .addDisposableTo(bag)
   }
   
-  func getGists(showLoading: Bool) {
-    let options = showLoading ? [] : [RequestOption.noTrack]
-    network.loadGists(options: options).subscribe { [weak self] event in
-      if event.error != nil { print("getGists error") }
-      if event.isStopEvent {
-        self?.stage.stopRefreshing()
-      }
+  func loadGists(useStatusOverlay: Bool = true) {
+    let req = useStatusOverlay ? api.gists.load() : api.gists.noOverlayLoad(stage)
+    
+    req.onCompletion { [weak self] _ in
+      self?.stage.stopRefreshing()
     }
-    .addDisposableTo(bag)
   }
 }
-
 
 struct GistSection: SectionModelType {
   typealias Item = GistEntity
@@ -104,22 +96,25 @@ extension GistSection {
 
 extension HomeDirector {
   
-  func gistSectionDriver() -> Driver<[GistSection]> {
-    
-    return state.gistsDriver.map { gists in
-      guard let gists = gists else { return [] }
+  fileprivate func addApiObservers() {
+    api.gists.addObserver(owner: self) { [weak self] resource, event in
+      guard let s = self else { return }
       
-      let groups = gists.groupBy { $0.isPublic }
-      
-      let publicGists = GistSection(header: "Public Gists", items: groups.match)
-      let privateGists = GistSection(header: "Private Gists", items: groups.noMatch)
-      
-      return [publicGists, privateGists]
+      if let t: [GistEntity] = resource.typedContent() {
+        s.stage.inputs.source.value = s.gistsToSections(t)
+      }
     }
   }
+  
+  private func gistsToSections(_ gists: [GistEntity]) -> [GistSection] {
+    let groups = gists.groupBy { $0.isPublic }
+    
+    let publicGists = GistSection(header: "Public Gists", items: groups.match)
+    let privateGists = GistSection(header: "Private Gists", items: groups.noMatch)
+    
+    return [publicGists, privateGists]
+  }
 }
-
-
 
 
 

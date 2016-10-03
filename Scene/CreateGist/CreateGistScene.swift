@@ -23,7 +23,7 @@ class CreateGistScene : BaseScene {
     let s = CreateGistStage.create()
     s.afterLoad = {
       let d = CreateGistDirector(scene: self,
-                               networkInteractor: self.services.networkInteractor)
+                               api: self.services.api)
       s.directorRef = d
       d.stage = s
     }

@@ -17,6 +17,7 @@ open class LoginScene : BaseScene {
   }
   
   private func observeRequestCount() {
+    /*
     services.networkInteractor.requestsInProgress.asDriver(onErrorJustReturn: 0)
       .skip(1)
       .drive(onNext: { count in
@@ -30,13 +31,14 @@ open class LoginScene : BaseScene {
         }
       })
       .addDisposableTo(bag)
+ */
   }
   
   open override func createStage() -> UIViewController {
     
     let s = LoginStage.create()
     s.afterLoad = {
-      let d = LoginDirector(scene: self, networkInteractor: self.services.networkInteractor)
+      let d = LoginDirector(scene: self, api: self.services.api)
       s.directorRef = d
       d.stage = s
     }
@@ -52,6 +54,6 @@ open class LoginScene : BaseScene {
   
   func logout() {
     navigation.dismiss(animated: true, completion: nil)
-    services.state.reset()
+    services.api.wipeResources()
   }
 }

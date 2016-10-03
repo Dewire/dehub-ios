@@ -19,12 +19,11 @@ class HomeScene : BaseScene {
     let s = HomeStage.create()
     s.afterLoad = {
       let d = HomeDirector(scene: self,
-                           state: self.services.state,
-                           network: self.services.networkInteractor)
+                           api: self.services.api)
       s.directorRef = d
       d.stage = s
       
-      self.newGistCallback = { [weak d] in d?.getGists(showLoading: true) }
+      self.newGistCallback = { [weak d] in d?.loadGists() }
     }
     
     return s

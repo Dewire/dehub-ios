@@ -7,32 +7,9 @@
 //
 
 import Foundation
-import Model
+@testable import Model
 @testable import Scene
 import RxSwift
-
-class NopNetworkInteractor : P_NetworkInteractor {
-  
-  var requestsInProgress: Observable<Int> {
-    return Observable.never()
-  }
-  
-  func login(username: String, password: String, options: RequestOptions) -> Observable<Void> {
-    return Observable.never()
-  }
-  
-  func loadGists(options: RequestOptions) -> Observable<Void> {
-    return Observable.never()
-  }
-  
-  func get(url: String, options: RequestOptions) -> Observable<Data> {
-    return Observable.never()
-  }
-  
-  func create(gist: CreateGistEntity, options: RequestOptions) -> Observable<Data> {
-    return Observable.never()
-  }
-}
 
 class SpyNavigation : Navigation {
   
@@ -55,20 +32,5 @@ class SpyNavigation : Navigation {
   
   func popController(animated: Bool) {
     poppedController = true
-  }
-}
-
-class SpyNetworkInteractor : NopNetworkInteractor {
-  
-  public override func loadGists(options: RequestOptions) -> Observable<Void> {
-    return Observable.just(())
-  }
-  
-  var loginWasCalled = false
-  var loginResult: LoginResult!
-  
-  override func login(username: String, password: String, options: RequestOptions) -> Observable<Void> {
-    loginWasCalled = true
-    return loginResult()
   }
 }
