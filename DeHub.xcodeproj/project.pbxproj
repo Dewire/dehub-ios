@@ -25,11 +25,11 @@
 		6BC47CF11D9BA19900286368 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF01D9BA19800286368 /* RxDataSources.framework */; };
 		6BC47CF31D9BAD0700286368 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CF21D9BAD0700286368 /* Collection.swift */; };
 		6BC47CF51D9D395800286368 /* Siesta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF41D9D395800286368 /* Siesta.framework */; };
-		6BC47CF71D9D398F00286368 /* GistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CF61D9D398F00286368 /* GistApi.swift */; };
 		6BC47CF81D9D3D4700286368 /* Siesta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF41D9D395800286368 /* Siesta.framework */; };
 		6BC47CFA1D9D54F200286368 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF91D9D54F200286368 /* SwiftyJSON.framework */; };
 		6BC47CFC1D9E937900286368 /* SiestaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CFB1D9E937900286368 /* SiestaUI.framework */; };
 		6BC47CFE1D9FBF0400286368 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CFD1D9FBF0400286368 /* Common.swift */; };
+		6BC47D001DA272A100286368 /* GistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CFF1DA272A100286368 /* GistApi.swift */; };
 		D37CF6A91D0DDB8C00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AA1D0DDB8D00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AB1D0DDB8F00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
@@ -174,10 +174,10 @@
 		6BC47CF01D9BA19800286368 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
 		6BC47CF21D9BAD0700286368 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		6BC47CF41D9D395800286368 /* Siesta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Siesta.framework; path = Carthage/Build/iOS/Siesta.framework; sourceTree = "<group>"; };
-		6BC47CF61D9D398F00286368 /* GistApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GistApi.swift; path = ../GistApi.swift; sourceTree = "<group>"; };
 		6BC47CF91D9D54F200286368 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		6BC47CFB1D9E937900286368 /* SiestaUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SiestaUI.framework; path = Carthage/Build/iOS/SiestaUI.framework; sourceTree = "<group>"; };
 		6BC47CFD1D9FBF0400286368 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		6BC47CFF1DA272A100286368 /* GistApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GistApi.swift; path = Model/GistApi.swift; sourceTree = SOURCE_ROOT; };
 		D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		D3BD74061D042E650032CC00 /* DeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BD74091D042E650032CC00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -326,7 +326,7 @@
 		D32D8E2C1D0BF27E00730381 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				6BC47CF61D9D398F00286368 /* GistApi.swift */,
+				6BC47CFF1DA272A100286368 /* GistApi.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -882,8 +882,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC47D001DA272A100286368 /* GistApi.swift in Sources */,
 				6B3053581D86EBF8000F344A /* GistEntity.swift in Sources */,
-				6BC47CF71D9D398F00286368 /* GistApi.swift in Sources */,
 				D3E0EF581D0D34E10066AE5C /* Services.swift in Sources */,
 				6BC47CFE1D9FBF0400286368 /* Common.swift in Sources */,
 				6BC47CEF1D8FDD1200286368 /* CreateGistEntity.swift in Sources */,

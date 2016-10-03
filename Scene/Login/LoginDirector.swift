@@ -61,7 +61,6 @@ class LoginDirector : BaseDirector<LoginScene, LoginStage> {
   }
   
   @objc private func logout() {
-    print("logout")
     stage.resetUi()
     stage.enableLoginButton(enabled: false)
     scene.logout()
@@ -71,12 +70,11 @@ class LoginDirector : BaseDirector<LoginScene, LoginStage> {
     
     api.login(username: username, password: password)
       .onFailure { [weak self] e in
-        print("login error: \(e)")
         self?.stage.enableLoginButton(enabled: true)
       }
       .onSuccess { [weak self] s in
-        print("login ok")
         self?.scene.login()
       }
+      .addToOverlay(stage: stage)
   }
 }

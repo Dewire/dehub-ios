@@ -29,6 +29,8 @@ public class GistApi: Service {
   init() {
     super.init(baseURL: "https://api.github.com")
     
+    Siesta.enabledLogCategories = LogCategory.common
+    
     configure { [weak self] in
       guard let s = self else { return }
       

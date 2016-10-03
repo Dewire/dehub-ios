@@ -1,6 +1,6 @@
 github "hkellaway/Gloss" "145c78888ccca678bf146b5b0b58882016a4d9aa"
-github "Quick/Nimble" "9ed51e1f17c410ff51cfa1c69e18e9e2d450dfb7"
+github "Quick/Nimble" "8b71ca345b9b41e3555f87dd904c6f23e4ccdc34"
 github "ReactiveX/RxSwift" "3.0.0-beta.1"
 github "SwiftyJSON/SwiftyJSON" "3.1.0"
-github "bustoutsolutions/siesta" "af53c9fa81f8fd61b56d21441d3e08a0f35a8f65"
+github "bustoutsolutions/siesta" "1.0-rc.0"
 github "RxSwiftCommunity/RxDataSources" "e55b725644cd4261debbf5e5c2a547a6d7f6fc78"

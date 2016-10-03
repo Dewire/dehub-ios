@@ -74,5 +74,6 @@ class CreateGistDirector : BaseDirector<CreateGistScene, CreateGistStage> {
         print("create ok")
         self?.scene.gistCreated()
       }
+      .addToOverlay(stage: stage)
   }
 }

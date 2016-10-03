@@ -30,7 +30,6 @@ class HomeScene : BaseScene {
   }
   
   func onNewGist() {
-    print("new gist")
     let scene = CreateGistScene(services: self.services, newGistCallback: newGistCallback)
     self.navigation.pushController(scene.stage(), animated: true)
   }

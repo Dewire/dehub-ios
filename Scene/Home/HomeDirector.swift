@@ -29,8 +29,8 @@ class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   override func stageDidLoad(stage: HomeStage) {
     addApiObservers()
     observe(outputs: stage.outputs)
-    api.gists.loadIfNeeded()
     stage.overlayResources = [api.gists]
+    api.gists.loadIfNeeded()
   }
  
   private func observe(outputs: O) {
@@ -65,7 +65,6 @@ class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   
   func observeRefresh(_ outputs: O) {
     outputs.refresh.asObservable().subscribe(onNext: { [unowned self] in
-      print("refresh")
       self.loadGists(useStatusOverlay: false)
     })
     .addDisposableTo(bag)
