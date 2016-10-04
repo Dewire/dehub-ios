@@ -1,7 +1,5 @@
-github "ReactiveX/RxSwift" "3.0.0-beta.1"
-github "RxSwiftCommunity/RxDataSources" "master"
+github "ReactiveX/RxSwift" "3.0.0-beta.2"
+github "RxSwiftCommunity/RxDataSources" "1.0.0-beta.3"
 github "Quick/Nimble" "master"
-github "hkellaway/Gloss" "swift_3.0"
 github "bustoutsolutions/siesta" "1.0-rc.0"
-
 github "SwiftyJSON/SwiftyJSON" "3.1.0"
