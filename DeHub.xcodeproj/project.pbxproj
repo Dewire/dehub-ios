@@ -60,7 +60,6 @@
 		D3E0EF5D1D0D3ACE0066AE5C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE001D0576D8004C6569 /* RxSwift.framework */; };
 		D3E0EF5E1D0D3AF30066AE5C /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE011D0576D8004C6569 /* RxCocoa.framework */; };
 		D3E0EF5F1D0D3AF70066AE5C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE001D0576D8004C6569 /* RxSwift.framework */; };
-		D3F43D031D16A096005A0094 /* Gloss.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F43D021D16A096005A0094 /* Gloss.framework */; };
 		D3F43D0B1D191913005A0094 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3F43D091D191913005A0094 /* Home.storyboard */; };
 		D3F43D0D1D191937005A0094 /* HomeStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F43D0C1D191937005A0094 /* HomeStage.swift */; };
 		D3F43D0F1D191944005A0094 /* HomeDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F43D0E1D191944005A0094 /* HomeDirector.swift */; };
@@ -206,7 +205,6 @@
 		D3BD748D1D043BE40032CC00 /* LoginStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginStage.swift; sourceTree = "<group>"; };
 		D3CE169A1D0BEB4600749C9F /* BaseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScene.swift; sourceTree = "<group>"; };
 		D3E0EF571D0D34E10066AE5C /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
-		D3F43D021D16A096005A0094 /* Gloss.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gloss.framework; path = Carthage/Build/iOS/Gloss.framework; sourceTree = "<group>"; };
 		D3F43D0A1D191913005A0094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Scene/Base.lproj/Home.storyboard; sourceTree = SOURCE_ROOT; };
 		D3F43D0C1D191937005A0094 /* HomeStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStage.swift; sourceTree = "<group>"; };
 		D3F43D0E1D191944005A0094 /* HomeDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDirector.swift; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 				D3E0EF5B1D0D3ACC0066AE5C /* RxSwift.framework in Frameworks */,
 				6BC47CF51D9D395800286368 /* Siesta.framework in Frameworks */,
 				D3E0EF521D0C01AE0066AE5C /* RxCocoa.framework in Frameworks */,
-				D3F43D031D16A096005A0094 /* Gloss.framework in Frameworks */,
 				6BC47CFA1D9D54F200286368 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,7 +498,6 @@
 				6BC47CF91D9D54F200286368 /* SwiftyJSON.framework */,
 				6BC47CF41D9D395800286368 /* Siesta.framework */,
 				6BC47CF01D9BA19800286368 /* RxDataSources.framework */,
-				D3F43D021D16A096005A0094 /* Gloss.framework */,
 				D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */,
 				D3FFDE001D0576D8004C6569 /* RxSwift.framework */,
 				D3FFDE011D0576D8004C6569 /* RxCocoa.framework */,
@@ -839,7 +835,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Gloss.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Siesta.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",

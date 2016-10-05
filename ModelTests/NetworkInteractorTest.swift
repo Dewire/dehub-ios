@@ -11,7 +11,6 @@ import XCTest
 import RxSwift
 import RxCocoa
 import Nimble
-import Gloss
 
 class MockNetwork : P_Network {
   
