@@ -12,6 +12,7 @@ import XCTest
 import RxSwift
 import RxCocoa
 import Nimble
+import Siesta
 
 typealias LoginResult = () -> Observable<Void>
 
@@ -41,6 +42,72 @@ class SpyLoginStage : LoginStage {
   override var outputs: Outputs { return o }
 }
 
+class MockProvider: NetworkingProvider {
+  
+  var stubs = [String: ResponseStub]()
+  
+  var defaultHeaders = [String:String]()
+  
+  func startRequest(
+    _ request: URLRequest,
+    completion: @escaping RequestNetworkingCompletionCallback) -> RequestNetworking {
+    
+    guard let stub = stub(forRequest: request) else {
+      puts("no stub matching url: \(request.url?.absoluteString)")
+      return RequestStub()
+    }
+    
+    var headers = defaultHeaders
+    headers["Content-Type"] = stub.contentType
+    
+    let response = HTTPURLResponse(
+      url: request.url!,
+      statusCode: stub.error == nil ? 200 : 500,
+      httpVersion: "HTTP/1.1",
+      headerFields: headers)
+    
+    completion(response, stub.data, stub.error)
+    
+    return RequestStub()
+  }
+  
+  private func stub(forRequest req: URLRequest) -> ResponseStub? {
+    for key in stubs.keys {
+      if req.url!.absoluteString.contains(key) {
+        return stubs[key]
+      }
+    }
+    return nil
+  }
+  
+}
+
+struct ResponseStub {
+  let contentType: String
+  let data: Data
+  let error: Error?
+  
+  init(contentType: String = "application/octet-stream", data: Data, error: Error? = nil) {
+    self.contentType = contentType
+    self.error = error
+    self.data = data
+  }
+}
+  
+struct RequestStub: RequestNetworking {
+    
+  func cancel() { }
+    
+  /// Returns raw data used for progress calculation.
+  var transferMetrics: RequestTransferMetrics {
+      
+    return RequestTransferMetrics(
+      requestBytesSent: 0,
+      requestBytesTotal: nil,
+      responseBytesReceived: 0,
+      responseBytesTotal: nil)
+  }
+}
 
 class LoginDirectorTests: XCTestCase {
   
@@ -51,8 +118,10 @@ class LoginDirectorTests: XCTestCase {
   var passwordInput: BehaviorSubject<String>!
   var loginButtonInput: BehaviorSubject<Void>!
   
+  var mockProvider: MockProvider!
   var navigation: SpyNavigation!
   var stage: SpyLoginStage!
+  var scene: SpyLoginScene!
   var director: LoginDirector!
   
   override func setUp() {
@@ -62,9 +131,12 @@ class LoginDirectorTests: XCTestCase {
     passwordInput = BehaviorSubject(value: "")
     loginButtonInput = BehaviorSubject(value: Void())
     
-    let api = GistApi()
+    mockProvider = MockProvider()
+    let api = GistApi(networkProvider: mockProvider)
     
-    let scene = LoginScene(services: Services())
+    navigation = SpyNavigation()
+    
+    scene = SpyLoginScene(services: Services())
     scene.navigation = navigation
     director = LoginDirector(
       scene: scene,
@@ -84,6 +156,7 @@ class LoginDirectorTests: XCTestCase {
   
   // MARK: Tests
   
+  
   func testLoginButtonDisabledWhenUsernameAndPasswordNotEntered() {
     usernameInput.onNext("")
     passwordInput.onNext("")
@@ -98,24 +171,35 @@ class LoginDirectorTests: XCTestCase {
     expect(self.stage.enableLoginButtonValue).toEventually(beTrue())
   }
  
-  /* TODO: fix these
-  func testLoginButtonDisableAfterPressedAndLoginSuccess() {
+  func testLoginButtonDisableAfterPressed() {
+    usernameInput.onNext("username")
+    passwordInput.onNext("password")
+    
+    
     loginButtonInput.onNext(Void())
     expect(self.stage.enableLoginButtonValue).toEventually(beFalse())
   }
   
   func testLoginButtonEnabledAfterPressedAndLoginFailure() {
-    interactor.loginResult = { Observable.error(URLError(.unknown)) }
+    usernameInput.onNext("username")
+    passwordInput.onNext("password")
+    
+    mockProvider.stubs["/gists"] = ResponseStub(data: json(forFile: "gists"),
+                                                error: URLError(.unknown))
     
     loginButtonInput.onNext(Void())
     expect(self.stage.enableLoginButtonValue).toEventually(beTrue())
   }
-  
+ 
   func testLoginCalledWhenLoginButtonPressed() {
+    mockProvider.stubs["/gists"] = ResponseStub(contentType: "application/json",
+                                                data: json(forFile: "gists"),
+                                                error: nil)
+    
+    
     loginButtonInput.onNext(Void())
-    expect(self.interactor.loginWasCalled).toEventually(beTrue())
+    expect(self.scene.called_login).toEventually(beTrue())
   }
- */
 }
 
 

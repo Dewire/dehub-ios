@@ -34,3 +34,35 @@ class SpyNavigation : Navigation {
     poppedController = true
   }
 }
+
+func json(forFile: String) -> Data {
+  
+  func filePath(_ file: String) -> String {
+    return "json/\(file)"
+  }
+  
+  let bundle = Bundle(for: SpyNavigation.self)
+  let url = bundle.url(forResource: filePath(forFile), withExtension: nil)!
+  
+  return try! Data.init(contentsOf: url)
+}
+
+
+class SpyLoginScene : LoginScene {
+  var called_createStage: Bool = false
+  var called_login: Bool = false
+  var called_logout: Bool = false
+
+  override func createStage() -> UIViewController {
+    called_createStage = true
+    return super.createStage()
+  }
+
+  override func login() {
+    called_login = true
+  }
+
+  override func logout() {
+    called_logout = true
+  }
+}

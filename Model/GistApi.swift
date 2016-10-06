@@ -12,11 +12,13 @@ import SwiftyJSON
 
 public class GistApi: Service {
   
+  static let BASE_URL = "https://api.github.com"
+  
   private let SwiftyJSONTransformer = ResponseContentTransformer {
     JSON($0.content as AnyObject)
   }
   
-  var authToken = "" {
+  fileprivate var authToken = "" {
     didSet {
       // Rerun existing configuration closure using new value
       invalidateConfiguration()
@@ -26,8 +28,18 @@ public class GistApi: Service {
     }
   }
   
-  init() {
-    super.init(baseURL: "https://api.github.com")
+  init(networkProvider: NetworkingProvider? = nil) {
+    if let provider = networkProvider {
+      super.init(baseURL: GistApi.BASE_URL, useDefaultTransformers: true, networking: provider)
+    }
+    else {
+      super.init(baseURL: GistApi.BASE_URL)
+    }
+    
+    setup()
+  }
+  
+  private func setup() {
     
     Siesta.enabledLogCategories = LogCategory.common
     
@@ -42,27 +54,31 @@ public class GistApi: Service {
       try ($0.content as JSON).arrayValue.map(GistEntity.init)
     }
   }
-  
-  public var gists: Resource { return resource("/gists") }
+}
+
+extension GistApi {
   
   public func login(username: String, password: String) -> Request {
-    
     authToken = basicAuthFor(username: username, password: password)
-    
     return gists.request(.get)
+  }
+  
+  public func logout() {
+    authToken = ""
+  }
+  
+  private func basicAuthFor(username: String, password: String) -> String {
+    let data = (username + ":" + password).data(using: String.Encoding.utf8)
+    let encoded = data?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+    return "Basic " + encoded!
   }
   
   public func get(url: String) -> Request {
     return resource(absoluteURL: url).request(.get)
   }
   
-  
-  private func basicAuthFor(username: String, password: String) -> String {
-    let data = (username + ":" + password).data(using: String.Encoding.utf8)
-    let encoded = data?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-    
-    return "Basic " + encoded!
+  public var gists: Resource {
+    return resource("/gists")
   }
-  
-  
 }
+

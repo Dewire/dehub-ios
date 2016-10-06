@@ -30,6 +30,8 @@
 		6BC47CFC1D9E937900286368 /* SiestaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CFB1D9E937900286368 /* SiestaUI.framework */; };
 		6BC47CFE1D9FBF0400286368 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CFD1D9FBF0400286368 /* Common.swift */; };
 		6BC47D001DA272A100286368 /* GistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CFF1DA272A100286368 /* GistApi.swift */; };
+		6BC47D041DA3BA4400286368 /* json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC47D031DA3BA4400286368 /* json */; };
+		6BC47D051DA3C4FC00286368 /* json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC47D031DA3BA4400286368 /* json */; };
 		D37CF6A91D0DDB8C00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AA1D0DDB8D00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AB1D0DDB8F00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
@@ -177,6 +179,7 @@
 		6BC47CFB1D9E937900286368 /* SiestaUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SiestaUI.framework; path = Carthage/Build/iOS/SiestaUI.framework; sourceTree = "<group>"; };
 		6BC47CFD1D9FBF0400286368 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		6BC47CFF1DA272A100286368 /* GistApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GistApi.swift; path = Model/GistApi.swift; sourceTree = SOURCE_ROOT; };
+		6BC47D031DA3BA4400286368 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
 		D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		D3BD74061D042E650032CC00 /* DeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BD74091D042E650032CC00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -429,6 +432,7 @@
 		D3BD746E1D0431F10032CC00 /* SceneTests */ = {
 			isa = PBXGroup;
 			children = (
+				6BC47D031DA3BA4400286368 /* json */,
 				6BC3768E1D8A90F4007F4C87 /* Common.swift */,
 				D3BD746F1D0431F10032CC00 /* LoginDirectorTest.swift */,
 				6BC3768B1D8A8C8E007F4C87 /* LoginSceneTest.swift */,
@@ -771,6 +775,7 @@
 				D3F43D0B1D191913005A0094 /* Home.storyboard in Resources */,
 				6BC376A41D8AC501007F4C87 /* ViewGist.storyboard in Resources */,
 				D3BD748A1D043AAB0032CC00 /* Login.storyboard in Resources */,
+				6BC47D041DA3BA4400286368 /* json in Resources */,
 				D3BD74901D043E1C0032CC00 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -779,6 +784,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC47D051DA3C4FC00286368 /* json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

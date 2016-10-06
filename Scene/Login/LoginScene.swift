@@ -10,7 +10,7 @@ import UIKit
 import Model
 
 open class LoginScene : BaseScene {
-  
+
   open override func createStage() -> UIViewController {
     
     let s = LoginStage.create()
@@ -31,6 +31,7 @@ open class LoginScene : BaseScene {
   
   func logout() {
     navigation.dismiss(animated: true, completion: nil)
-    services.api.wipeResources()
+    services.api.logout()
   }
+  
 }
