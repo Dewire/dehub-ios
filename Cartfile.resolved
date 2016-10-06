@@ -1,5 +1,5 @@
 github "Quick/Nimble" "71c072fa68a267bf1795a25a64c9c85c66fe74fa"
 github "ReactiveX/RxSwift" "3.0.0-beta.2"
 github "SwiftyJSON/SwiftyJSON" "3.1.0"
-github "bustoutsolutions/siesta" "1.0-rc.0"
+github "bustoutsolutions/siesta" "69c5a492d7d26988cf58b920ae69a02bc935ed30"
 github "RxSwiftCommunity/RxDataSources" "1.0.0-beta.3"
