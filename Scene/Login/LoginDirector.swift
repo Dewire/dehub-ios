@@ -51,7 +51,7 @@ class LoginDirector : BaseDirector<LoginScene, LoginStage> {
   }
   
   private func observeLoginPressed(_ userPass: Observable<(String, String)>, loginPressed: ControlEvent<Void>) {
-    loginPressed.asObservable().skip(1)
+    loginPressed.asObservable()
       .withLatestFrom(userPass) { $1 }
       .subscribe(onNext: { userPass in
         self.stage.enableLoginButton(enabled: false)

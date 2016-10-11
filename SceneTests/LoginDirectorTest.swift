@@ -148,9 +148,9 @@ class LoginDirectorTests: XCTestCase {
   
   func mockOutputs() -> LoginStage.Outputs {
     return LoginStage.Outputs(
-      username: ControlProperty<String>(values: usernameInput, valueSink: AnyObserver { n in }),
-      password: ControlProperty<String>(values: passwordInput, valueSink: AnyObserver { n in }),
-      loginPressed: ControlEvent<Void>(events: loginButtonInput))
+      username: ControlProperty<String>(values: usernameInput.skip(1), valueSink: AnyObserver { n in }),
+      password: ControlProperty<String>(values: passwordInput.skip(1), valueSink: AnyObserver { n in }),
+      loginPressed: ControlEvent<Void>(events: loginButtonInput.skip(1)))
   }
   
   
@@ -175,8 +175,7 @@ class LoginDirectorTests: XCTestCase {
     usernameInput.onNext("username")
     passwordInput.onNext("password")
     
-    
-    loginButtonInput.onNext(Void())
+    loginButtonInput.onNext(())
     expect(self.stage.enableLoginButtonValue).toEventually(beFalse())
   }
   
@@ -196,7 +195,8 @@ class LoginDirectorTests: XCTestCase {
                                                 data: json(forFile: "gists"),
                                                 error: nil)
     
-    
+    usernameInput.onNext("username")
+    passwordInput.onNext("password")
     loginButtonInput.onNext(Void())
     expect(self.scene.called_login).toEventually(beTrue())
   }
