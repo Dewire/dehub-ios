@@ -5,7 +5,7 @@
 dehub is an app that can be used to view your gists and to create new gists.
 It is written using RxSwift using a MVP-like architecture.
 
-## Setup
+## Setup (requires Xcode 8.0/Swift 3 or greater)
 
 * Install [Carthage](https://github.com/Carthage/Carthage)
 * Clone the repo and run ```carthage bootstrap --platform iOS```
@@ -19,10 +19,10 @@ The app is split into two frameworks, one called ```Model``` and the other calle
 
 ## The View
 
-The view layer architecure is based on Srdan Rasic's blog post 
-[A Different Take on MVVM with Swift](http://rasic.info/a-different-take-on-mvvm-with-swift/)
+The view layer architecure is inspired by Srdan Rasic's blog post 
+[A Different Take on MVVM with Swift](http://rasic.info/a-different-take-on-mvvm-with-swift/) with some significant changes.
 
-In this setup, each screen in the app has a ```Scene```, ```Stage``` and ```Director``` object,
+In this architecture, each screen in the app has a ```Scene```, ```Stage``` and ```Director``` object,
 which together fulfill the same role as the UIViewController in a vanilla iOS app.
 
 ### The ```Stage```
@@ -34,33 +34,27 @@ It doesn't even know what it "means" when the user taps a button, it just delega
 
 ### The ```Director```
 
-Tells the ```Stage``` what to do. For example a ```Director``` may have a property called ```enableLoginButton```.
-The ```Stage``` would then listen to this property, and depending on whether it is true or false it would enable or disable
-the login button. The important concept here is that only the ```Director``` contains the logic that decides
-if ```enableLoginButton``` should be true or false.
+Tells the ```Stage``` what to do. For example a ```Director``` may call a method ```enableLoginButton(enabled: Bool)``` on its ```Stage```. The ```Stage``` would then enable or disable the login button in this method. The important concept here is that only the ```Director``` contains the logic that decides when and with what argument the ```enableLoginButton(enabled: Bool)``` method should be called.
 
-Let's say that the ```enableLoginButton``` should be true if the user has entered some text in both the
-username field and the password field. Since the fields are views, they are referenced by the ```Stage```, and since
-the ```Director``` needs to know their values, the ```Stage``` has to send their values to the ```Director```.
+Let's say that the ```enableLoginButton(enabled: Bool)``` should be called with ```true``` if the user has entered some text in both the username field and the password field. Since the fields are views, they are referenced by the ```Stage```, and since the ```Director``` needs to know their values, the ```Stage``` has to send their values to the ```Director```.
 
 ```[Stage] --> [username] --> [Director]```
 
 ```[Stage] --> [password] --> [Director]```
 
-The ```Director``` can then set ```enableLoginButton = !username.isEmpty && !password.isEmpty```
-and send that back to the ```Stage```:
+The ```Director``` can then do
+```swift
+let enabled = !username.isEmpty && !password.isEmpty
+stage.enableLoginButton(enabled: enabled)
+```
 
-```[Stage] <-- [enableLoginButton] <-- [Director]```
+The ```Director``` communicates with the stage by directly calling methods on it, while the ```Stage``` communicates with the ```Director``` by exposing RxSwift properties that the ```Director``` observes.
 
 ### The ```Scene```
 
-Creates the ```Stage``` and the ```Director``` and is responsible for transitioning to other scenes. Generally the ```Scene``` listens to events from the ```Director``` to decide when to change to a new ```Scene```.
-
-![alt tag](http://i.imgur.com/p7XMFTm.png)
+Creates the ```Stage``` and the ```Director``` and is responsible for transitioning to other scenes. Generally a ```Director``` calls a method on a ```Scene``` when it decides that the scene should change. The ```Scene``` then performs the transition to the new ```Scene```, which creates it's corresponding ```Director``` and ```Stage```.
 
 ## Bootstrapping
 
-When the app starts it creates the initial ```Scene``` which in turn creates the initial ```Stage```.
-
-
+When the app starts it creates the initial ```Scene``` which in turn creates the initial ```Stage``` and ```Director```.
 
