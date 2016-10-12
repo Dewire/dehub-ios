@@ -32,6 +32,7 @@
 		6BC47D001DA272A100286368 /* GistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CFF1DA272A100286368 /* GistApi.swift */; };
 		6BC47D041DA3BA4400286368 /* json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC47D031DA3BA4400286368 /* json */; };
 		6BC47D051DA3C4FC00286368 /* json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC47D031DA3BA4400286368 /* json */; };
+		6BD77AFD1DAE22AB009D8360 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BD77AFC1DAE22AB009D8360 /* Quick.framework */; };
 		D37CF6A91D0DDB8C00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AA1D0DDB8D00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AB1D0DDB8F00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
@@ -180,6 +181,7 @@
 		6BC47CFD1D9FBF0400286368 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		6BC47CFF1DA272A100286368 /* GistApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GistApi.swift; path = Model/GistApi.swift; sourceTree = SOURCE_ROOT; };
 		6BC47D031DA3BA4400286368 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
+		6BD77AFC1DAE22AB009D8360 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		D3BD74061D042E650032CC00 /* DeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BD74091D042E650032CC00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				D3E0EF5A1D0D3AC40066AE5C /* RxCocoa.framework in Frameworks */,
 				D3BD74691D0431F10032CC00 /* Scene.framework in Frameworks */,
 				D3E0EF5D1D0D3ACE0066AE5C /* RxSwift.framework in Frameworks */,
+				6BD77AFD1DAE22AB009D8360 /* Quick.framework in Frameworks */,
 				D37CF6AA1D0DDB8D00E8CD2A /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,6 +501,7 @@
 		D3FFDDFF1D0576A3004C6569 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6BD77AFC1DAE22AB009D8360 /* Quick.framework */,
 				6BC47CFB1D9E937900286368 /* SiestaUI.framework */,
 				6BC47CF91D9D54F200286368 /* SwiftyJSON.framework */,
 				6BC47CF41D9D395800286368 /* Siesta.framework */,
@@ -826,6 +830,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
 			);
 			outputPaths = (
 			);

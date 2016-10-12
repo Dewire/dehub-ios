@@ -11,47 +11,41 @@ import XCTest
 import Model
 import RxSwift
 import RxCocoa
+import Quick
 import Nimble
 
-
-class LoginSceneTests: XCTestCase {
-  
-  
-  // MARK: Setup
-  
-  
-  var spyNavigation: SpyNavigation!
-  var scene: LoginScene!
-  
-  override func setUp() {
-    super.setUp()
+class LoginSceneTests: QuickSpec {
+  override func spec() {
     
-    scene = LoginScene(services: Services())
-    spyNavigation = SpyNavigation()
-    scene.navigation = spyNavigation
+    // MARK: Setup
+    
+    var spyNavigation: SpyNavigation!
+    var scene: LoginScene!
+    
+    describe("the login scene") {
+      
+      beforeEach {
+        scene = LoginScene(services: Services())
+        spyNavigation = SpyNavigation()
+        scene.navigation = spyNavigation
+      }
+      
+      // MARK: Tests
+      
+      it("presents the a controller on a successful login") {
+        
+        scene.login()
+        
+        expect(spyNavigation.presentedController).toEventuallyNot(beNil())
+      }
+      
+      it("dismisses a controller on logout") {
+        
+        scene.logout()
+        
+        expect(spyNavigation.dismissCalled).toEventually(beTrue())
+      }
+    }
   }
-  
-  
-  // MARK: Tests
-  
-  
-  func testPresentsControllerOnSuccessfulLogin() {
-    scene.login()
-    expect(self.spyNavigation.presentedController).toEventuallyNot(beNil())
-  }
-  
-  func testDismissesControllerOnLogout() {
-    scene.logout()
-    expect(self.spyNavigation.dismissCalled).toEventually(beTrue())
-  }
-  
-  //func testStateIsResetOnLogout() {
-    // TODO
-  //}
 }
-
-
-
-
-
 

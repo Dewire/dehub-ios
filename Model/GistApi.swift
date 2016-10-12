@@ -41,7 +41,7 @@ public class GistApi: Service {
   
   private func setup() {
     
-    Siesta.enabledLogCategories = LogCategory.common
+    Siesta.LogCategory.enabled = LogCategory.common
     
     configure { [weak self] in
       guard let s = self else { return }
