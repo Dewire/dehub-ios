@@ -40,8 +40,8 @@ extension CreateGistStage {
 
   struct Outputs {
     let saveButtonTapped: ControlEvent<Void>
-    let titleText: ControlProperty<String>
-    let contentText: ControlProperty<String>
+    let titleText: ControlProperty<String?>
+    let contentText: ControlProperty<String?>
     let privatePublic: ControlProperty<Int>
   }
 

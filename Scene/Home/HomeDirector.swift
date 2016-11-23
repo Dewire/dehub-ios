@@ -56,7 +56,7 @@ class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   
   private func observeRowTap(_ outputs: O) {
     outputs.rowTap
-      .filter { $0 != nil }.map { $0! }
+      .unwrap()
       .subscribe(onNext: { [unowned self] gist in
         self.scene.onViewGist(gist: gist)
       })

@@ -22,8 +22,8 @@ class LoginDirectorTests: QuickSpec {
     
     // MARK: Setup
     
-    var usernameInput: BehaviorSubject<String>!
-    var passwordInput: BehaviorSubject<String>!
+    var usernameInput: BehaviorSubject<String?>!
+    var passwordInput: BehaviorSubject<String?>!
     var loginButtonInput: BehaviorSubject<Void>!
   
     var mockProvider: MockProvider!
@@ -51,8 +51,8 @@ class LoginDirectorTests: QuickSpec {
           api: api)
         
         stage = SpyLoginStage(outputs: LoginStage.Outputs(
-          username: ControlProperty<String>(values: usernameInput.skip(1), valueSink: AnyObserver { n in }),
-          password: ControlProperty<String>(values: passwordInput.skip(1), valueSink: AnyObserver { n in }),
+          username: ControlProperty<String?>(values: usernameInput.skip(1), valueSink: AnyObserver { n in }),
+          password: ControlProperty<String?>(values: passwordInput.skip(1), valueSink: AnyObserver { n in }),
           loginPressed: ControlEvent<Void>(events: loginButtonInput.skip(1))))
           
         director.stage = stage

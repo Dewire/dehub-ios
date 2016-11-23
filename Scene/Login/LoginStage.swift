@@ -33,8 +33,8 @@ class LoginStage : DirectedViewController {
   }
   
   struct Outputs {
-    let username: ControlProperty<String>
-    let password: ControlProperty<String>
+    let username: ControlProperty<String?>
+    let password: ControlProperty<String?>
     let loginPressed: ControlEvent<Void>
   }
 

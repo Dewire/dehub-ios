@@ -27,7 +27,7 @@ class HomeStage : DirectedViewController {
       addButtonTap: navigationItem.rightBarButtonItem!.rx.tap,
       
       rowTap: tableView.rx.itemSelected.map { [unowned self] indexPath in
-        return try? self.tableView.rx.model(indexPath)
+        try? self.tableView.rx.model(at: indexPath)
       },
       
       refresh: refreshControl.rx.controlEvent(UIControlEvents.valueChanged)

@@ -31,8 +31,8 @@ class LoginDirector : BaseDirector<LoginScene, LoginStage> {
   }
 
   private func observeOutputs(outputs: LoginStage.Outputs) {
-    let userPass = Observable.combineLatest(outputs.username.asObservable(),
-                                            outputs.password.asObservable()) {
+    let userPass = Observable.combineLatest(outputs.username.asObservable().unwrap(),
+                                            outputs.password.asObservable().unwrap()) {
       ($0, $1)
     }
 

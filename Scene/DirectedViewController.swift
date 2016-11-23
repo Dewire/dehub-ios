@@ -16,7 +16,7 @@ class DirectedViewController : UIViewController {
   
   let overlay: ResourceStatusOverlay = {
     let o = ResourceStatusOverlay()
-    o.displayPriority = [.ManualLoading, .Loading, .Error, .AnyData]
+    o.displayPriority = [.manualLoading, .loading, .error, .anyData]
     return o
   }()
   
@@ -35,7 +35,7 @@ class DirectedViewController : UIViewController {
   }
   
   private func embedOverlay() {
-    overlay.embedIn(self)
+    overlay.embed(in: self)
     overlay.backgroundColor = overlay.backgroundColor?.withAlphaComponent(0.5)
   }
   
