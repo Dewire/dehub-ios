@@ -38,21 +38,20 @@ class CreateGistDirector : BaseDirector<CreateGistScene, CreateGistStage> {
         isPublic: p == 1,
         file: CreateGistFileInfo(content: c))
     }
-    .asDriver(onErrorJustReturn: nil)
     
     observeEnableSaveButton(gist: gist)
     observeSaveGist(saveButtonTapped: outputs.saveButtonTapped, gist: gist)
   }
   
-  private func observeEnableSaveButton(gist: Driver<CreateGistEntity?>) {
+  private func observeEnableSaveButton(gist: Observable<CreateGistEntity?>) {
     gist.map { $0 != nil }
-      .drive(onNext: { [unowned self] in
+      .subscribe(onNext: { [unowned self] in
         self.stage.enableSaveButton($0)
       })
       .addDisposableTo(bag)
   }
   
-  private func observeSaveGist(saveButtonTapped: ControlEvent<Void>, gist: Driver<CreateGistEntity?>) {
+  private func observeSaveGist(saveButtonTapped: ControlEvent<Void>, gist: Observable<CreateGistEntity?>) {
     saveButtonTapped
       .withLatestFrom(gist)
       .subscribe(onNext: { [weak self] gist in

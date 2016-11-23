@@ -76,7 +76,7 @@ class HomeStage : DirectedViewController {
     super.viewDidLoad()
     tableView.addSubview(refreshControl)
     
-    gists.asDriver().drive(tableView.rx.items(dataSource: dataSource))
+    gists.asObservable().bindTo(tableView.rx.items(dataSource: dataSource))
       .addDisposableTo(bag)
   }
   
