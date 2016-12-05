@@ -32,7 +32,7 @@ class LoginSceneTests: QuickSpec {
       
       // MARK: Tests
       
-      it("presents the a controller on a successful login") {
+      it("presents the controller on a successful login") {
         
         scene.login()
         

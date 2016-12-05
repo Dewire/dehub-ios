@@ -12,6 +12,7 @@
 		6B3053531D86E577000F344A /* CreateGistScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053501D86E577000F344A /* CreateGistScene.swift */; };
 		6B3053541D86E577000F344A /* CreateGistStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053511D86E577000F344A /* CreateGistStage.swift */; };
 		6B3053581D86EBF8000F344A /* GistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053571D86EBF8000F344A /* GistEntity.swift */; };
+		6B44B4F21DF59E73005CA8DB /* FreeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B44B4F11DF59E73005CA8DB /* FreeFunctions.swift */; };
 		6B5E3EDE1D883B5800E357E2 /* GistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */; };
 		6BC3768D1D8A8C9C007F4C87 /* LoginSceneTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3768B1D8A8C8E007F4C87 /* LoginSceneTest.swift */; };
 		6BC3768F1D8A90F4007F4C87 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC3768E1D8A90F4007F4C87 /* Common.swift */; };
@@ -162,6 +163,7 @@
 		6B3053501D86E577000F344A /* CreateGistScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGistScene.swift; path = CreateGist/CreateGistScene.swift; sourceTree = "<group>"; };
 		6B3053511D86E577000F344A /* CreateGistStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGistStage.swift; path = CreateGist/CreateGistStage.swift; sourceTree = "<group>"; };
 		6B3053571D86EBF8000F344A /* GistEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistEntity.swift; sourceTree = "<group>"; };
+		6B44B4F11DF59E73005CA8DB /* FreeFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeFunctions.swift; sourceTree = "<group>"; };
 		6B5E3EDD1D883B5800E357E2 /* GistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistTableViewCell.swift; sourceTree = "<group>"; };
 		6BC3768B1D8A8C8E007F4C87 /* LoginSceneTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSceneTest.swift; sourceTree = "<group>"; };
 		6BC3768E1D8A90F4007F4C87 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				D3CE169A1D0BEB4600749C9F /* BaseScene.swift */,
 				D3F5418E1D264C61009A9A27 /* BaseDirector.swift */,
 				D3FFDDF91D045680004C6569 /* DirectedViewController.swift */,
+				6B44B4F11DF59E73005CA8DB /* FreeFunctions.swift */,
 				D3F541931D281E30009A9A27 /* Extensions */,
 				D3F541901D281C3F009A9A27 /* Custom Views */,
 				D3BD748C1D043B8D0032CC00 /* Login */,
@@ -681,14 +684,17 @@
 				TargetAttributes = {
 					D3BD74051D042E650032CC00 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 483X4L5462;
 						LastSwiftMigration = 0800;
 					};
 					D3BD74191D042E650032CC00 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 483X4L5462;
 						TestTargetID = D3BD74051D042E650032CC00;
 					};
 					D3BD74241D042E650032CC00 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 483X4L5462;
 						TestTargetID = D3BD74051D042E650032CC00;
 					};
 					D3BD743B1D0431B40032CC00 = {
@@ -705,6 +711,7 @@
 					};
 					D3BD74671D0431F00032CC00 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 483X4L5462;
 						TestTargetID = D3BD74051D042E650032CC00;
 					};
 				};
@@ -909,6 +916,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B09C1541D8C020800434B33 /* DualScrollableTextView.swift in Sources */,
+				6B44B4F21DF59E73005CA8DB /* FreeFunctions.swift in Sources */,
 				D3F541971D298739009A9A27 /* UIView.swift in Sources */,
 				D3FFDDFE1D047233004C6569 /* LoginScene.swift in Sources */,
 				6B3053521D86E577000F344A /* CreateGistDirector.swift in Sources */,
@@ -1073,7 +1081,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1116,7 +1124,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1131,6 +1139,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 483X4L5462;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1148,6 +1157,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 483X4L5462;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1164,6 +1174,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 483X4L5462;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1180,6 +1191,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 483X4L5462;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1195,6 +1207,7 @@
 		D3BD74351D042E650032CC00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 483X4L5462;
 				INFOPLIST_FILE = DeHubUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dewire.DeHubUITests;
@@ -1206,6 +1219,7 @@
 		D3BD74361D042E650032CC00 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 483X4L5462;
 				INFOPLIST_FILE = DeHubUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dewire.DeHubUITests;
@@ -1353,6 +1367,7 @@
 		D3BD747A1D0431F10032CC00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 483X4L5462;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1368,6 +1383,7 @@
 		D3BD747B1D0431F10032CC00 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 483X4L5462;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

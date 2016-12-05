@@ -27,8 +27,8 @@ class CreateGistDirector : BaseDirector<CreateGistScene, CreateGistStage> {
   private func observeOutputs(outputs: CreateGistStage.Outputs) {
     
     let gist = Observable.combineLatest(
-      outputs.titleText.unwrap(),
-      outputs.contentText.unwrap(),
+      outputs.titleText.withoutNils(),
+      outputs.contentText.withoutNils(),
       outputs.privatePublic) { t, c, p -> CreateGistEntity? in
         
       guard !t.isEmpty && !c.isEmpty else { return nil }

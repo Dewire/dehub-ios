@@ -36,7 +36,7 @@ import RxSwift
 public protocol Optionable
 {
     associatedtype WrappedType
-    func unwrap() -> WrappedType
+    func withoutNils() -> WrappedType
     func isEmpty() -> Bool
 }
 
@@ -49,7 +49,7 @@ extension Optional : Optionable
      
      - returns: Value of the contained type
      */
-    public func unwrap() -> WrappedType {
+    public func withoutNils() -> WrappedType {
         return self!
     }
     
@@ -71,13 +71,13 @@ extension ObservableType where E : Optionable {
      - returns: An observable sequence of non-optional elements
      */
     
-    public func unwrap() -> Observable<E.WrappedType> {
+    public func withoutNils() -> Observable<E.WrappedType> {
         return self
             .filter { value in
                 return !value.isEmpty()
             }
             .map { value -> E.WrappedType in
-                value.unwrap()
+                value.withoutNils()
         }
     }
 }

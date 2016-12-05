@@ -56,7 +56,7 @@ class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   
   private func observeRowTap(_ outputs: O) {
     outputs.rowTap
-      .unwrap()
+      .withoutNils()
       .subscribe(onNext: { [unowned self] gist in
         self.scene.onViewGist(gist: gist)
       })
@@ -108,8 +108,8 @@ extension HomeDirector {
   private func gistsToSections(_ gists: [GistEntity]) -> [GistSection] {
     let groups = gists.groupBy { $0.isPublic }
     
-    let publicGists = GistSection(header: "Public Gists", items: groups.match)
-    let privateGists = GistSection(header: "Private Gists", items: groups.noMatch)
+    let publicGists = GistSection(header: L("Public Gists"), items: groups.match)
+    let privateGists = GistSection(header: L("Private Gists"), items: groups.noMatch)
     
     return [publicGists, privateGists]
   }
