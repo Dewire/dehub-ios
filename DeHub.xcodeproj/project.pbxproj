@@ -42,7 +42,6 @@
 		D3BD742A1D042E650032CC00 /* DeHubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BD74291D042E650032CC00 /* DeHubUITests.swift */; };
 		D3BD743F1D0431B40032CC00 /* Model.h in Headers */ = {isa = PBXBuildFile; fileRef = D3BD743E1D0431B40032CC00 /* Model.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3BD74461D0431B50032CC00 /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BD743C1D0431B40032CC00 /* Model.framework */; };
-		D3BD744D1D0431B50032CC00 /* NetworkInteractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BD744C1D0431B50032CC00 /* NetworkInteractorTest.swift */; };
 		D3BD74511D0431B50032CC00 /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BD743C1D0431B40032CC00 /* Model.framework */; };
 		D3BD74521D0431B50032CC00 /* Model.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D3BD743C1D0431B40032CC00 /* Model.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D3BD74621D0431F00032CC00 /* Scene.h in Headers */ = {isa = PBXBuildFile; fileRef = D3BD74611D0431F00032CC00 /* Scene.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -199,7 +198,6 @@
 		D3BD743E1D0431B40032CC00 /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		D3BD74401D0431B40032CC00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3BD74451D0431B40032CC00 /* ModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3BD744C1D0431B50032CC00 /* NetworkInteractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInteractorTest.swift; sourceTree = "<group>"; };
 		D3BD744E1D0431B50032CC00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3BD745F1D0431F00032CC00 /* Scene.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Scene.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BD74611D0431F00032CC00 /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
@@ -408,7 +406,6 @@
 		D3BD744B1D0431B50032CC00 /* ModelTests */ = {
 			isa = PBXGroup;
 			children = (
-				D3BD744C1D0431B50032CC00 /* NetworkInteractorTest.swift */,
 				D3BD744E1D0431B50032CC00 /* Info.plist */,
 			);
 			path = ModelTests;
@@ -907,7 +904,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3BD744D1D0431B50032CC00 /* NetworkInteractorTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
