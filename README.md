@@ -67,12 +67,3 @@ RxSwift has the same fundamental API as RxJava, so RxJava resources can be used 
 * [Reactive Programming with RxJava](http://shop.oreilly.com/product/0636920042228.do) - A good in-depth book on RxJava.
 
 For RxSwift specifics, see the [documentation](https://github.com/ReactiveX/RxSwift/tree/master/Documentation).
-
-##[Siesta](https://github.com/bustoutsolutions/siesta)##
-
-A REST library with a Retrofit inspired api. Does not currently support converting network respones to RxSwift observables (though it has support for RxCocoa). If this is implemented in the future we should probably use that API.
-
-__Learning resources:__
-* [The user guide](https://bustoutsolutions.github.io/siesta/guide/) - A good guide.
-
-
