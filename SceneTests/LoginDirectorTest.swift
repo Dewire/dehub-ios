@@ -11,7 +11,6 @@ import XCTest
 @testable import Model
 import RxSwift
 import RxCocoa
-import Siesta
 import Quick
 import Nimble
 
@@ -26,7 +25,7 @@ class LoginDirectorTests: QuickSpec {
     var passwordInput: BehaviorSubject<String?>!
     var loginButtonInput: BehaviorSubject<Void>!
   
-    var mockProvider: MockProvider!
+    var restService: MockRestService!
     var navigation: SpyNavigation!
     var stage: SpyLoginStage!
     var scene: SpyLoginScene!
@@ -39,13 +38,13 @@ class LoginDirectorTests: QuickSpec {
         passwordInput = BehaviorSubject(value: "")
         loginButtonInput = BehaviorSubject(value: Void())
         
-        mockProvider = MockProvider()
-        let api = GistApi(networkProvider: mockProvider)
-        
         navigation = SpyNavigation()
-        
         scene = SpyLoginScene(services: Services())
         scene.navigation = navigation
+        
+        restService = MockRestService()
+        let api = GistApi(restService: restService, state: State())
+        
         director = LoginDirector(
           scene: scene,
           api: api)
@@ -85,10 +84,20 @@ class LoginDirectorTests: QuickSpec {
         expect(stage.enableLoginButtonValue).toEventually(beFalse())
       }
       
+      it("calls login on the scene after the login button is tapped and the login request succeeds")  {
+        
+        restService.setMockResponse(path: "gists", jsonFile: "gists")
+        
+        usernameInput.onNext("username")
+        passwordInput.onNext("password")
+        loginButtonInput.onNext(Void())
+        
+        expect(scene.called_login).toEventually(beTrue())
+      }
+      
       it("enables the login button after it is tapped and the login request fails") {
         
-        mockProvider.stubs["/gists"] = ResponseStub(data: json(forFile: "gists"),
-                                                    error: URLError(.unknown))
+        restService.setMockError(path: "gists", error: URLError(.unknown))
         
         usernameInput.onNext("username")
         passwordInput.onNext("password")
@@ -97,17 +106,6 @@ class LoginDirectorTests: QuickSpec {
         expect(stage.enableLoginButtonValue).toEventually(beTrue())
       }
       
-      it("calls login on the scene after the login button is tapped and the login request succeeds")  {
-        
-        mockProvider.stubs["/gists"] = ResponseStub(contentType: "application/json",
-                                                    data: json(forFile: "gists"),
-                                                    error: nil)
-        usernameInput.onNext("username")
-        passwordInput.onNext("password")
-        loginButtonInput.onNext(Void())
-        
-        expect(scene.called_login).toEventually(beTrue())
-      }
     }
   }
 }

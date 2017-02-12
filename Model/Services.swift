@@ -10,8 +10,10 @@ import Foundation
 
 public struct Services {
   public let api: GistApi
+  public let state: State
 
   public init() {
-    api = GistApi()
+    state = State()
+    api = GistApi(restService: RestService(baseUrl: "https://api.github.com"), state: state)
   }
 }

@@ -15,77 +15,117 @@ import Siesta
 
 // MARK: Network
 
-
-class MockProvider: NetworkingProvider {
+class MockRestService: RestService {
+  
+  private var stubs = [String: RestResponse]()
+  private var errorStubs = [String: Error]()
+  
+  init() {
+    super.init(baseUrl: "mock")
+  }
+  
+  //MARK: GET
+  override func get<T>(
+    _ path: String,
+    requestTransform: ((URLRequest) -> URLRequest)? = nil,
+    responseTransform: @escaping (RestResponse) throws -> T
+    ) -> Observable<T> {
     
-    var stubs = [String: ResponseStub]()
-    
-    var defaultHeaders = [String:String]()
-    
-    func startRequest(
-        _ request: URLRequest,
-        completion: @escaping RequestNetworkingCompletionCallback) -> RequestNetworking {
-        
-        guard let stub = stub(forRequest: request) else {
-            puts("no stub matching url: \(request.url?.absoluteString)")
-            return RequestStub()
-        }
-        
-        var headers = defaultHeaders
-        headers["Content-Type"] = stub.contentType
-        
-        let response = HTTPURLResponse(
-            url: request.url!,
-            statusCode: stub.error == nil ? 200 : 500,
-            httpVersion: "HTTP/1.1",
-            headerFields: headers)
-        
-        completion(response, stub.data, stub.error)
-        
-        return RequestStub()
+    if let error = errorStubs[path] {
+      return Observable.error(error)
     }
     
-    private func stub(forRequest req: URLRequest) -> ResponseStub? {
-        for key in stubs.keys {
-            if req.url!.absoluteString.contains(key) {
-                return stubs[key]
-            }
-        }
-        return nil
+    guard let res = stubs[path] else {
+      print("no stub matching path: \(path))")
+      return Observable.never()
     }
     
-}
-
-struct ResponseStub {
-    let contentType: String
-    let data: Data
-    let error: Error?
+    return Observable.just(res)
+      .map(responseTransform)
+      .observeOn(MainScheduler.instance)
+  }
+  
+  override func get(
+    _ path: String,
+    requestTransform: ((URLRequest) -> URLRequest)? = nil
+    ) -> Observable<RestResponse> {
     
-    init(contentType: String = "application/octet-stream", data: Data, error: Error? = nil) {
-        self.contentType = contentType
-        self.error = error
-        self.data = data
+    if let error = errorStubs[path] {
+      return Observable.error(error)
     }
-}
-
-struct RequestStub: RequestNetworking {
     
-    func cancel() { }
-    
-    /// Returns raw data used for progress calculation.
-    var transferMetrics: RequestTransferMetrics {
-        
-        return RequestTransferMetrics(
-            requestBytesSent: 0,
-            requestBytesTotal: nil,
-            responseBytesReceived: 0,
-            responseBytesTotal: nil)
+    guard let stub = stubs[path] else {
+      print("no stub matching path: \(path))")
+      return Observable.never()
     }
+    
+    return Observable.just(stub)
+      .observeOn(MainScheduler.instance)
+  }
+  
+  //MARK: POST
+  override func post<T>(
+    _ path: String,
+    body: Data?,
+    requestTransform: ((URLRequest) -> URLRequest)? = nil,
+    responseTransform: @escaping (RestResponse) throws -> T
+    ) -> Observable<T> {
+    
+    if let error = errorStubs[path] {
+      return Observable.error(error)
+    }
+    
+    guard let stub = stubs[path] else {
+      print("no stub matching path: \(path))")
+      return Observable.never()
+    }
+    
+    return Observable.just(stub)
+      .map(responseTransform)
+      .observeOn(MainScheduler.instance)
+  }
+  
+  override func post(
+    _ path: String,
+    body: Data?,
+    requestTransform: ((URLRequest) -> URLRequest)? = nil
+    ) -> Observable<RestResponse> {
+    
+    if let error = errorStubs[path] {
+      return Observable.error(error)
+    }
+    
+    guard let stub = stubs[path] else {
+      print("no stub matching path: \(path))")
+      return Observable.never()
+    }
+    
+    return Observable.just(stub)
+      .observeOn(MainScheduler.instance)
+  }
+  
+  func setMockResponse(path: String,
+                       jsonFile: String,
+                       contentType: String = "application/json",
+                       headers: [String : String]? = [:]) {
+    
+    let data = json(forFile: jsonFile)
+    let res = HTTPURLResponse(
+      url: url(forPath: path),
+      statusCode: 200,
+      httpVersion: "HTTP/1.1",
+      headerFields: headers)!
+    
+    stubs[path] = RestResponse(response: res, data: data)
+  }
+  
+  func setMockError(path: String, error: Error) {
+    errorStubs[path] = error
+  }
 }
 
 
 // MARK: Util
-
 
 func json(forFile: String) -> Data {
     

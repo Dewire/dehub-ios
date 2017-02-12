@@ -62,6 +62,5 @@ extension UIViewController : Navigation {
     else {
       fatalError("tried to pop a view controller on a controller that does not have a navigation controller")
     }
-    
   }
 }

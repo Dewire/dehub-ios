@@ -10,12 +10,12 @@ import Foundation
 import RxSwift
 
 extension ObservableType {
-  
-  public func doOnNextAndError(callback: @escaping () -> ()) -> RxSwift.Observable<Self.E> {
+
+  public func doOnNextAndError(callback: @escaping () -> ()) -> Observable<Self.E> {
     return self.do(onNext: { _ in callback() }, onError: { _ in callback() })
   }
   
-  public func doOnErrorAndCompleted(callback: @escaping () -> ()) -> RxSwift.Observable<Self.E> {
+  public func doOnErrorAndCompleted(callback: @escaping () -> ()) -> Observable<Self.E> {
     return self.do(onError: { _ in callback() }, onCompleted: { _ in callback() })
   }
   
@@ -30,8 +30,6 @@ extension ObservableType {
 //  Created by Marin Todorov on 4/7/16.
 //  Copyright (c) 2016 RxSwiftCommunity https://github.com/RxSwiftCommunity
 //
-import Foundation
-import RxSwift
 
 public protocol Optionable
 {
@@ -81,4 +79,3 @@ extension ObservableType where E : Optionable {
         }
     }
 }
-

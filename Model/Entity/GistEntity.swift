@@ -15,7 +15,7 @@ public struct GistEntity {
   public let file: GistFileInfo
 }
 
-extension GistEntity {
+extension GistEntity: Entity {
   
   public init(json: JSON) throws {
     

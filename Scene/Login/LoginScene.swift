@@ -33,5 +33,4 @@ open class LoginScene : BaseScene {
     navigation.dismiss(animated: true, completion: nil)
     services.api.logout()
   }
-  
 }

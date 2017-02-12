@@ -19,9 +19,10 @@ public struct CreateGistEntity {
     self.isPublic = isPublic
     self.file = file
   }
-}
-
-extension CreateGistEntity {
+  
+  public func jsonData() -> Data {
+    return try! json().toJsonData()
+  }
   
   public func json() -> JsonDict {
     return [
@@ -38,9 +39,6 @@ public struct CreateGistFileInfo {
   public init(content: String) {
     self.content = content
   }
-}
-
-extension CreateGistFileInfo {
   
   public func json() -> JsonDict {
     return [

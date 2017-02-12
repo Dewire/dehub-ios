@@ -64,15 +64,17 @@ class CreateGistDirector : BaseDirector<CreateGistScene, CreateGistStage> {
   private func createGist(gist: CreateGistEntity) {
     stage.enableSaveButton(false)
     
-    api.gists.request(.post, json: gist.json())
-      .onFailure { [weak self] in
-        print("create failed: \($0)")
-        self?.stage.enableSaveButton(true)
-      }
-      .onSuccess { [weak self] _ in
-        print("create ok")
-        self?.scene.gistCreated()
-      }
-      .addToOverlay(stage: stage)
+    api.create(gist: gist)
+      .spin(self).error(self)
+      .subscribe(
+        onNext: { [weak self] _ in
+          print("create ok")
+          self?.scene.gistCreated()
+        },
+        onError: { [weak self] err in
+          print("create failed: \(err)")
+          self?.stage.enableSaveButton(true)
+        })
+      .addDisposableTo(bag)
   }
 }

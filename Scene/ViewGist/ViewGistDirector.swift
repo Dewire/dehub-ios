@@ -16,25 +16,23 @@ class ViewGistDirector : BaseDirector<ViewGistScene, ViewGistStage> {
   
   let gist: GistEntity
   let api: GistApi
-  let resource: Resource
 
   init(scene: ViewGistScene, api: GistApi, gist: GistEntity) {
     self.gist = gist
     self.api = api
-    resource = api.resource(absoluteURL: gist.file.raw_url)
     
     super.init(scene: scene)
   }
   
   override func stageDidLoad(stage: ViewGistStage) {
-    stage.overlayResources = [resource]
     
     stage.title = gist.file.filename
     
-    resource.addObserver(owner: self) { [weak self] resource, event in
-      self?.stage.setText(text: resource.typedContent(ifNone: ""))
-    }
-    
-    self.resource.load()
+    api.getText(forGist: gist)
+      .spin(self).error(self)
+      .subscribe(onNext: { [weak self] text in
+        self?.stage.setText(text: text)
+      })
+      .addDisposableTo(bag)
   }
 }

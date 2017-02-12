@@ -55,7 +55,23 @@ class LoginDirector : BaseDirector<LoginScene, LoginStage> {
       .withLatestFrom(userPass) { $1 }
       .subscribe(onNext: { userPass in
         self.stage.enableLoginButton(enabled: false)
-        self.performLoginRequest(userPass.0, password: userPass.1)
+        self.performLoginRequest(username: userPass.0, password: userPass.1)
+      })
+      .addDisposableTo(bag)
+  }
+  
+  private func performLoginRequest(username: String, password: String) {
+    api.login(username: username, password: password)
+      .spin(self).error(self)
+      .subscribe(onNext: { [weak self] loggedIn in
+        if loggedIn {
+          self?.scene.login()
+        } else {
+          print("Wrong credentials")
+          self?.stage.enableLoginButton(enabled: true)
+        }
+        }, onError: { [weak self] _ in
+          self?.stage.enableLoginButton(enabled: true)
       })
       .addDisposableTo(bag)
   }
@@ -65,16 +81,5 @@ class LoginDirector : BaseDirector<LoginScene, LoginStage> {
     stage.enableLoginButton(enabled: false)
     scene.logout()
   }
-
-  private func performLoginRequest(_ username: String, password: String) {
-    
-    api.login(username: username, password: password)
-      .onFailure { [weak self] e in
-        self?.stage.enableLoginButton(enabled: true)
-      }
-      .onSuccess { [weak self] s in
-        self?.scene.login()
-      }
-      .addToOverlay(stage: stage)
-  }
 }
+

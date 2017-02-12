@@ -40,39 +40,51 @@ class BaseDirector<Scene, Stage: AnyObject> {
 }
 
 
-extension Resource {
+//MARK: ErrorDisplayer
+extension BaseDirector: ErrorDisplayer {
   
-  func noOverlayLoad(_ stage: DirectedViewController) -> Request {
-    
-    let original = stage.overlayResources
-    
-    stage.overlayResources = original.filter {
-      $0 != self
+  func display(error: Error) {
+    guard let stage = stage as? ErrorDisplayer else {
+      fatalError("Tried to call display:error from a director when the stage did not implement ErrorDisplayer")
     }
-    
-    let req = load()
-    req.onCompletion { [weak stage] _ in
-      stage?.overlayResources = original
-    }
-    return req
-  }
-  
-  func noOverlayLoadIfNeeded(_ stage: DirectedViewController) -> Request? {
-    
-    let original = stage.overlayResources
-    
-    stage.overlayResources = original.filter {
-      $0 != self
-    }
-    
-    let req = loadIfNeeded()
-    req?.onCompletion { [weak stage] _ in
-      stage?.overlayResources = original
-    }
-    return req
+    stage.display(error: error)
   }
 }
 
+
+//MARK: SpinnerDisplayer
+extension BaseDirector: SpinnerDisplayer {
+  func hideSpinner() {
+    guard let stage = stage as? SpinnerDisplayer else {
+      fatalError("Tried to call hideSpinner from a director when the stage did not implement SpinnerDisplayer")
+    }
+    stage.hideSpinner()
+  }
+  
+  func showSpinner() {
+    guard let stage = stage as? SpinnerDisplayer else {
+      fatalError("Tried to call showSpinner from a director when the stage did not implement SpinnerDisplayer")
+    }
+    stage.showSpinner()
+  }
+}
+
+
+//MARK: ObservableType extensions
+extension ObservableType {
+  
+  func error(_ displayer: ErrorDisplayer) -> Observable<Self.E> {
+    return self.do(onError: { error in
+      displayer.display(error: error)
+    })
+  }
+  
+  func spin(_ displayer: SpinnerDisplayer) -> Observable<Self.E> {
+    return self.do(onError: { _ in displayer.hideSpinner() },
+                   onCompleted: { displayer.hideSpinner() },
+                   onSubscribe: { displayer.showSpinner() })
+  }
+}
 
 
 

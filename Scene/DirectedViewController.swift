@@ -10,38 +10,27 @@ typealias Closure = () -> Void
 class DirectedViewController : UIViewController {
   
   let bag = DisposeBag()
+  
   var directorRef: AnyObject?
   
   var afterLoad: Closure?
   
-  let overlay: ResourceStatusOverlay = {
-    let o = ResourceStatusOverlay()
-    o.displayPriority = [.manualLoading, .loading, .error, .anyData]
-    return o
+  let spinner: UIActivityIndicatorView = {
+    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    spinner.color = UIColor.red
+    return spinner
   }()
   
-  var overlayResources: [Resource] = [] {
-    didSet {
-      oldValue.forEach { $0.removeObservers(ownedBy: overlay) }
-      overlayResources.forEach { $0.addObserver(overlay) }
-    }
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
-    embedOverlay()
+    setupSpinner()
     afterLoad?()
     afterLoad = nil
   }
   
-  private func embedOverlay() {
-    overlay.embed(in: self)
-    overlay.backgroundColor = overlay.backgroundColor?.withAlphaComponent(0.5)
-  }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    overlay.positionToCoverParent()
+  private func setupSpinner() {
+    spinner.center = view.center
+    view.addSubview(spinner)
   }
   
   deinit {
@@ -50,11 +39,22 @@ class DirectedViewController : UIViewController {
 }
 
 
-extension Request {
+//MARK: ErrorDisplayer
+extension DirectedViewController: ErrorDisplayer {
   
-  @discardableResult
-  func addToOverlay(stage: DirectedViewController) -> Request {
-    stage.overlay.trackManualLoad(self)
-    return self
+  func display(error: Error) {
+    print((error as NSError).localizedDescription)
+  }
+}
+
+
+//MARK: SpinnerDisplayer
+extension DirectedViewController: SpinnerDisplayer {
+  func hideSpinner() {
+    spinner.stopAnimating()
+  }
+  
+  func showSpinner() {
+    spinner.startAnimating()
   }
 }

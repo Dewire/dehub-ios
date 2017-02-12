@@ -19,7 +19,8 @@ class HomeScene : BaseScene {
     let s = HomeStage.create()
     s.afterLoad = {
       let d = HomeDirector(scene: self,
-                           api: self.services.api)
+                           api: self.services.api,
+                           state: self.services.state)
       s.directorRef = d
       d.stage = s
       

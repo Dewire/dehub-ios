@@ -19,18 +19,39 @@ class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   
   fileprivate let api: GistApi
   
+  fileprivate let state: State
+  
   init(scene: HomeScene,
-       api: GistApi) {
+       api: GistApi,
+       state: State) {
     
     self.api = api
+    self.state = state
     super.init(scene: scene)
   }
   
   override func stageDidLoad(stage: HomeStage) {
-    addApiObservers()
+
+    state.gists.subscribe(onNext: { [unowned self] gists in
+      self.stage.inputs.source.value = self.gistsToSections(gists)
+    })
+    .addDisposableTo(bag)
+    
     observe(outputs: stage.outputs)
-    stage.overlayResources = [api.gists]
-    api.gists.loadIfNeeded()
+    loadGists()
+  }
+  
+  func loadGists() {
+    api.loadGists().spin(self).error(self).subscribe().addDisposableTo(bag)
+  }
+  
+  private func gistsToSections(_ gists: [GistEntity]) -> [GistSection] {
+    let groups = gists.groupBy { $0.isPublic }
+    
+    let publicGists = GistSection(header: L("Public Gists"), items: groups.match)
+    let privateGists = GistSection(header: L("Private Gists"), items: groups.noMatch)
+    
+    return [publicGists, privateGists]
   }
  
   private func observe(outputs: O) {
@@ -64,18 +85,16 @@ class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   }
   
   func observeRefresh(_ outputs: O) {
-    outputs.refresh.asObservable().subscribe(onNext: { [unowned self] in
-      self.loadGists(useStatusOverlay: false)
-    })
-    .addDisposableTo(bag)
-  }
-  
-  func loadGists(useStatusOverlay: Bool = true) {
-    let req = useStatusOverlay ? api.gists.load() : api.gists.noOverlayLoad(stage)
-    
-    req.onCompletion { [weak self] _ in
-      self?.stage.stopRefreshing()
-    }
+    outputs.refresh.asObservable()
+        .flatMap { [unowned self] in
+            self.api.loadGists()
+                .error(self)
+                .catchErrorJustReturn(())
+        }
+        .subscribe { [unowned self] _ in
+            self.stage.stopRefreshing()
+        }
+        .addDisposableTo(bag)
   }
 }
 
@@ -93,27 +112,6 @@ extension GistSection {
   }
 }
 
-extension HomeDirector {
-  
-  fileprivate func addApiObservers() {
-    api.gists.addObserver(owner: self) { [weak self] resource, event in
-      guard let s = self else { return }
-      
-      if let t: [GistEntity] = resource.typedContent() {
-        s.stage.inputs.source.value = s.gistsToSections(t)
-      }
-    }
-  }
-  
-  private func gistsToSections(_ gists: [GistEntity]) -> [GistSection] {
-    let groups = gists.groupBy { $0.isPublic }
-    
-    let publicGists = GistSection(header: L("Public Gists"), items: groups.match)
-    let privateGists = GistSection(header: L("Private Gists"), items: groups.noMatch)
-    
-    return [publicGists, privateGists]
-  }
-}
 
 
 
