@@ -2,8 +2,6 @@
 
 import UIKit
 import RxSwift
-import Siesta
-import SiestaUI
 
 typealias Closure = () -> Void
 

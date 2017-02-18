@@ -32,10 +32,7 @@
 		6BC47CEF1D8FDD1200286368 /* CreateGistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CEE1D8FDD1200286368 /* CreateGistEntity.swift */; };
 		6BC47CF11D9BA19900286368 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF01D9BA19800286368 /* RxDataSources.framework */; };
 		6BC47CF31D9BAD0700286368 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CF21D9BAD0700286368 /* Collection.swift */; };
-		6BC47CF51D9D395800286368 /* Siesta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF41D9D395800286368 /* Siesta.framework */; };
-		6BC47CF81D9D3D4700286368 /* Siesta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF41D9D395800286368 /* Siesta.framework */; };
 		6BC47CFA1D9D54F200286368 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CF91D9D54F200286368 /* SwiftyJSON.framework */; };
-		6BC47CFC1D9E937900286368 /* SiestaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC47CFB1D9E937900286368 /* SiestaUI.framework */; };
 		6BC47CFE1D9FBF0400286368 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CFD1D9FBF0400286368 /* Entity.swift */; };
 		6BC47D041DA3BA4400286368 /* json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC47D031DA3BA4400286368 /* json */; };
 		6BC47D051DA3C4FC00286368 /* json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC47D031DA3BA4400286368 /* json */; };
@@ -272,7 +269,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3E0EF5B1D0D3ACC0066AE5C /* RxSwift.framework in Frameworks */,
-				6BC47CF51D9D395800286368 /* Siesta.framework in Frameworks */,
 				D3E0EF521D0C01AE0066AE5C /* RxCocoa.framework in Frameworks */,
 				6BC47CFA1D9D54F200286368 /* SwiftyJSON.framework in Frameworks */,
 			);
@@ -296,8 +292,6 @@
 				6BC47CF11D9BA19900286368 /* RxDataSources.framework in Frameworks */,
 				D3FFDE051D0576D8004C6569 /* RxCocoa.framework in Frameworks */,
 				D3FFDE041D0576D8004C6569 /* RxSwift.framework in Frameworks */,
-				6BC47CF81D9D3D4700286368 /* Siesta.framework in Frameworks */,
-				6BC47CFC1D9E937900286368 /* SiestaUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,8 +701,8 @@
 				TargetAttributes = {
 					D3BD74051D042E650032CC00 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 483X4L5462;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
 					};
 					D3BD74191D042E650032CC00 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -877,9 +871,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Siesta.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SiestaUI.framework",
 			);
 			outputPaths = (
 			);
@@ -1171,7 +1163,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 483X4L5462;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1189,7 +1181,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 483X4L5462;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

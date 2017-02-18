@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Model
-import Siesta
 
 class ViewGistDirector : BaseDirector<ViewGistScene, ViewGistStage> {
   

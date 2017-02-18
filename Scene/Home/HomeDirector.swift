@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import Model
-import Siesta
 
 class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   

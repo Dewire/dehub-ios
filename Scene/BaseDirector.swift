@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import Siesta
 
 class BaseDirector<Scene, Stage: AnyObject> {
   
