@@ -52,7 +52,7 @@ public class GistApi {
   public func getText(forGist gist: GistEntity) -> Observable<String> {
     return restService.get(gist.file.raw_url) { response -> String in
       guard let string = String(data: response.data, encoding: .utf8) else {
-        throw ModelError.StringParseError
+        throw ModelError(.stringParseError)
       }
       return string
     }

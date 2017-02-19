@@ -8,8 +8,20 @@
 
 import Foundation
 
-public enum ModelError: Error {
-  case JsonParseError
-  case StringParseError
-  case ResponseNot200Error(response: HTTPURLResponse)
+struct ModelError: Error {
+  enum ErrorKind {
+    case jsonParseError
+    case stringParseError
+    case responseNot200
+  }
+  
+  let kind: ErrorKind
+  let hint: String
+  let underlying: NSError?
+  
+  init(_ kind: ErrorKind, hint: String = "", underlying: NSError? = nil) {
+    self.kind = kind
+    self.hint = hint
+    self.underlying = underlying
+  }
 }

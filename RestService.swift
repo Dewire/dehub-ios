@@ -156,7 +156,7 @@ extension ObservableType where E == RestResponse {
   func validateIs200() -> Observable<RestResponse> {
     return map { res in
       guard 200..<300 ~= res.response.statusCode else {
-        throw ModelError.ResponseNot200Error(response: res.response)
+        throw ModelError(.responseNot200, hint: res.response.debugDescription)
       }
       return res
     }

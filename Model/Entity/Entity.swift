@@ -21,13 +21,15 @@ public protocol Entity {
    Given a JSON object that is JSON array, returns an array of [Self]
    If the JSON object is not an array, or it could not be parsed correctly,
    a JsonParseError is thrown.
-  */
+   */
   static func parse(fromJSONArray: JSON) throws -> [Self]
 }
 
 extension Entity {
   public static func parse(fromJSONArray json: JSON) throws -> [Self] {
-    guard let array = json.array else { throw ModelError.JsonParseError }
+    guard let array = json.array else {
+      throw ModelError(.jsonParseError, hint: json.debugDescription, underlying: json.error)
+    }
     return try array.map(Self.init)
   }
 }
@@ -45,9 +47,11 @@ public typealias JsonDict = [String : Any]
 postfix operator *!
 
 extension Optional {
-
+  
   static postfix func *! (o: Optional<Wrapped>) throws -> Wrapped {
-    guard let value = o else { throw ModelError.JsonParseError }
+    guard let value = o else {
+      throw ModelError(.jsonParseError, hint: o.customMirror.description)
+    }
     return value
   }
 }
