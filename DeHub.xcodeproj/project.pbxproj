@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6B09C1541D8C020800434B33 /* DualScrollableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B09C1531D8C020800434B33 /* DualScrollableTextView.swift */; };
-		6B114FD31E336CFB00FB182C /* GistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B114FD21E336CFB00FB182C /* GistApi.swift */; };
-		6B114FD51E33793800FB182C /* RestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B114FD41E33793800FB182C /* RestService.swift */; };
 		6B114FD71E34D98400FB182C /* CommonProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B114FD61E34D98400FB182C /* CommonProtocols.swift */; };
 		6B3053521D86E577000F344A /* CreateGistDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B30534F1D86E577000F344A /* CreateGistDirector.swift */; };
 		6B3053531D86E577000F344A /* CreateGistScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3053501D86E577000F344A /* CreateGistScene.swift */; };
@@ -36,6 +34,8 @@
 		6BC47CFE1D9FBF0400286368 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC47CFD1D9FBF0400286368 /* Entity.swift */; };
 		6BC47D041DA3BA4400286368 /* json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC47D031DA3BA4400286368 /* json */; };
 		6BC47D051DA3C4FC00286368 /* json in Resources */ = {isa = PBXBuildFile; fileRef = 6BC47D031DA3BA4400286368 /* json */; };
+		6BCC836D1E7035D0008DD6F5 /* GistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCC836B1E7035D0008DD6F5 /* GistApi.swift */; };
+		6BCC836E1E7035D0008DD6F5 /* RestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCC836C1E7035D0008DD6F5 /* RestService.swift */; };
 		6BD77AFD1DAE22AB009D8360 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BD77AFC1DAE22AB009D8360 /* Quick.framework */; };
 		D37CF6A91D0DDB8C00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
 		D37CF6AA1D0DDB8D00E8CD2A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */; };
@@ -160,8 +160,6 @@
 
 /* Begin PBXFileReference section */
 		6B09C1531D8C020800434B33 /* DualScrollableTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DualScrollableTextView.swift; sourceTree = "<group>"; };
-		6B114FD21E336CFB00FB182C /* GistApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistApi.swift; sourceTree = SOURCE_ROOT; };
-		6B114FD41E33793800FB182C /* RestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestService.swift; sourceTree = SOURCE_ROOT; };
 		6B114FD61E34D98400FB182C /* CommonProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonProtocols.swift; sourceTree = "<group>"; };
 		6B30534F1D86E577000F344A /* CreateGistDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGistDirector.swift; path = CreateGist/CreateGistDirector.swift; sourceTree = "<group>"; };
 		6B3053501D86E577000F344A /* CreateGistScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGistScene.swift; path = CreateGist/CreateGistScene.swift; sourceTree = "<group>"; };
@@ -189,6 +187,8 @@
 		6BC47CFB1D9E937900286368 /* SiestaUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SiestaUI.framework; path = Carthage/Build/iOS/SiestaUI.framework; sourceTree = "<group>"; };
 		6BC47CFD1D9FBF0400286368 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		6BC47D031DA3BA4400286368 /* json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = json; sourceTree = "<group>"; };
+		6BCC836B1E7035D0008DD6F5 /* GistApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistApi.swift; sourceTree = "<group>"; };
+		6BCC836C1E7035D0008DD6F5 /* RestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestService.swift; sourceTree = "<group>"; };
 		6BD77AFC1DAE22AB009D8360 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		D37CF6A71D0DDB7900E8CD2A /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		D3BD74061D042E650032CC00 /* DeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -341,8 +341,8 @@
 		D32D8E2C1D0BF27E00730381 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				6B114FD21E336CFB00FB182C /* GistApi.swift */,
-				6B114FD41E33793800FB182C /* RestService.swift */,
+				6BCC836B1E7035D0008DD6F5 /* GistApi.swift */,
+				6BCC836C1E7035D0008DD6F5 /* RestService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -919,16 +919,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B114FD51E33793800FB182C /* RestService.swift in Sources */,
 				6B3053581D86EBF8000F344A /* GistEntity.swift in Sources */,
-				6B114FD31E336CFB00FB182C /* GistApi.swift in Sources */,
 				D3E0EF581D0D34E10066AE5C /* Services.swift in Sources */,
 				6B5C7B031E505553000B3055 /* Dictionary.swift in Sources */,
 				6B5C7B001E4F87FE000B3055 /* ModelError.swift in Sources */,
 				6BC47CFE1D9FBF0400286368 /* Entity.swift in Sources */,
 				6BC47CEF1D8FDD1200286368 /* CreateGistEntity.swift in Sources */,
 				6BA1960C1E36214200DF6FFB /* State.swift in Sources */,
+				6BCC836D1E7035D0008DD6F5 /* GistApi.swift in Sources */,
 				6B5C7B051E5064B5000B3055 /* ObservableType.swift in Sources */,
+				6BCC836E1E7035D0008DD6F5 /* RestService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
