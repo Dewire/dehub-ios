@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-//MARK: Entity
+// MARK: Entity
 
 /**
  An Entity is something that can be parsed from a JSON object.
@@ -34,7 +34,7 @@ extension Entity {
   }
 }
 
-//MARK: JSON parsing
+// MARK: JSON parsing
 
 public typealias JsonDict = [String : Any]
 
@@ -48,7 +48,7 @@ postfix operator *!
 
 extension Optional {
   
-  static postfix func *! (o: Optional<Wrapped>) throws -> Wrapped {
+  static postfix func *! (o: Wrapped?) throws -> Wrapped {
     guard let value = o else {
       throw ModelError(.jsonParseError, hint: o.customMirror.description)
     }

@@ -41,7 +41,7 @@ class DualScrollableTextView: UITextView {
     let boundingRect = (forText as NSString).boundingRect(
       with: maxSize,
       options: NSStringDrawingOptions.usesLineFragmentOrigin,
-      attributes: [NSFontAttributeName : font!],  // must unwrap font here or we crash
+      attributes: [NSFontAttributeName: font!],  // must unwrap font here or we crash
       context: nil)
     
     let newFrame = CGRect(

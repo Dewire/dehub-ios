@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ViewGistStage : DirectedViewController {
+class ViewGistStage: DirectedViewController {
   
   @IBOutlet weak var textViewContainer: UIScrollView!
   weak var textView: DualScrollableTextView!

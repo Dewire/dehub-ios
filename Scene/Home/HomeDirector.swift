@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 import Model
 
-class HomeDirector : BaseDirector<HomeScene, HomeStage> {
+class HomeDirector: BaseDirector<HomeScene, HomeStage> {
   
   typealias O = HomeStage.Outputs
   

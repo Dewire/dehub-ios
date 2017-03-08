@@ -5,6 +5,7 @@
 //  Created by Kalle Lindström on 05/06/16.
 //  Copyright © 2016 Dewire. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import XCTest
 @testable import Scene
@@ -50,8 +51,8 @@ class LoginDirectorTests: QuickSpec {
           api: api)
         
         stage = SpyLoginStage(outputs: LoginStage.Outputs(
-          username: ControlProperty<String?>(values: usernameInput.skip(1), valueSink: AnyObserver { n in }),
-          password: ControlProperty<String?>(values: passwordInput.skip(1), valueSink: AnyObserver { n in }),
+          username: ControlProperty<String?>(values: usernameInput.skip(1), valueSink: AnyObserver { _ in }),
+          password: ControlProperty<String?>(values: passwordInput.skip(1), valueSink: AnyObserver { _ in }),
           loginPressed: ControlEvent<Void>(events: loginButtonInput.skip(1))))
           
         director.stage = stage
@@ -84,7 +85,7 @@ class LoginDirectorTests: QuickSpec {
         expect(stage.enableLoginButtonValue).toEventually(beFalse())
       }
       
-      it("calls login on the scene after the login button is tapped and the login request succeeds")  {
+      it("calls login on the scene after the login button is tapped and the login request succeeds") {
         
         restService.setMockResponse(path: "gists", jsonFile: "gists")
         

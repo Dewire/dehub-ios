@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CreateGistStage : DirectedViewController {
+class CreateGistStage: DirectedViewController {
   
   @IBOutlet weak var titleText: UITextField!
   @IBOutlet weak var contentText: UITextView!

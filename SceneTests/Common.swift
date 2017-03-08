@@ -22,7 +22,7 @@ class MockRestService: RestService {
     super.init(baseUrl: "mock")
   }
   
-  //MARK: GET
+  // MARK: GET
   override func get<T>(
     _ path: String,
     requestTransform: ((URLRequest) -> URLRequest)? = nil,
@@ -61,7 +61,7 @@ class MockRestService: RestService {
       .observeOn(MainScheduler.instance)
   }
   
-  //MARK: POST
+  // MARK: POST
   override func post<T>(
     _ path: String,
     body: Data?,
@@ -141,7 +141,7 @@ func json(forFile: String) -> Data {
 // MARK: Spies
 
 
-class SpyNavigation : Navigation {
+class SpyNavigation: Navigation {
     
     var presentedController: UIViewController?
     var pushedController: UIViewController?
@@ -165,7 +165,7 @@ class SpyNavigation : Navigation {
     }
 }
 
-class SpyLoginScene : LoginScene {
+class SpyLoginScene: LoginScene {
     var called_createStage: Bool = false
     var called_login: Bool = false
     var called_logout: Bool = false
@@ -184,7 +184,7 @@ class SpyLoginScene : LoginScene {
     }
 }
 
-class SpyLoginStage : LoginStage {
+class SpyLoginStage: LoginStage {
     
     let o: LoginStage.Outputs
     

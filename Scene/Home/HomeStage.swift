@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 import Model
 
-class HomeStage : DirectedViewController {
+class HomeStage: DirectedViewController {
   
   struct Outputs {
     let logoutButtonTap: ControlEvent<Void>

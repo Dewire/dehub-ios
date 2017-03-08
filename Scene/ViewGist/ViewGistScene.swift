@@ -9,7 +9,7 @@
 import UIKit
 import Model
 
-class ViewGistScene : BaseScene {
+class ViewGistScene: BaseScene {
   
   private let gist: GistEntity
   

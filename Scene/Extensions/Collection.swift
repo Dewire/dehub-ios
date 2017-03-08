@@ -19,8 +19,7 @@ extension Collection {
     for e in self {
       if predicate(e) {
         match.append(e)
-      }
-      else {
+      } else {
         noMatch.append(e)
       }
     }

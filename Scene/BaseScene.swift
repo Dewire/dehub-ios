@@ -49,8 +49,7 @@ extension UIViewController : Navigation {
   func pushController(_ viewController: UIViewController, animated: Bool) {
     if let nav = navigationController {
       nav.pushViewController(viewController, animated: animated)
-    }
-    else {
+    } else {
       fatalError("tried to push a view controller on a controller that does not have a navigation controller")
     }
   }
@@ -58,8 +57,7 @@ extension UIViewController : Navigation {
   func popController(animated: Bool) {
     if let nav = navigationController {
       nav.popViewController(animated: animated)
-    }
-    else {
+    } else {
       fatalError("tried to pop a view controller on a controller that does not have a navigation controller")
     }
   }

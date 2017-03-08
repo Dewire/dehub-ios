@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class LoginStage : DirectedViewController {
+class LoginStage: DirectedViewController {
   
   @IBOutlet weak var username: UITextField!
   @IBOutlet weak var password: UITextField!

@@ -7,8 +7,7 @@ extension UIView {
   func showLoadingIndicator() {
     if let indicator = viewWithTag(555999) as? UIActivityIndicatorView {
       indicator.startAnimating()
-    }
-    else {
+    } else {
       let indicator = UIActivityIndicatorView()
       indicator.tag = 555999
       indicator.hidesWhenStopped = true
@@ -47,7 +46,6 @@ extension UIView {
     }
   }
 }
-
 
 let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 

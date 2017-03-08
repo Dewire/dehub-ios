@@ -10,7 +10,7 @@ import UIKit
 import Model
 import RxSwift
 
-class CreateGistScene : BaseScene {
+class CreateGistScene: BaseScene {
   
   let newGistCallback: Closure
   

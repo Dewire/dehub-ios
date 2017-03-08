@@ -22,8 +22,7 @@ class Button: UIButton {
     didSet {
       if isEnabled {
         backgroundColor = activeColor ?? backgroundColor
-      }
-      else {
+      } else {
         guard oldValue else { return }
         activeColor = backgroundColor
         backgroundColor = UIColor.lightClay()

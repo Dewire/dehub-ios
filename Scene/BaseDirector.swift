@@ -39,7 +39,7 @@ class BaseDirector<Scene, Stage: AnyObject> {
 }
 
 
-//MARK: ErrorDisplayer
+// MARK: ErrorDisplayer
 extension BaseDirector: ErrorDisplayer {
   
   func display(error: Error) {
@@ -51,7 +51,7 @@ extension BaseDirector: ErrorDisplayer {
 }
 
 
-//MARK: SpinnerDisplayer
+// MARK: SpinnerDisplayer
 extension BaseDirector: SpinnerDisplayer {
   func hideSpinner() {
     guard let stage = stage as? SpinnerDisplayer else {
@@ -69,7 +69,7 @@ extension BaseDirector: SpinnerDisplayer {
 }
 
 
-//MARK: ObservableType extensions
+// MARK: ObservableType extensions
 extension ObservableType {
   
   func error(_ displayer: ErrorDisplayer) -> Observable<Self.E> {

@@ -1,0 +1,11 @@
+disabled_rules: # rule identifiers to exclude from running
+  - force_cast
+  - force_try
+  - variable_name
+  - type_name
+  - trailing_newline
+  - trailing_whitespace
+  - vertical_whitespace
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+

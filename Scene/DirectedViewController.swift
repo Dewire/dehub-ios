@@ -1,11 +1,9 @@
-
-
 import UIKit
 import RxSwift
 
 typealias Closure = () -> Void
 
-class DirectedViewController : UIViewController {
+class DirectedViewController: UIViewController {
   
   let bag = DisposeBag()
   
@@ -37,7 +35,7 @@ class DirectedViewController : UIViewController {
 }
 
 
-//MARK: ErrorDisplayer
+// MARK: ErrorDisplayer
 extension DirectedViewController: ErrorDisplayer {
   
   func display(error: Error) {
@@ -46,7 +44,7 @@ extension DirectedViewController: ErrorDisplayer {
 }
 
 
-//MARK: SpinnerDisplayer
+// MARK: SpinnerDisplayer
 extension DirectedViewController: SpinnerDisplayer {
   func hideSpinner() {
     spinner.stopAnimating()

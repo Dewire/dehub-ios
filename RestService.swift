@@ -46,7 +46,7 @@ class RestService {
     self.defaultTimeout = timeout
   }
   
-  //MARK: POST
+  // MARK: POST
   func post<T>(
     _ path: String,
     body: Data?,
@@ -82,7 +82,7 @@ class RestService {
     return req
   }
   
-  //MARK: GET
+  // MARK: GET
   func get<T>(
     _ path: String,
     requestTransform: ((URLRequest) -> URLRequest)? = nil,
@@ -113,7 +113,7 @@ class RestService {
     return requestWithStandardHeaders(forPath: path)
   }
   
-  //MARK: Helpers
+  // MARK: Helpers
   private func transform(request: URLRequest, transform: ((URLRequest) -> URLRequest)?) -> URLRequest {
     guard let transform = transform else { return request }
     return transform(request)
@@ -147,7 +147,7 @@ class RestService {
 }
 
 
-//MARK: Basic auth
+// MARK: Basic auth
 extension RestService {
   func setBasicAuth(username: String, password: String) {
     standardHeaders["Authorization"] = basicAuthFor(username: username, password: password)
@@ -161,7 +161,7 @@ extension RestService {
 }
 
 
-//MARK: ObservableType extensions
+// MARK: ObservableType extensions
 extension ObservableType where E == RestResponse {
   
   func validateIs200() -> Observable<RestResponse> {
@@ -173,7 +173,3 @@ extension ObservableType where E == RestResponse {
     }
   }
 }
-
-
-
-

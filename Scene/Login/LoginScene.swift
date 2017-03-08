@@ -9,7 +9,7 @@
 import UIKit
 import Model
 
-open class LoginScene : BaseScene {
+open class LoginScene: BaseScene {
 
   open override func createStage() -> UIViewController {
     
