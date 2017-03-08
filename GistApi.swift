@@ -23,6 +23,16 @@ public class GistApi {
   }
   
   /**
+   Calling this method will make the cache policy for the next request to reloadIgnoringLocalCacheData
+   (i.e. no cache). Only the upcoming request is altered -- requests after the next one will use the
+   default cache policy.
+  */
+  public func invalidateNextCache() -> GistApi {
+    restService.invalidateNextCache = true
+    return self
+  }
+  
+  /**
    Tries to log in with the given username and password.
    If the log in is successful true will be emitted.
    If the log in fails because of bad credentials the false will be emitted.

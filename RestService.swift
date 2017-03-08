@@ -13,6 +13,8 @@ public typealias RestResponse = (response: HTTPURLResponse, data: Data)
 
 class RestService {
   
+  var invalidateNextCache = false
+  
   fileprivate let baseUrl: URL
   
   fileprivate let defaultCachePolicy: URLRequest.CachePolicy
@@ -21,8 +23,17 @@ class RestService {
   
   fileprivate var standardHeaders = [String: String]()
   
+  fileprivate var cachePolicy: URLRequest.CachePolicy {
+    if invalidateNextCache {
+      invalidateNextCache = false
+      return .reloadIgnoringLocalCacheData
+    } else {
+      return defaultCachePolicy
+    }
+  }
+  
   init(baseUrl: String,
-       cachePolicy: URLRequest.CachePolicy = .reloadIgnoringLocalCacheData,
+       cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy,
        timeout: Double = 10) {
     
     if let url = URL(string: baseUrl) {
@@ -122,7 +133,7 @@ class RestService {
   
   private func request(forPath path: String) -> URLRequest {
     return URLRequest(url: url(forPath: path),
-                      cachePolicy: defaultCachePolicy,
+                      cachePolicy: cachePolicy,
                       timeoutInterval: defaultTimeout)
   }
   
@@ -162,6 +173,7 @@ extension ObservableType where E == RestResponse {
     }
   }
 }
+
 
 
 

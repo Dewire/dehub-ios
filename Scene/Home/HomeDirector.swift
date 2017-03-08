@@ -86,7 +86,7 @@ class HomeDirector : BaseDirector<HomeScene, HomeStage> {
   func observeRefresh(_ outputs: O) {
     outputs.refresh.asObservable()
         .flatMap { [unowned self] in
-            self.api.loadGists()
+            self.api.invalidateNextCache().loadGists()
                 .error(self)
                 .catchErrorJustReturn(())
         }
