@@ -27,7 +27,7 @@ public class GistApi {
    (i.e. no cache). Only the upcoming request is altered -- requests after the next one will use the
    default cache policy.
   */
-  public func invalidateNextCache() -> GistApi {
+  @discardableResult public func invalidateNextCache() -> GistApi {
     restService.invalidateNextCache = true
     return self
   }

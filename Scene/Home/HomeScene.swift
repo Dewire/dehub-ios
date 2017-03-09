@@ -24,7 +24,10 @@ class HomeScene: BaseScene {
       s.directorRef = d
       d.stage = s
       
-      self.newGistCallback = { [weak d] in d?.loadGists() }
+      self.newGistCallback = { [weak d] in
+        self.services.api.invalidateNextCache()
+        d?.loadGists()
+      }
     }
     
     return s
@@ -39,5 +42,4 @@ class HomeScene: BaseScene {
     let stage = ViewGistScene(services: self.services, gist: gist).stage()
     self.navigation.pushController(stage, animated: true)
   }
-  
 }

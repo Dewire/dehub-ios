@@ -55,3 +55,19 @@ extension Optional {
     return value
   }
 }
+
+/**
+ Archivable is a protocol that types can implement if they should support being persisted to disk
+ using NSKeyedArchiver. See State for examples.
+ */
+protocol Archivable {
+  /**
+   Initializer that takes a Data object that was produces from archive() method.
+  */
+  init(data: Data)
+  
+  /**
+   Archives self into a Data object using some method (most likely NSKeyedArchiver, but this is not required)
+  */
+  func archive() -> Data
+}

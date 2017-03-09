@@ -18,11 +18,26 @@ public struct GistEntity {
 extension GistEntity: Entity {
   
   public init(json: JSON) throws {
-    
     description = try json["description"].string*!
     isPublic = try json["public"].bool*!
-    
     file = try GistFileInfo(json: json["files"].dictionary*!.first*!.value*!)
+  }
+}
+
+extension GistEntity: Archivable {
+  init(data: Data) {
+    let dic = NSKeyedUnarchiver.unarchiveObject(with: data) as! [String: Any]
+    description = dic["description"] as! String
+    isPublic = dic["public"] as! Bool
+    file = GistFileInfo(data: dic["file"] as! Data)
+  }
+  
+  func archive() -> Data {
+    var dic = [String: Any]()
+    dic["description"] = description
+    dic["public"] = isPublic
+    dic["file"] = file.archive()
+    return NSKeyedArchiver.archivedData(withRootObject: dic)
   }
 }
 
@@ -40,5 +55,24 @@ extension GistFileInfo {
     raw_url = try json["raw_url"].string*!
     filename = try json["filename"].string*!
     language = json["language"].string
+  }
+}
+
+extension GistFileInfo: Archivable {
+  init(data: Data) {
+    let dic = NSKeyedUnarchiver.unarchiveObject(with: data) as! [String: Any]
+    size = dic["size"] as! Int
+    raw_url = dic["raw_url"] as! String
+    filename = dic["filename"] as! String
+    language = dic["language"] as? String
+  }
+  
+  func archive() -> Data {
+    var dic = [String: Any]()
+    dic["size"] = size
+    dic["raw_url"] = raw_url
+    dic["filename"] = filename
+    dic["language"] = language
+    return NSKeyedArchiver.archivedData(withRootObject: dic)
   }
 }

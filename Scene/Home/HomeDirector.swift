@@ -30,11 +30,11 @@ class HomeDirector: BaseDirector<HomeScene, HomeStage> {
   }
   
   override func stageDidLoad(stage: HomeStage) {
-
+    
     state.gists.subscribe(onNext: { [unowned self] gists in
       self.stage.inputs.source.value = self.gistsToSections(gists)
     })
-    .addDisposableTo(bag)
+      .addDisposableTo(bag)
     
     observe(outputs: stage.outputs)
     loadGists()
@@ -52,7 +52,7 @@ class HomeDirector: BaseDirector<HomeScene, HomeStage> {
     
     return [publicGists, privateGists]
   }
- 
+  
   private func observe(outputs: O) {
     observeLogoutButtonTap(outputs)
     observeAddButtonTap(outputs)
@@ -66,7 +66,7 @@ class HomeDirector: BaseDirector<HomeScene, HomeStage> {
     })
     .addDisposableTo(bag)
   }
- 
+  
   private func observeAddButtonTap(_ outputs: O) {
     outputs.addButtonTap.subscribe(onNext: { [unowned self] in
       self.scene.onNewGist()
@@ -85,38 +85,29 @@ class HomeDirector: BaseDirector<HomeScene, HomeStage> {
   
   func observeRefresh(_ outputs: O) {
     outputs.refresh.asObservable()
-        .flatMap { [unowned self] in
-            self.api.invalidateNextCache().loadGists()
-                .error(self)
-                .catchErrorJustReturn(())
-        }
-        .subscribe { [unowned self] _ in
-            self.stage.stopRefreshing()
-        }
-        .addDisposableTo(bag)
+      .flatMap { [unowned self] in
+        self.api.invalidateNextCache().loadGists()
+          .error(self)
+          .catchErrorJustReturn(())
+      }
+      .subscribe { [unowned self] _ in
+        self.stage.stopRefreshing()
+        self.state.persistToDisk()
+      }
+      .addDisposableTo(bag)
   }
 }
 
 struct GistSection: SectionModelType {
   typealias Item = GistEntity
-    
+  
   var header: String
   var items: [Item]
 }
-  
+
 extension GistSection {
   init(original: GistSection, items: [Item]) {
     self = original
     self.items = items
   }
 }
-
-
-
-
-
-
-
-
-
-
