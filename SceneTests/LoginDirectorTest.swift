@@ -26,7 +26,7 @@ class LoginDirectorTests: QuickSpec {
     var passwordInput: BehaviorSubject<String?>!
     var loginButtonInput: BehaviorSubject<Void>!
   
-    var restService: MockRestService!
+    var resourceFactory: MockResourceFactory!
     var navigation: SpyNavigation!
     var stage: SpyLoginStage!
     var scene: SpyLoginScene!
@@ -43,8 +43,8 @@ class LoginDirectorTests: QuickSpec {
         scene = SpyLoginScene(services: Services())
         scene.navigation = navigation
         
-        restService = MockRestService()
-        let api = GistApi(restService: restService, state: State())
+        resourceFactory = MockResourceFactory()
+        let api = GistApi(resourceFactory: resourceFactory, state: State())
         
         director = LoginDirector(
           scene: scene,
@@ -87,7 +87,7 @@ class LoginDirectorTests: QuickSpec {
       
       it("calls login on the scene after the login button is tapped and the login request succeeds") {
         
-        restService.setMockResponse(path: "gists", jsonFile: "gists")
+        resourceFactory.setMockResponse(path: "gists", jsonFile: "gists")
         
         usernameInput.onNext("username")
         passwordInput.onNext("password")
@@ -98,7 +98,7 @@ class LoginDirectorTests: QuickSpec {
       
       it("enables the login button after it is tapped and the login request fails") {
         
-        restService.setMockError(path: "gists", error: URLError(.unknown))
+        resourceFactory.setMockError(path: "gists", error: URLError(.unknown))
         
         usernameInput.onNext("username")
         passwordInput.onNext("password")

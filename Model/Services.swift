@@ -14,6 +14,6 @@ public struct Services {
 
   public init() {
     state = State()
-    api = GistApi(restService: RestService(baseUrl: "https://api.github.com"), state: state)
+    api = GistApi(resourceFactory: ResourceFactory(baseUrl: "https://api.github.com"), state: state)
   }
 }

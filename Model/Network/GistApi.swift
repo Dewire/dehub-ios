@@ -13,12 +13,12 @@ import SwiftyJSON
 
 public class GistApi {
   
-  private let restService: RestService
+  private let resourceFactory: ResourceFactory
   
   private let state: State
   
-  init(restService: RestService, state: State) {
-    self.restService = restService
+  init(resourceFactory: ResourceFactory, state: State) {
+    self.resourceFactory = resourceFactory
     self.state = state
   }
   
@@ -28,7 +28,7 @@ public class GistApi {
    default cache policy.
   */
   @discardableResult public func invalidateNextCache() -> GistApi {
-    restService.invalidateNextCache = true
+    resourceFactory.invalidateNextCache = true
     return self
   }
   
@@ -39,37 +39,43 @@ public class GistApi {
    If a network error occurs the error will be emitted.
    */
   public func login(username: String, password: String) -> Observable<Bool> {
-    restService.setBasicAuth(username: username, password: password)
+    resourceFactory.setBasicAuth(username: username, password: password)
     
-    return restService.get("gists").map { res in
+    return resourceFactory.resource("gists") { res in
       200..<300 ~= res.response.statusCode
     }
+    .load()
   }
   
   public func logout() {
-    restService.setBasicAuth(username: "", password: "")
+    resourceFactory.setBasicAuth(username: "", password: "")
   }
   
   public func loadGists() -> Observable<Void> {
-    
-    return restService.get("gists") { response -> [GistEntity] in
-      return try GistEntity.parse(fromJSONArray: JSON(data: response.data))
+    return resourceFactory.resource("gists") { res in
+      try GistEntity.parse(fromJSONArray: JSON(data: res.data))
     }
+    .load()
     .connect(state._gists)
     .map { _ in () }
   }
   
   public func getText(forGist gist: GistEntity) -> Observable<String> {
-    return restService.get(gist.file.raw_url) { response -> String in
-      guard let string = String(data: response.data, encoding: .utf8) else {
+    return resourceFactory.resource(gist.file.raw_url) { res in
+      guard let string = String(data: res.data, encoding: .utf8) else {
         throw ModelError(.stringParseError)
       }
       return string
     }
+    .load()
   }
   
   public func create(gist: CreateGistEntity) -> Observable<Void> {
-    return restService.post("gists", body: gist.jsonData()).validateIs200().toVoid()
+    var res = resourceFactory.resource("gists", parse: noParse)
+    res.httpMethod = "POST"
+    res.body = gist.jsonData()
+    
+    return res.load().validateIs200().toVoid()
   }
 }
 

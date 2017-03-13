@@ -13,104 +13,21 @@ import RxSwift
 
 // MARK: Network
 
-class MockRestService: RestService {
+class MockResourceFactory: ResourceFactory {
   
   private var stubs = [String: RestResponse]()
   private var errorStubs = [String: Error]()
   
-  init() {
-    super.init(baseUrl: "mock")
-  }
-  
-  // MARK: GET
-  override func get<T>(
-    _ path: String,
-    requestTransform: ((URLRequest) -> URLRequest)? = nil,
-    responseTransform: @escaping (RestResponse) throws -> T
-    ) -> Observable<T> {
-    
-    if let error = errorStubs[path] {
-      return Observable.error(error)
-    }
-    
-    guard let res = stubs[path] else {
-      print("no stub matching path: \(path))")
-      return Observable.never()
-    }
-    
-    return Observable.just(res)
-      .map(responseTransform)
-      .observeOn(MainScheduler.instance)
-  }
-  
-  override func get(
-    _ path: String,
-    requestTransform: ((URLRequest) -> URLRequest)? = nil
-    ) -> Observable<RestResponse> {
-    
-    if let error = errorStubs[path] {
-      return Observable.error(error)
-    }
-    
-    guard let stub = stubs[path] else {
-      print("no stub matching path: \(path))")
-      return Observable.never()
-    }
-    
-    return Observable.just(stub)
-      .observeOn(MainScheduler.instance)
-  }
-  
-  // MARK: POST
-  override func post<T>(
-    _ path: String,
-    body: Data?,
-    requestTransform: ((URLRequest) -> URLRequest)? = nil,
-    responseTransform: @escaping (RestResponse) throws -> T
-    ) -> Observable<T> {
-    
-    if let error = errorStubs[path] {
-      return Observable.error(error)
-    }
-    
-    guard let stub = stubs[path] else {
-      print("no stub matching path: \(path))")
-      return Observable.never()
-    }
-    
-    return Observable.just(stub)
-      .map(responseTransform)
-      .observeOn(MainScheduler.instance)
-  }
-  
-  override func post(
-    _ path: String,
-    body: Data?,
-    requestTransform: ((URLRequest) -> URLRequest)? = nil
-    ) -> Observable<RestResponse> {
-    
-    if let error = errorStubs[path] {
-      return Observable.error(error)
-    }
-    
-    guard let stub = stubs[path] else {
-      print("no stub matching path: \(path))")
-      return Observable.never()
-    }
-    
-    return Observable.just(stub)
-      .observeOn(MainScheduler.instance)
-  }
-  
   func setMockResponse(path: String,
                        jsonFile: String,
                        contentType: String = "application/json",
-                       headers: [String : String]? = [:]) {
+                       headers: [String : String]? = [:],
+                       statusCode: Int = 200) {
     
     let data = json(forFile: jsonFile)
     let res = HTTPURLResponse(
       url: url(forPath: path),
-      statusCode: 200,
+      statusCode: statusCode,
       httpVersion: "HTTP/1.1",
       headerFields: headers)!
     
@@ -120,8 +37,37 @@ class MockRestService: RestService {
   func setMockError(path: String, error: Error) {
     errorStubs[path] = error
   }
+  
+  init() {
+    super.init(baseUrl: "mock")
+  }
+  
+  override func resource<A>(_ path: String, parse: @escaping ((RestResponse) throws -> A)) -> Resource<A> {
+    
+    var res = Resource(url: url(forPath: path),
+                    parse: parse,
+                    httpMethod: "GET",
+                    headers: standardHeaders,
+                    timeout: defaultTimeout,
+                    cachePolicy: cachePolicy,
+                    body: nil,
+                    _customResponse: nil)
+    
+    if let error = errorStubs[path] {
+      res._customResponse = Observable.error(error).observeOn(MainScheduler.instance)
+      return res
+    }
+    
+    if let stub = stubs[path] {
+      res._customResponse = Observable.just(stub).map(parse).observeOn(MainScheduler.instance)
+    } else {
+      print("no stub matching path: \(path))")
+      res._customResponse = Observable.never().observeOn(MainScheduler.instance)
+    }
+    
+    return res
+  }
 }
-
 
 // MARK: Util
 
@@ -137,9 +83,7 @@ func json(forFile: String) -> Data {
     return try! Data.init(contentsOf: url)
 }
 
-
 // MARK: Spies
-
 
 class SpyNavigation: Navigation {
     
