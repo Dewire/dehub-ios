@@ -11,6 +11,10 @@ import RxSwift
 
 public typealias RestResponse = (response: HTTPURLResponse, data: Data)
 
+enum CacheTimeInterval: Int {
+  case oneMinute = 60, fiveMinutes = 300, tenMinutes = 600, twentyMinutes = 1200, oneHour = 3600
+}
+
 /**
  Use this function in cases where the RestResponse should not be parsed to
  something else.
@@ -21,6 +25,14 @@ func noParse(response: RestResponse) -> RestResponse {
 
 /**
  A factory that contains common state that is used when creating Resources.
+ 
+ This class supports using a caching policy on a per Resource base.
+ The cache policy can either be specified using the standard HTTP cache control headers,
+ which works out of the box. If the HTTP cache control headers can't be used for some
+ reason (for example we don't have control over the server) this class also supports
+ setting a cache timeout. If a Resource is loaded before the cache timeout has expired it will
+ return a cached response if one is available. Setting a cache timeout takes precendence
+ over using the HTTP cache control headers.
  */
 class ResourceFactory {
 
@@ -32,16 +44,7 @@ class ResourceFactory {
   /// Set this to true in order to invalidate the cache for the next Resource that is
   /// created from this ResourceFactory instance.
   var invalidateNextCache = false
-  
-  var cachePolicy: URLRequest.CachePolicy {
-    if invalidateNextCache {
-      invalidateNextCache = false
-      return .reloadIgnoringLocalCacheData
-    } else {
-      return defaultCachePolicy
-    }
-  }
-  
+
   init(baseUrl: String,
        cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy,
        timeout: TimeInterval = 10) {
@@ -63,13 +66,19 @@ class ResourceFactory {
    Otherwise it will be appended as a path component to the base url.
    The default HTTP method is GET.
   */
-  func resource<A>(_ path: String, parse: @escaping ((RestResponse) throws -> A)) -> Resource<A> {
-    return Resource(url: url(forPath: path),
+  func resource<A>(_ path: String,
+                   cacheInterval: CacheTimeInterval? = nil,
+                   parse: @escaping ((RestResponse) throws -> A)) -> Resource<A> {
+    
+    let u = url(forPath: path)
+    let policy = cachePolicy(forUrl: u, cacheInterval: cacheInterval)
+    
+    return Resource(url: u,
                     parse: parse,
                     httpMethod: "GET",
                     headers: standardHeaders,
                     timeout: defaultTimeout,
-                    cachePolicy: cachePolicy,
+                    cachePolicy: policy,
                     body: nil,
                     _customResponse: nil)
   }
@@ -80,6 +89,49 @@ class ResourceFactory {
     } else {
       return URL(string: path, relativeTo: baseUrl)!
     }
+  }
+}
+
+// MARK: Caching
+
+extension ResourceFactory {
+  
+  func cachePolicy(forUrl url: URL, cacheInterval: CacheTimeInterval?) -> URLRequest.CachePolicy {
+    
+    // The path without any query parameters
+    let resourcePath = url.absoluteString.components(separatedBy: "?").first
+    
+    // First check if the cache for this request is invalidated
+    guard !invalidateNextCache else {
+      invalidateNextCache = false
+      updateExpiration(cacheInterval: cacheInterval, forResourcePath: resourcePath)
+      return .reloadIgnoringLocalCacheData
+    }
+    
+    // If we don't have a cache interval or a path we use the default cache policy
+    guard let interval = cacheInterval, let path = resourcePath else {
+      return defaultCachePolicy
+    }
+    
+    let now = Date()
+    
+    // Check if a resource expiration date exists in the future
+    if let expiration = UserDefaults.standard.object(forKey: path) as? Date, expiration >= now {
+      print("Returning cached response (if available) for \(path)" +
+        " | Cache expires in \(Int(expiration.timeIntervalSince1970 - now.timeIntervalSince1970))s")
+      
+      return .returnCacheDataElseLoad
+    } else {
+      updateExpiration(cacheInterval: interval, forResourcePath: path)
+      return defaultCachePolicy
+    }
+  }
+  
+  private func updateExpiration(cacheInterval: CacheTimeInterval?, forResourcePath path: String?) {
+    guard let interval = cacheInterval, let path = path else { return }
+    
+    let nextExpiration = Date().addingTimeInterval(TimeInterval(interval.rawValue))
+    UserDefaults.standard.set(nextExpiration, forKey: path)
   }
 }
 
@@ -114,6 +166,7 @@ struct Resource<A> {
 }
 
 extension Resource {
+  
   func load() -> Observable<A> {
     
     if let custom = _customResponse {
@@ -128,14 +181,13 @@ extension Resource {
   }
   
   private func request(forUrl url: URL) -> URLRequest {
+    
     var req = URLRequest(url: url,
                          cachePolicy: cachePolicy,
                          timeoutInterval: timeout)
     
     req.httpMethod = httpMethod
     req.allHTTPHeaderFields = headers
-    req.timeoutInterval = timeout
-    req.cachePolicy = cachePolicy
     req.httpBody = body
     
     return req

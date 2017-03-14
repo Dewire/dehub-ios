@@ -34,7 +34,7 @@ class HomeDirector: BaseDirector<HomeScene, HomeStage> {
     state.gists.subscribe(onNext: { [unowned self] gists in
       self.stage.inputs.source.value = self.gistsToSections(gists)
     })
-      .addDisposableTo(bag)
+    .addDisposableTo(bag)
     
     observe(outputs: stage.outputs)
     loadGists()

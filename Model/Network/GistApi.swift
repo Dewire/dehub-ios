@@ -52,7 +52,7 @@ public class GistApi {
   }
   
   public func loadGists() -> Observable<Void> {
-    return resourceFactory.resource("gists") { res in
+    return resourceFactory.resource("gists", cacheInterval: .oneMinute) { res in
       try GistEntity.parse(fromJSONArray: JSON(data: res.data))
     }
     .load()

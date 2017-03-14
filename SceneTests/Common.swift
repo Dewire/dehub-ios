@@ -42,14 +42,19 @@ class MockResourceFactory: ResourceFactory {
     super.init(baseUrl: "mock")
   }
   
-  override func resource<A>(_ path: String, parse: @escaping ((RestResponse) throws -> A)) -> Resource<A> {
+  override func resource<A>(_ path: String,
+                            cacheInterval: CacheTimeInterval? = nil,
+                            parse: @escaping ((RestResponse) throws -> A)) -> Resource<A> {
+    
+    let u = url(forPath: path)
+    let policy = cachePolicy(forUrl: u, cacheInterval: cacheInterval)
     
     var res = Resource(url: url(forPath: path),
                     parse: parse,
                     httpMethod: "GET",
                     headers: standardHeaders,
                     timeout: defaultTimeout,
-                    cachePolicy: cachePolicy,
+                    cachePolicy: policy,
                     body: nil,
                     _customResponse: nil)
     
