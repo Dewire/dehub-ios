@@ -119,7 +119,7 @@ class SpyLoginScene: LoginScene {
     var called_login: Bool = false
     var called_logout: Bool = false
     
-    override func createStage() -> UIViewController {
+    override func createStage() -> Stage {
         called_createStage = true
         return super.createStage()
     }

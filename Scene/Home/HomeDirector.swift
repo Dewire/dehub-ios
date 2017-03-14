@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 import Model
 
-class HomeDirector: BaseDirector<HomeScene, HomeStage> {
+class HomeDirector: Director<HomeScene, HomeStage> {
   
   typealias O = HomeStage.Outputs
   
@@ -37,13 +37,20 @@ class HomeDirector: BaseDirector<HomeScene, HomeStage> {
     .addDisposableTo(bag)
     
     observe(outputs: stage.outputs)
-    loadGists()
+  }
+
+  override func stageDidAppear() {
+    loadGists(stealth: true)
   }
   
-  func loadGists() {
-    api.loadGists().spin(self).error(self).subscribe().addDisposableTo(bag)
+  func loadGists(stealth: Bool = false) {
+    var gists = api.loadGists()
+    if !stealth {
+      gists = gists.spin(self).error(self)
+    }
+    gists.subscribe().disposed(by: bag)
   }
-  
+
   private func gistsToSections(_ gists: [GistEntity]) -> [GistSection] {
     let groups = gists.groupBy { $0.isPublic }
     

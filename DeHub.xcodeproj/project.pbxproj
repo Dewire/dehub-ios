@@ -56,7 +56,7 @@
 		D3BD748E1D043BE40032CC00 /* LoginStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BD748D1D043BE40032CC00 /* LoginStage.swift */; };
 		D3BD748F1D043DE60032CC00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3BD74851D043AAB0032CC00 /* LaunchScreen.storyboard */; };
 		D3BD74901D043E1C0032CC00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3BD74851D043AAB0032CC00 /* LaunchScreen.storyboard */; };
-		D3CE169B1D0BEB4600749C9F /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CE169A1D0BEB4600749C9F /* BaseScene.swift */; };
+		D3CE169B1D0BEB4600749C9F /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CE169A1D0BEB4600749C9F /* Scene.swift */; };
 		D3E0EF521D0C01AE0066AE5C /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE011D0576D8004C6569 /* RxCocoa.framework */; };
 		D3E0EF581D0D34E10066AE5C /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0EF571D0D34E10066AE5C /* Services.swift */; };
 		D3E0EF591D0D3AC30066AE5C /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE011D0576D8004C6569 /* RxCocoa.framework */; };
@@ -70,12 +70,12 @@
 		D3F43D0D1D191937005A0094 /* HomeStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F43D0C1D191937005A0094 /* HomeStage.swift */; };
 		D3F43D0F1D191944005A0094 /* HomeDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F43D0E1D191944005A0094 /* HomeDirector.swift */; };
 		D3F43D111D19195B005A0094 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F43D101D19195B005A0094 /* HomeScene.swift */; };
-		D3F5418F1D264C61009A9A27 /* BaseDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F5418E1D264C61009A9A27 /* BaseDirector.swift */; };
+		D3F5418F1D264C61009A9A27 /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F5418E1D264C61009A9A27 /* Director.swift */; };
 		D3F541921D281C91009A9A27 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F541911D281C91009A9A27 /* Button.swift */; };
 		D3F541951D281E51009A9A27 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F541941D281E51009A9A27 /* UIColor.swift */; };
 		D3F541991D2D3D3E009A9A27 /* RoundedCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F541981D2D3D3E009A9A27 /* RoundedCornerView.swift */; };
 		D3FFDDEE1D044034004C6569 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BD74091D042E650032CC00 /* AppDelegate.swift */; };
-		D3FFDDFA1D045680004C6569 /* DirectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFDDF91D045680004C6569 /* DirectedViewController.swift */; };
+		D3FFDDFA1D045680004C6569 /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFDDF91D045680004C6569 /* Stage.swift */; };
 		D3FFDDFC1D04720F004C6569 /* LoginDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFDDFB1D04720F004C6569 /* LoginDirector.swift */; };
 		D3FFDDFE1D047233004C6569 /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFDDFD1D047233004C6569 /* LoginScene.swift */; };
 		D3FFDE041D0576D8004C6569 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FFDE001D0576D8004C6569 /* RxSwift.framework */; };
@@ -215,17 +215,17 @@
 		D3BD74861D043AAB0032CC00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3BD74881D043AAB0032CC00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		D3BD748D1D043BE40032CC00 /* LoginStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginStage.swift; sourceTree = "<group>"; };
-		D3CE169A1D0BEB4600749C9F /* BaseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScene.swift; sourceTree = "<group>"; };
+		D3CE169A1D0BEB4600749C9F /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		D3E0EF571D0D34E10066AE5C /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		D3F43D0A1D191913005A0094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Scene/Base.lproj/Home.storyboard; sourceTree = SOURCE_ROOT; };
 		D3F43D0C1D191937005A0094 /* HomeStage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStage.swift; sourceTree = "<group>"; };
 		D3F43D0E1D191944005A0094 /* HomeDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDirector.swift; sourceTree = "<group>"; };
 		D3F43D101D19195B005A0094 /* HomeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
-		D3F5418E1D264C61009A9A27 /* BaseDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDirector.swift; sourceTree = "<group>"; };
+		D3F5418E1D264C61009A9A27 /* Director.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
 		D3F541911D281C91009A9A27 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		D3F541941D281E51009A9A27 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		D3F541981D2D3D3E009A9A27 /* RoundedCornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedCornerView.swift; sourceTree = "<group>"; };
-		D3FFDDF91D045680004C6569 /* DirectedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectedViewController.swift; sourceTree = "<group>"; };
+		D3FFDDF91D045680004C6569 /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		D3FFDDFB1D04720F004C6569 /* LoginDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginDirector.swift; sourceTree = "<group>"; };
 		D3FFDDFD1D047233004C6569 /* LoginScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScene.swift; sourceTree = "<group>"; };
 		D3FFDE001D0576D8004C6569 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
@@ -436,9 +436,9 @@
 				D3BD74851D043AAB0032CC00 /* LaunchScreen.storyboard */,
 				6B114FD61E34D98400FB182C /* CommonProtocols.swift */,
 				6B44B4F11DF59E73005CA8DB /* FreeFunctions.swift */,
-				D3CE169A1D0BEB4600749C9F /* BaseScene.swift */,
-				D3F5418E1D264C61009A9A27 /* BaseDirector.swift */,
-				D3FFDDF91D045680004C6569 /* DirectedViewController.swift */,
+				D3CE169A1D0BEB4600749C9F /* Scene.swift */,
+				D3F5418E1D264C61009A9A27 /* Director.swift */,
+				D3FFDDF91D045680004C6569 /* Stage.swift */,
 				D3F541931D281E30009A9A27 /* Extensions */,
 				D3F541901D281C3F009A9A27 /* Custom Views */,
 				D3BD748C1D043B8D0032CC00 /* Login */,
@@ -947,9 +947,9 @@
 				6B44B4F21DF59E73005CA8DB /* FreeFunctions.swift in Sources */,
 				D3FFDDFE1D047233004C6569 /* LoginScene.swift in Sources */,
 				6B3053521D86E577000F344A /* CreateGistDirector.swift in Sources */,
-				D3F5418F1D264C61009A9A27 /* BaseDirector.swift in Sources */,
-				D3CE169B1D0BEB4600749C9F /* BaseScene.swift in Sources */,
-				D3FFDDFA1D045680004C6569 /* DirectedViewController.swift in Sources */,
+				D3F5418F1D264C61009A9A27 /* Director.swift in Sources */,
+				D3CE169B1D0BEB4600749C9F /* Scene.swift in Sources */,
+				D3FFDDFA1D045680004C6569 /* Stage.swift in Sources */,
 				6BC3769F1D8AC413007F4C87 /* ViewGistScene.swift in Sources */,
 				D3BD748E1D043BE40032CC00 /* LoginStage.swift in Sources */,
 				D3F541991D2D3D3E009A9A27 /* RoundedCornerView.swift in Sources */,

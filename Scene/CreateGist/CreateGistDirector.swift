@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Model
 
-class CreateGistDirector: BaseDirector<CreateGistScene, CreateGistStage> {
+class CreateGistDirector: Director<CreateGistScene, CreateGistStage> {
   
   private let api: GistApi
 

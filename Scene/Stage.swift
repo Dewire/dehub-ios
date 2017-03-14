@@ -3,11 +3,11 @@ import RxSwift
 
 typealias Closure = () -> Void
 
-class DirectedViewController: UIViewController {
+open class Stage: UIViewController {
   
   let bag = DisposeBag()
   
-  var directorRef: AnyObject?
+  var directorRef: DirectorType?
   
   var afterLoad: Closure?
   
@@ -17,7 +17,7 @@ class DirectedViewController: UIViewController {
     return spinner
   }()
   
-  override func viewDidLoad() {
+  open override func viewDidLoad() {
     super.viewDidLoad()
     setupSpinner()
     afterLoad?()
@@ -28,7 +28,12 @@ class DirectedViewController: UIViewController {
     spinner.center = view.center
     view.addSubview(spinner)
   }
-  
+
+  open override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    directorRef?.stageDidAppear()
+  }
+
   deinit {
     print("🗑 \(type(of: self)) deinit")
   }
@@ -36,7 +41,7 @@ class DirectedViewController: UIViewController {
 
 
 // MARK: ErrorDisplayer
-extension DirectedViewController: ErrorDisplayer {
+extension Stage: ErrorDisplayer {
   
   func display(error: Error) {
     print((error as NSError).localizedDescription)
@@ -45,7 +50,7 @@ extension DirectedViewController: ErrorDisplayer {
 
 
 // MARK: SpinnerDisplayer
-extension DirectedViewController: SpinnerDisplayer {
+extension Stage: SpinnerDisplayer {
   func hideSpinner() {
     spinner.stopAnimating()
   }

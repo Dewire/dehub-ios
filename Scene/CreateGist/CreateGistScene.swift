@@ -10,7 +10,7 @@ import UIKit
 import Model
 import RxSwift
 
-class CreateGistScene: BaseScene {
+class CreateGistScene: Scene {
   
   let newGistCallback: Closure
   
@@ -19,7 +19,7 @@ class CreateGistScene: BaseScene {
     super.init(services: services)
   }
   
-  override func createStage() -> UIViewController {
+  override func createStage() -> Stage {
     let s = CreateGistStage.create()
     s.afterLoad = {
       let d = CreateGistDirector(scene: self,

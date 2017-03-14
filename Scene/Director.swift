@@ -1,5 +1,5 @@
 //
-//  BaseDirector.swift
+//  Director.swift
 //  DeHub
 //
 //  Created by Kalle Lindström on 01/07/16.
@@ -9,15 +9,22 @@
 import Foundation
 import RxSwift
 
-class BaseDirector<Scene, Stage: AnyObject> {
-  
+protocol DirectorType {
+  /**
+  Called when the stage appears (viewDidAppear)
+  */
+  func stageDidAppear()
+}
+
+class Director<Z, S: Stage>: DirectorType {
+
   let bag = DisposeBag()
   
-  let scene: Scene
+  let scene: Z
   
   private var didSetStage = false
   
-  weak var stage: Stage! {
+  weak var stage: S! {
     didSet {
       guard !didSetStage else { return }
       if let s = stage {
@@ -27,7 +34,7 @@ class BaseDirector<Scene, Stage: AnyObject> {
     }
   }
   
-  init(scene: Scene) {
+  init(scene: Z) {
     self.scene = scene
   }
   
@@ -35,35 +42,28 @@ class BaseDirector<Scene, Stage: AnyObject> {
     print("🗑 \(type(of: self)) deinit")
   }
   
-  func stageDidLoad(stage: Stage) { }
+  func stageDidLoad(stage: S) { }
+
+  func stageDidAppear() { }
 }
 
 
 // MARK: ErrorDisplayer
-extension BaseDirector: ErrorDisplayer {
+extension Director: ErrorDisplayer {
   
   func display(error: Error) {
-    guard let stage = stage as? ErrorDisplayer else {
-      fatalError("Tried to call display:error from a director when the stage did not implement ErrorDisplayer")
-    }
     stage.display(error: error)
   }
 }
 
 
 // MARK: SpinnerDisplayer
-extension BaseDirector: SpinnerDisplayer {
+extension Director: SpinnerDisplayer {
   func hideSpinner() {
-    guard let stage = stage as? SpinnerDisplayer else {
-      fatalError("Tried to call hideSpinner from a director when the stage did not implement SpinnerDisplayer")
-    }
     stage.hideSpinner()
   }
   
   func showSpinner() {
-    guard let stage = stage as? SpinnerDisplayer else {
-      fatalError("Tried to call showSpinner from a director when the stage did not implement SpinnerDisplayer")
-    }
     stage.showSpinner()
   }
 }

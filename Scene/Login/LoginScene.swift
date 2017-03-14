@@ -9,9 +9,9 @@
 import UIKit
 import Model
 
-open class LoginScene: BaseScene {
+open class LoginScene: Scene {
 
-  open override func createStage() -> UIViewController {
+  open override func createStage() -> Stage {
     
     let s = LoginStage.create()
     s.afterLoad = {

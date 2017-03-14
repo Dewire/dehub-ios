@@ -10,11 +10,11 @@ import UIKit
 import Model
 import RxSwift
 
-class HomeScene: BaseScene {
+class HomeScene: Scene {
   
   var newGistCallback: Closure!
   
-  override func createStage() -> UIViewController {
+  override func createStage() -> Stage {
     
     let s = HomeStage.create()
     s.afterLoad = {
@@ -24,8 +24,8 @@ class HomeScene: BaseScene {
       s.directorRef = d
       d.stage = s
       
-      self.newGistCallback = { [weak d] in
-        self.services.api.invalidateNextCache()
+      self.newGistCallback = { [weak self, weak d] in
+        self?.services.api.invalidateNextCache()
         d?.loadGists()
       }
     }

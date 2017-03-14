@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Model
 
-class ViewGistDirector: BaseDirector<ViewGistScene, ViewGistStage> {
+class ViewGistDirector: Director<ViewGistScene, ViewGistStage> {
   
   let gist: GistEntity
   let api: GistApi

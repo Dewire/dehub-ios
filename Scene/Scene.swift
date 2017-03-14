@@ -1,5 +1,5 @@
 //
-//  BaseScene.swift
+//  Scene.swift
 //  DeHub
 //
 //  Created by Kalle Lindström on 11/06/16.
@@ -10,7 +10,7 @@ import UIKit
 import Model
 import RxSwift
 
-open class BaseScene {
+open class Scene {
   
   let bag = DisposeBag()
   
@@ -32,7 +32,7 @@ open class BaseScene {
     return stage
   }
   
-  func createStage() -> UIViewController {
+  func createStage() -> Stage {
     fatalError("must be overriden by subclass")
   }
 }

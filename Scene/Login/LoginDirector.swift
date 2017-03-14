@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Model
 
-class LoginDirector: BaseDirector<LoginScene, LoginStage> {
+class LoginDirector: Director<LoginScene, LoginStage> {
   
   let api: GistApi
 

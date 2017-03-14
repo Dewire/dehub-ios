@@ -9,7 +9,7 @@
 import UIKit
 import Model
 
-class ViewGistScene: BaseScene {
+class ViewGistScene: Scene {
   
   private let gist: GistEntity
   
@@ -18,7 +18,7 @@ class ViewGistScene: BaseScene {
     super.init(services: services)
   }
   
-  override func createStage() -> UIViewController {
+  override func createStage() -> Stage {
     
     let s = ViewGistStage.create()
     s.afterLoad = {
