@@ -11,7 +11,7 @@ import Foundation
 /**
  Something that can display a formatted error message to the user.
  */
-protocol ErrorDisplayer {
+protocol ErrorDisplayer: class {
   func display(error: Error)
 }
 
@@ -19,7 +19,7 @@ protocol ErrorDisplayer {
  Something that can show/hide a "spinner" (loading indicator) to the user,
  indicating that a load (e.g. network request) is in progress.
  */
-protocol SpinnerDisplayer {
+protocol SpinnerDisplayer: class {
   func showSpinner()
   func hideSpinner()
 }

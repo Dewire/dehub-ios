@@ -73,15 +73,15 @@ extension Director: SpinnerDisplayer {
 extension ObservableType {
   
   func error(_ displayer: ErrorDisplayer) -> Observable<Self.E> {
-    return self.do(onError: { error in
-      displayer.display(error: error)
+    return self.do(onError: { [weak displayer] error in
+      displayer?.display(error: error)
     })
   }
   
   func spin(_ displayer: SpinnerDisplayer) -> Observable<Self.E> {
-    return self.do(onNext: { _ in displayer.hideSpinner() },
-                   onError: { _ in displayer.hideSpinner() },
-                   onSubscribe: { displayer.showSpinner() })
+    return self.do(onNext: { [weak displayer] _ in displayer?.hideSpinner() },
+                   onError: { [weak displayer] _ in displayer?.hideSpinner() },
+                   onSubscribe: { [weak displayer] in displayer?.showSpinner() })
   }
 }
 
