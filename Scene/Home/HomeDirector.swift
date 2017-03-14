@@ -92,7 +92,6 @@ class HomeDirector: BaseDirector<HomeScene, HomeStage> {
       }
       .subscribe { [unowned self] _ in
         self.stage.stopRefreshing()
-        self.state.persistToDisk()
       }
       .addDisposableTo(bag)
   }
