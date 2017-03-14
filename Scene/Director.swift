@@ -79,8 +79,8 @@ extension ObservableType {
   }
   
   func spin(_ displayer: SpinnerDisplayer) -> Observable<Self.E> {
-    return self.do(onError: { _ in displayer.hideSpinner() },
-                   onCompleted: { displayer.hideSpinner() },
+    return self.do(onNext: { _ in displayer.hideSpinner() },
+                   onError: { _ in displayer.hideSpinner() },
                    onSubscribe: { displayer.showSpinner() })
   }
 }

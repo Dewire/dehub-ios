@@ -80,9 +80,9 @@ public class GistApi {
 }
 
 fileprivate extension ObservableType {
-  func connect(_ variable: Variable<E>) -> Observable<Self.E> {
+  func connect(_ subject: ReplaySubject<E>) -> Observable<Self.E> {
     return self.do(onNext: { value in
-      variable.value = value
+      subject.onNext(value)
     })
   }
 }

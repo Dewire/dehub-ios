@@ -31,7 +31,7 @@ class HomeDirector: Director<HomeScene, HomeStage> {
   
   override func stageDidLoad(stage: HomeStage) {
     
-    state.gists.subscribe(onNext: { [unowned self] gists in
+    state.gists.spin(self).subscribe(onNext: { [unowned self] gists in
       self.stage.inputs.source.value = self.gistsToSections(gists)
     })
     .addDisposableTo(bag)
