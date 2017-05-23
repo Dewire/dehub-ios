@@ -18,7 +18,7 @@ public struct GistEntity {
 extension GistEntity: Entity {
   
   public init(json: JSON) throws {
-    description = try json["description"].string*!
+    description = json["description"].string ?? ""
     isPublic = try json["public"].bool*!
     file = try GistFileInfo(json: json["files"].dictionary*!.first*!.value*!)
   }
