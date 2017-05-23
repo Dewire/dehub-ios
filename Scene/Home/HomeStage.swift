@@ -76,7 +76,7 @@ class HomeStage: Stage {
     super.viewDidLoad()
     tableView.addSubview(refreshControl)
     
-    gists.asObservable().bindTo(tableView.rx.items(dataSource: dataSource))
+    gists.asObservable().bind(to: tableView.rx.items(dataSource: dataSource))
       .addDisposableTo(bag)
   }
   
