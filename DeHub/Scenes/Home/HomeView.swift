@@ -1,5 +1,5 @@
 //
-//  HomeStage.swift
+//  HomeView.swift
 //  DeHub
 //
 //  Created by Kalle Lindström on 21/06/16.
@@ -12,58 +12,35 @@ import RxCocoa
 import RxDataSources
 import Model
 
-class HomeStage: Stage {
+class HomeView: View {
+
+  @IBOutlet weak var tableView: UITableView!
   
-  struct Outputs {
-    let logoutButtonTap: ControlEvent<Void>
-    let addButtonTap: ControlEvent<Void>
-    let rowTap: Observable<GistEntity?>
-    let refresh: ControlEvent<Void>
-  }
-  
-  var outputs: Outputs {
-    return Outputs(
+  var inputs: HomeViewModel.Inputs {
+    return HomeViewModel.Inputs(
       logoutButtonTap: navigationItem.leftBarButtonItem!.rx.tap,
       addButtonTap: navigationItem.rightBarButtonItem!.rx.tap,
-      
+
       rowTap: tableView.rx.itemSelected.map { [unowned self] indexPath in
         try? self.tableView.rx.model(at: indexPath)
-      },
+      }.withoutNils(),
       
       refresh: refreshControl.rx.controlEvent(UIControlEvents.valueChanged)
     )
   }
   
-  struct Inputs {
-    let tableView: Reactive<UITableView>
-    let tableViewDataSource: RxTableViewSectionedReloadDataSource<GistSection>
-    let source: Variable<[GistSection]>
-  }
+  private var viewModel: HomeViewModel!
   
-  var inputs: Inputs {
-    return Inputs(
-      tableView: tableView.rx,
-      tableViewDataSource: dataSource,
-      source: gists
-    )
-  }
-  
-  private let gists = Variable<[GistSection]>([])
-  
-  @IBOutlet weak var tableView: UITableView!
-  var refreshControl: UIRefreshControl!
-  
-  static func create() -> HomeStage {
-    let storyboard = UIStoryboard(name: "Home", bundle: Bundle(for: HomeScene.self))
-    return storyboard.instantiateInitialViewController() as! HomeStage
-  }
-  
-  override func awakeFromNib() {
-    super.awakeFromNib()
+  private var refreshControl: UIRefreshControl!
+
+  override public func viewDidLoad() {
+    super.viewDidLoad()
     setupBarButtons()
     refreshControl = UIRefreshControl()
+    tableView.addSubview(refreshControl)
+    viewModel = HomeViewModel(services: services)
   }
-  
+
   private func setupBarButtons() {
     let logout = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.done, target: nil, action: nil)
     self.navigationItem.leftBarButtonItem = logout
@@ -71,33 +48,37 @@ class HomeStage: Stage {
     let plus = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: nil, action: nil)
     self.navigationItem.rightBarButtonItem = plus
   }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    tableView.addSubview(refreshControl)
-    
-    gists.asObservable().bind(to: tableView.rx.items(dataSource: dataSource))
-      .addDisposableTo(bag)
+
+  override func startObserving(bag: DisposeBag) {
+    let viewModelOutputs = viewModel.observe(inputs: inputs, bag: bag)
+    observeViewModelOutputs(viewModelOutputs, bag: bag)
   }
-  
-  func stopRefreshing() {
-    refreshControl.endRefreshing()
+
+  private func observeViewModelOutputs(_ outputs: HomeViewModel.Outputs, bag: DisposeBag) {
+
+    outputs.gists.drive(tableView.rx.items(dataSource: dataSource)).addDisposableTo(bag)
+
+    outputs.navigateNewGist.drive(onNext: {
+      self.performSegue(withIdentifier: "CREATE_GIST_SEGUE", sender: nil)
+    }).addDisposableTo(bag)
+
+    outputs.navigateViewGist.drive(onNext: { gist in
+      self.performSegue(withIdentifier: "VIEW_GIST_SEGUE", sender: gist)
+    }).addDisposableTo(bag)
+
+    outputs.stopRefresh.drive(onNext: { _ in
+      self.refreshControl.endRefreshing()
+    }).disposed(by: bag)
   }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    if let selected = tableView.indexPathForSelectedRow {
-      tableView.deselectRow(at: selected, animated: false)
+
+  open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "VIEW_GIST_SEGUE" {
+      (segue.destination as! ViewGistView).gist = (sender as! GistEntity)
     }
-  }
-  
-  func setGists(gists: [GistEntity]) {
-    
   }
 }
 
-
-extension HomeStage {
+extension HomeView {
   
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<GistSection> {
     let source = RxTableViewSectionedReloadDataSource<GistSection>()
@@ -120,4 +101,3 @@ extension HomeStage {
     cell.languageLabel.text = model.file.language ?? ""
   }
 }
-

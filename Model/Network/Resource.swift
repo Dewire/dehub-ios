@@ -41,10 +41,6 @@ class ResourceFactory {
   let defaultTimeout: TimeInterval
   var standardHeaders = [String: String]()
   
-  /// Set this to true in order to invalidate the cache for the next Resource that is
-  /// created from this ResourceFactory instance.
-  var invalidateNextCache = false
-
   init(baseUrl: String,
        cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy,
        timeout: TimeInterval = 10) {
@@ -61,17 +57,18 @@ class ResourceFactory {
   
   /**
    Creates a new Resource for the path. The parse closure is used to parse the response.
-   If the RestResponse shouldn't be parsed the noParse function can be used a convenicence.
+   If the RestResponse shouldn't be parsed the noParse function can be used a convenience.
    If the path url is an absolute URL (starting with http/https) it will be used directly.
    Otherwise it will be appended as a path component to the base url.
    The default HTTP method is GET.
   */
   func resource<A>(_ path: String,
                    cacheInterval: CacheTimeInterval? = nil,
+                   invalidateCache: Bool = false,
                    parse: @escaping ((RestResponse) throws -> A)) -> Resource<A> {
     
     let u = url(forPath: path)
-    let policy = cachePolicy(forUrl: u, cacheInterval: cacheInterval)
+    let policy = cachePolicy(forUrl: u, cacheInterval: cacheInterval, invalidateCache: invalidateCache)
     
     return Resource(url: u,
                     parse: parse,
@@ -96,18 +93,20 @@ class ResourceFactory {
 
 extension ResourceFactory {
   
-  func cachePolicy(forUrl url: URL, cacheInterval: CacheTimeInterval?) -> URLRequest.CachePolicy {
+  func cachePolicy(
+    forUrl url: URL,
+    cacheInterval: CacheTimeInterval?,
+    invalidateCache: Bool = false) -> URLRequest.CachePolicy {
     
     // The path without any query parameters
     let resourcePath = url.absoluteString.components(separatedBy: "?").first
     
     // First check if the cache for this request is invalidated
-    guard !invalidateNextCache else {
-      invalidateNextCache = false
+    guard !invalidateCache else {
       updateExpiration(cacheInterval: cacheInterval, forResourcePath: resourcePath)
       return .reloadIgnoringLocalCacheData
     }
-    
+
     // If we don't have a cache interval or a path we use the default cache policy
     guard let interval = cacheInterval, let path = resourcePath else {
       return defaultCachePolicy

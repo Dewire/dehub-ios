@@ -7,40 +7,35 @@
 //
 
 import UIKit
-import Scene
 import Model
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+  
   var window: UIWindow?
-  var state: State!
   
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-   
+
+    #if DEBUG
+      if isRunningTest {
+        return true
+      }
+    #endif
+
     #if arch(i386) || arch(x86_64)
       logDocumentsPath()
     #endif
+
+    Services.shared.state.restoreFromDisk()
     
-    let win = createWindow()
-    win.makeKeyAndVisible()
+    self.window = UIWindow(frame: UIScreen.main.bounds)
+    let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
-    let services = Services()
-    state = services.state
-    state.restoreFromDisk()
+    self.window?.rootViewController = mainStoryboard.instantiateInitialViewController()
+    self.window?.makeKeyAndVisible()
     
-    let scene = LoginScene(services: services)
-    win.rootViewController = scene.stage()
-    
-    window = win
     return true
-  }
-  
-  private func createWindow() -> UIWindow {
-    let window = UIWindow(frame: UIScreen.main.bounds)
-    window.backgroundColor = UIColor.white
-    return window
   }
   
   private func logDocumentsPath() {
@@ -49,6 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func applicationWillResignActive(_ application: UIApplication) {
-    state.persistToDisk()
+    Services.shared.state.persistToDisk()
+  }
+  
+  var isRunningTest: Bool {
+    return ProcessInfo.processInfo.environment["XCInjectBundleInto"] != nil
   }
 }

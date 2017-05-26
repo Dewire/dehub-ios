@@ -39,22 +39,12 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D3BD74441D0431B40032CC00"
                BuildableName = "ModelTests.xctest"
                BlueprintName = "ModelTests"
-               ReferencedContainer = "container:DeHub.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D3BD74671D0431F00032CC00"
-               BuildableName = "SceneTests.xctest"
-               BlueprintName = "SceneTests"
                ReferencedContainer = "container:DeHub.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -68,6 +58,12 @@
             ReferencedContainer = "container:DeHub.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            value = ""
+            isEnabled = "NO">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

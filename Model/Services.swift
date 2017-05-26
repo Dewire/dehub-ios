@@ -8,12 +8,22 @@
 
 import Foundation
 
-public struct Services {
+public class Services {
+  
+  public static let shared = { () -> Services in 
+    let state = State()
+    let api = GistApi(resourceFactory: ResourceFactory(baseUrl: "https://api.github.com"), state: state)
+    return Services(api: api, state: state)
+  }()
+
   public let api: GistApi
   public let state: State
 
-  public init() {
-    state = State()
-    api = GistApi(resourceFactory: ResourceFactory(baseUrl: "https://api.github.com"), state: state)
+  init(
+    api: GistApi,
+    state: State
+  ) {
+    self.api = api
+    self.state = state
   }
 }
