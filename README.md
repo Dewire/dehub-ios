@@ -1,5 +1,8 @@
 # dehub-ios
 
+![Image of Yaktocat](http://i.imgur.com/RScEHu8.gif)
+
+
 ## Synopsis
 
 DeHub is a sample app that can be used to view your gists and to create new gists.
@@ -19,7 +22,7 @@ Coming soon
 
 # Main libraries used
 
-##[RxSwift](https://github.com/ReactiveX/RxSwift)##
+__[RxSwift](https://github.com/ReactiveX/RxSwift)__
 
 Used for observing the the view state.
 
