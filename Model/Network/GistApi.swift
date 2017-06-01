@@ -47,7 +47,7 @@ public class GistApi {
     }
     .load()
     .connect(state._gists)
-    .map { _ in () }
+    .toVoid()
     .cacheInterval(key: "loadGists", interval: .oneMinute, invalidateCache: force)
   }
   

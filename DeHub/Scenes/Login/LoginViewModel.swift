@@ -86,7 +86,7 @@ public class LoginViewModel: ViewModel {
       .do(onNext: { _ in
         self.api.logout()
       })
-      .map { _ in () }
+      .toVoid()
       .asDriver(onErrorJustReturn: ())
   }
 }
