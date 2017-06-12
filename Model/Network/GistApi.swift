@@ -79,15 +79,17 @@ public class GistApi {
 fileprivate extension ObservableType {
 
   func cacheInterval(key: String, interval: CacheTimeInterval, invalidateCache: Bool) -> Observable<E> {
-
+    
     guard let expiration = UserDefaults.standard.object(forKey: key) as? Date, !invalidateCache else {
-      updateExpiration(forKey: key, interval: interval)
-      return asObservable()
+      return asObservable().do(onCompleted: {
+        self.updateExpiration(forKey: key, interval: interval)
+      })
     }
-
+    
     if Date() >= expiration {
-      updateExpiration(forKey: key, interval: interval)
-      return asObservable()
+      return asObservable().do(onCompleted: {
+        self.updateExpiration(forKey: key, interval: interval)
+      })
     } else {
       return Observable.empty()
     }

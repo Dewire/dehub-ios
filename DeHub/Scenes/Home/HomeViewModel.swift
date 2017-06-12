@@ -37,7 +37,11 @@ public class HomeViewModel: ViewModel {
   }
 
   func observe(inputs: Inputs, bag: DisposeBag) -> Outputs {
-    api.loadGists().subscribe().disposed(by: bag)
+    // NOTE: we should not dispose api fetches with the dispose bag, since the bag is emptied
+    // when the view disappears. If this should happen before the request has completed we lose the data.
+    // It is fine to not dispose network observables because they are disposed automatically when the
+    // request completes.
+    _ = api.loadGists().subscribe()
 
     inputs.logoutButtonTap.subscribe(onNext: {
       NotificationCenter.default.post(name: Notification.Name("Logout"), object: nil)
