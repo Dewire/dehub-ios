@@ -13,6 +13,7 @@ import Model
 
 class ViewGistView: View {
 
+  override var getViewModel: ViewModel { return viewModel }
   private var viewModel: ViewGistViewModel!
 
   @IBOutlet weak var textViewContainer: UIScrollView!

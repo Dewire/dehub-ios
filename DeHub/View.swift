@@ -20,6 +20,10 @@ class View: UIViewController {
     return spinner
   }()
   
+  var getViewModel: ViewModel {
+    fatalError("Must be provided by the sublass")
+  }
+  
   func startObserving(bag: DisposeBag) {
     fatalError("Override this method and observe the view model")
   }
@@ -43,7 +47,7 @@ class View: UIViewController {
   }
 
   private func observeEvents(bag: DisposeBag) {
-    EventChannel.shared.events.subscribe(onNext: { event in
+    getViewModel.eventChannel.events.subscribe(onNext: { event in
       self.handle(event: event)
     }).disposed(by: bag)
   }

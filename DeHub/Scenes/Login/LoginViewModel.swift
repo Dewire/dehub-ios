@@ -51,7 +51,7 @@ public class LoginViewModel: ViewModel {
 
     let loginState = inputs.loginPressed.asDriver().triggeredProgress(fromSource: userPass) { userPass in
       self.api.login(username: userPass.0, password: userPass.1)
-        .spin().error()
+        .spin(self).error(self)
     }
 
     return Outputs(

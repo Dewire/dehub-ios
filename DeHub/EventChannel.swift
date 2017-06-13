@@ -16,7 +16,9 @@ enum Event {
 }
 
 final class EventChannel {
-  static let shared = EventChannel()
-  
   let events = PublishSubject<Event>()
+}
+
+protocol EventChannelProvider {
+  var eventChannel: EventChannel { get }
 }

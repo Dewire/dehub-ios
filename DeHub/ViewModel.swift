@@ -9,9 +9,11 @@
 import Foundation
 import RxSwift
 
-public class ViewModel {
-
+public class ViewModel: EventChannelProvider {
+  
   deinit {
     print("🗑 \(type(of: self)) deinit")
   }
+  
+  let eventChannel = EventChannel()
 }

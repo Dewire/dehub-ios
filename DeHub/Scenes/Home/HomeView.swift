@@ -14,6 +14,7 @@ import Model
 
 class HomeView: View {
 
+  override var getViewModel: ViewModel { return viewModel }
   @IBOutlet weak var tableView: UITableView!
   
   var inputs: HomeViewModel.Inputs {

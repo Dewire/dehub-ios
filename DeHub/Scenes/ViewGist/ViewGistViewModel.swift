@@ -30,7 +30,7 @@ class ViewGistViewModel: ViewModel {
     return Outputs(
       title: Driver.just(gist.file.filename),
       text: api.getText(forGist: gist)
-        .spin().error().asDriver(onErrorJustReturn: "")
+        .spin(self).error(self).asDriver(onErrorJustReturn: "")
     )
   }
 }

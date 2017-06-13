@@ -19,6 +19,7 @@ class LoginView: View {
 
   private var hiddenBag: DisposeBag!
   
+  override var getViewModel: ViewModel { return viewModel }
   private var viewModel: LoginViewModel!
   
   public override func viewDidLoad() {

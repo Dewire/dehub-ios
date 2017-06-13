@@ -31,16 +31,27 @@ extension ObservableType {
 
 extension ObservableType {
 
-  func error() -> Observable<Self.E> {
+  func error(_ provider: EventChannelProvider) -> Observable<Self.E> {
     return self.do(onError: { error in
-      EventChannel.shared.events.onNext(.displayError(error: error))
+      provider.eventChannel.events.onNext(.displayError(error: error))
     })
   }
-
-  func spin() -> Observable<Self.E> {
-    return self.do(onNext: { _ in EventChannel.shared.events.onNext(.hideSpinner) },
-      onError: { _ in EventChannel.shared.events.onNext(.hideSpinner) },
-      onSubscribe: { EventChannel.shared.events.onNext(.showSpinner) })
+  
+  func spin(_ provider: EventChannelProvider) -> Observable<Self.E> {
+    
+    return self.do(
+      onNext: { _ in
+        provider.eventChannel.events.onNext(.hideSpinner)
+    },
+      onError: { _ in
+        provider.eventChannel.events.onNext(.hideSpinner)
+    },
+      onCompleted: {
+        provider.eventChannel.events.onNext(.hideSpinner)
+    },
+      onSubscribe: {
+        provider.eventChannel.events.onNext(.showSpinner)
+    })
   }
 }
 

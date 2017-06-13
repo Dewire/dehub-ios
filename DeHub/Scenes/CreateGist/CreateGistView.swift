@@ -17,6 +17,7 @@ class CreateGistView: View {
   @IBOutlet weak var contentText: UITextView!
   @IBOutlet weak var privatePublicSegment: UISegmentedControl!
 
+  override var getViewModel: ViewModel { return viewModel }
   private var viewModel: CreateGistViewModel!
   
   override func viewDidLoad() {

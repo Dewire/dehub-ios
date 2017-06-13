@@ -39,7 +39,7 @@ class CreateGistViewModel: ViewModel {
     let saveDriver = inputs.saveButtonTapped.asDriver()
     let gistCreatedState = saveDriver.triggeredProgress(fromSource: gist.withoutNils()) { gist in
       self.api.create(gist: gist)
-        .spin().error()
+        .spin(self).error(self)
         .map { _ in true }
     }
 

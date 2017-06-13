@@ -49,12 +49,12 @@ public class HomeViewModel: ViewModel {
     .disposed(by: bag)
 
     let stopRefresh = inputs.refresh.asDriver().flatMap {
-      self.api.loadGists(force: true).error().asDriver(onErrorJustReturn: ())
+      self.api.loadGists(force: true).error(self).asDriver(onErrorJustReturn: ())
     }
 
     let sections = state.gists
       .map { self.gistsToSections($0) }
-      .spin()
+      .spin(self)
       .asDriver(onErrorJustReturn: [])
 
     return Outputs(
